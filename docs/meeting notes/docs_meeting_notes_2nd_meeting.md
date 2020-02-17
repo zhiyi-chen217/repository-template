@@ -8,18 +8,14 @@ Room reservation system
 
 
 ## Sub functions (in this priority)
-    
-Bike reservation system
-Food ordering system 
+- Bike reservation system
+- Food ordering system 
 
 ## Users
 
 - Students:
-
     - Username and password are enough for authentication 
-
 - Employees:
-
     - Username and password are enough for authentication
 - Administrator:
     - Adds any data (add or delete buildings for example)
@@ -34,27 +30,16 @@ Food ordering system
 ## Relevant entities
 
 - Building:
-
     - Opening time
-
     - Closing time
-
     - Location
-
     - Pictures
-
     - Name
-
 - Rooms:
-
     - Picture
-
     - Description
-
     - Capacity
-
     - Name
-
     - Can be reserved by student or only employee
     - TV
     - Whiteboard
