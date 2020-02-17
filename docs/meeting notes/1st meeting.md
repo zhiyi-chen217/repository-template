@@ -1,9 +1,15 @@
 # Project requirements:
 ## Main function
-    a room reservation system
+    Room reservation system
 
 ## Sub function
-    food ordering system
+    Food ordering system
+
+## Users
+- Students:
+    - Students sign in and are able to reserve some rooms (e.g. can't reserve employee-only rooms). 
+- Employees:
+    - Employees also sign in and are able to reserve all rooms.
 
 ## Relevant entities
 - Building:
@@ -17,10 +23,11 @@
     - Description
     - Capacity
     - Name
+    - Can be reserved by student or only employee
 
 ## Capabilities of system administrator
-- Input room information
-- Input building information
+- Input new room information
+- Input new building information
 - Specifying the relationship between each room and building
 
 ## Other details:
