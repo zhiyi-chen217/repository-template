@@ -11,7 +11,7 @@ Add your own name (do not add the names for others!) to the section below.
 | 📸 | Name | Email |
 |---|---|---|
 | ![](https://eu.ui-avatars.com/api/?name=OOPP&length=4&size=50&color=DDD&background=777&font-size=0.325) | Zhiqiang LEI | z.lei-1@student.tudelft.nl |
-| ![](https://eu.ui-avatars.com/api/?name=OOPP&length=4&size=50&color=DDD&background=777&font-size=0.325) | Luca Hagemans | l.c.hagemans@student.tudelft.nl|
+| <img src="https://gitlab.ewi.tudelft.nl/uploads/-/system/user/avatar/2783/avatar.png?width=400" height="50" width="50"> | Luca Hagemans | l.c.hagemans@student.tudelft.nl|
 | ![](https://eu.ui-avatars.com/api/?name=OOPP&length=4&size=50&color=DDD&background=777&font-size=0.325) | Zhiyi Chen | Z.Chen-29@student.tudelft.nl|
 | ![](https://eu.ui-avatars.com/api/?name=OOPP&length=4&size=50&color=DDD&background=777&font-size=0.325) | Suleyman Ali | s.ali-5@student.tudelft.nl|
 | <img src="https://simchavos.com/pf.png" height="50" width="50">| Simcha Vos | a.s.j.vos@student.tudelft.nl|
