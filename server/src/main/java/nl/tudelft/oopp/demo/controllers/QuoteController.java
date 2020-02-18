@@ -4,6 +4,10 @@ import java.util.ArrayList;
 import java.util.Random;
 
 import nl.tudelft.oopp.demo.entities.Quote;
+import nl.tudelft.oopp.demo.entities.Users;
+import nl.tudelft.oopp.demo.repositories.QuoteRepository;
+import nl.tudelft.oopp.demo.repositories.UserRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -15,6 +19,12 @@ public class QuoteController {
      *
      * @return randomly selected {@link Quote}.
      */
+    @Autowired
+    private QuoteRepository quoteRepository;
+
+    @Autowired
+    private UserRepository userRepository;
+
     @GetMapping("quote")
     @ResponseBody
     public Quote getRandomQuote() {
@@ -35,7 +45,8 @@ public class QuoteController {
                 "Tell me and I forget.  Teach me and I remember.  Involve me and I learn.",
                 "Benjamin Franklin"
         );
-
+        quoteRepository.save(q1);
+        userRepository.save(new Users("admin","","12345") );
         ArrayList<Quote> quotes = new ArrayList<>();
         quotes.add(q1);
         quotes.add(q2);
