@@ -7,28 +7,28 @@ import java.util.Objects;
 @Table(name = "users")
 public class Users {
     @Id
-    @Column(name = "user_id")
-    private String user_id;
+    @Column(name = "userId")
+    private String userId;
 
     @Column(name = "Email")
-    private String e_mail;
+    private String Email;
 
     @Column(name = "type")
     private String type;
 
-    @Column(name = "Password")
+    @Column(name = "password")
     private String password;
 
     public Users(String user_id, String e_mail, String password){
-        this.user_id = user_id;
-        this.e_mail = e_mail;
+        this.userId = user_id;
+        this.Email = e_mail;
         this.type = "Student";
         this.password = password;
     }
     public Users(){}
 
     public String getUser_id(){
-        return this.user_id;
+        return this.userId;
     }
 
     public String getType(){
@@ -36,7 +36,7 @@ public class Users {
     }
 
     public String getE_mail(){
-        return this.e_mail;
+        return this.Email;
     }
 
     @Override
@@ -44,7 +44,7 @@ public class Users {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Users users = (Users) o;
-        return user_id.equals(users.user_id);
+        return userId.equals(users.userId);
     }
 
 }
