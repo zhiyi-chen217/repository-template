@@ -29,4 +29,19 @@ public class ServerCommunication {
         return response.body();
     }
 
+    public static String getRandom(){
+        HttpRequest request = HttpRequest.newBuilder().GET().uri(URI.create("http://localhost:8080/banana")).build();
+        HttpResponse<String> response = null;
+        try {
+            response = client.send(request, HttpResponse.BodyHandlers.ofString());
+        } catch (Exception e) {
+            e.printStackTrace();
+            return "Communication with server failed";
+        }
+        if (response.statusCode() != 200) {
+            System.out.println("Status: " + response.statusCode());
+        }
+        return response.body();
+    }
+
 }
