@@ -9,7 +9,7 @@ import javafx.stage.Stage;
 import java.io.IOException;
 import java.net.URL;
 
-public class LoginDisplay extends Application{
+public class LoginDisplay extends Application {
 
     @Override
     public void start(Stage primaryStage) throws IOException {
@@ -22,7 +22,7 @@ public class LoginDisplay extends Application{
         primaryStage.show();
     }
 
-    public static void main(String args[]){
+    public static void main(String args[]) {
         launch(args);
     }
 }
