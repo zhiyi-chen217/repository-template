@@ -27,7 +27,7 @@ public class QuoteController {
 
     @GetMapping("quote")
     @ResponseBody
-    public Quote getRandomQuote() {
+    public Users getRandomQuote() {
         Quote q1 = new Quote(
                 1,
                 "A clever person solves a problem. A wise person avoids it.",
@@ -52,6 +52,6 @@ public class QuoteController {
         quotes.add(q2);
         quotes.add(q3);
 
-        return quotes.get(new Random().nextInt(quotes.size()));
+        return userRepository.findByUserId("admin");
     }
 }
