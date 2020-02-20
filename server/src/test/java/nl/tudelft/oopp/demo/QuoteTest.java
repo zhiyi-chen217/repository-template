@@ -20,6 +20,6 @@ public class QuoteTest {
     public void retrieveUser() {
         Users u1 = new Users("admin", "", "12345");
         userRepository.save(u1);
-        assertEquals(u1, userRepository.findByUserId("admin"));
+        assertEquals(u1, userRepository.findByUserId("admin").get());
     }
 }
