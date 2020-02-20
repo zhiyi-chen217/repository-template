@@ -48,8 +48,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                     .antMatchers("/**")
                     .authenticated()
                     .and()
-                .formLogin()
-                .failureHandler(authenticationFailure());;
+                .httpBasic();
     }
 
 
