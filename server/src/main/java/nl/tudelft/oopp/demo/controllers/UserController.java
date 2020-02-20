@@ -7,6 +7,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import java.util.Optional;
+
 @Controller
 public class UserController {
 
@@ -19,7 +21,7 @@ public class UserController {
      */
     @GetMapping("quote")
     @ResponseBody
-    public Users getUser() {
+    public Optional<Users> getUser() {
         userRepository.save(new Users("admin","","12345") );
         return userRepository.findByUserId("admin");
     }

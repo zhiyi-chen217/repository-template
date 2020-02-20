@@ -1,8 +1,6 @@
 package nl.tudelft.oopp.demo.config;
 
 import nl.tudelft.oopp.demo.entities.Users;
-import nl.tudelft.oopp.demo.repositories.UserRepository;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -10,6 +8,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
+import java.util.Optional;
 
 public class reserveUser implements UserDetails {
     private String pass;
