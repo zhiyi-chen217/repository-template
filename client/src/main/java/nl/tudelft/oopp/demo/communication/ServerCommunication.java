@@ -4,6 +4,8 @@ import java.net.URI;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
+import java.nio.charset.StandardCharsets;
+import java.util.*;
 
 public class ServerCommunication {
 
@@ -29,8 +31,13 @@ public class ServerCommunication {
         return response.body();
     }
 
-    public static String getRandom(){
-        HttpRequest request = HttpRequest.newBuilder().GET().uri(URI.create("http://localhost:8080/banana")).build();
+    public static String login(String username, String password){
+        String baseurl = "http://localhost:8080/login?";
+        String auth = username + ":" + password;
+        Base64.Encoder encoder = Base64.getEncoder();
+        String encodedAuth = encoder.encodeToString(auth.getBytes());
+        baseurl += "user=" + username +"&"+ "auth=" + encodedAuth;
+        HttpRequest request = HttpRequest.newBuilder().GET().uri(URI.create(baseurl)).build();
         HttpResponse<String> response = null;
         try {
             response = client.send(request, HttpResponse.BodyHandlers.ofString());

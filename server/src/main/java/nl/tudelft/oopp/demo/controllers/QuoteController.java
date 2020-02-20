@@ -1,11 +1,13 @@
 package nl.tudelft.oopp.demo.controllers;
 
 import java.util.ArrayList;
+import java.util.Base64;
 import java.util.Random;
 
 import nl.tudelft.oopp.demo.entities.Quote;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 @Controller
@@ -44,9 +46,19 @@ public class QuoteController {
         return quotes.get(new Random().nextInt(quotes.size()));
     }
 
-    @GetMapping("banana")
+    @GetMapping(path = "login")
     @ResponseBody
-    public String getRandomResponse(){
-        return "I like bananas";
+    public String loginVerification(@RequestParam String user, @RequestParam String auth){
+        Base64.Encoder encoder = Base64.getEncoder();
+        String pass = user +":Banaan";
+        String encodedAuth = encoder.encodeToString(pass.getBytes());
+        try {
+            if (auth.equals(encodedAuth)) {
+                return "Login was a success!";
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return "Login failed, please try again!, " + encodedAuth + ", should be: " + auth;
     }
 }

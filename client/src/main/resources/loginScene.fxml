@@ -10,7 +10,7 @@
       xmlns:fx="http://javafx.com/fxml"
       fx:controller="nl.tudelft.oopp.demo.controllers.LoginSceneController">
     <Label text="Login Please!"/>
-    <TextField fx:id="textfield1" promptText="Username"/>
-    <PasswordField fx:id="textfield2" promptText="Password"/>
+    <TextField fx:id="username" promptText="Username"/>
+    <PasswordField fx:id="password" promptText="Password"/>
     <Button fx:id="submitbutton" text="Submit" onAction="#submitClicked"/>
 </VBox>

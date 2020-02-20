@@ -11,17 +11,18 @@ import java.util.ResourceBundle;
 
 public class LoginSceneController {
     @FXML
-    private TextField textfield1;
+    private TextField username;
     @FXML
-    private TextField textfield2;
+    private TextField password;
 
     public void submitClicked() {
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
         alert.setTitle("Submit clicked");
         alert.setHeaderText(null);
-        String result = "";
-        result += textfield1.getText() + "\n" + textfield2.getText();
-        alert.setContentText(result);
+        alert.setContentText(ServerCommunication.login(username.getText(), password.getText()));
+//        String result = "";
+//        result += username.getText() + "\n" + password.getText();
+//        alert.setContentText(result);
         alert.showAndWait();
     }
 }
