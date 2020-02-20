@@ -11,8 +11,8 @@ import java.util.Base64;
 @RestController
 public class LoginController {
 
-    @GetMapping("/")
-    public String greetings(Authentication authentication) {
+    @GetMapping("login")
+    public String greetings(@RequestHeader(name = "Authentication") Authentication authentication) {
        String userName = authentication.getName();
        return "hello " + userName;
     }

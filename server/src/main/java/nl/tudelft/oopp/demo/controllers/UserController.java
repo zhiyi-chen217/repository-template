@@ -19,10 +19,14 @@ public class UserController {
      * get the admin user account
      * @return admin user
      */
-    @GetMapping("quote")
+    @GetMapping("admin")
     @ResponseBody
-    public Optional<Users> getUser() {
+    public String getUser() {
         userRepository.save(new Users("admin","","12345") );
-        return userRepository.findByUserId("admin");
+        Optional<Users> user = userRepository.findByUserId("admin");
+        if(user.isPresent()){
+            return user.get().getUser_id();
+        }
+        return "This user was not found.";
     }
 }

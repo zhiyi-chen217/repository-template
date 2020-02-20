@@ -16,11 +16,25 @@ public class LoginSceneController {
     @FXML
     private TextField password;
 
+    /**
+     * Submit the login credentials when clicked on submit
+     */
     public void submitClicked() {
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
         alert.setTitle("Submit clicked");
         alert.setHeaderText(null);
         alert.setContentText(ServerCommunication.sendLogin(username.getText(), password.getText()));
+        alert.showAndWait();
+    }
+
+    /**
+     * This was an attempt to retrieve the admin info via getQuote() of the serverCommunication
+     */
+    public void adminClicked(){
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setTitle("Submit clicked");
+        alert.setHeaderText(null);
+        alert.setContentText(ServerCommunication.getQuote());
         alert.showAndWait();
     }
 }

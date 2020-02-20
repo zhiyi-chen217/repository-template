@@ -37,7 +37,7 @@ public class ServerCommunication {
      * @throws Exception if communication with the server fails.
      */
     public static String getQuote() {
-        HttpRequest request = HttpRequest.newBuilder().GET().uri(URI.create("http://localhost:8080/quote")).build();
+        HttpRequest request = HttpRequest.newBuilder().GET().uri(URI.create("http://localhost:8080/admin")).build();
         HttpResponse<String> response = null;
         try {
             response = client.send(request, HttpResponse.BodyHandlers.ofString());
@@ -51,14 +51,18 @@ public class ServerCommunication {
         return response.body();
     }
 
-
+    /**
+     * Send the username and password under the authentication header to the server
+     * @param username the username that is inputted
+     * @param password the password that the user inputs
+     * @return the string to present in the alert
+     */
     public static String sendLogin(String username, String password){
-        String baseurl = "http://localhost:8080/login?";
+        String baseurl = "http://localhost:8080/login";
         String auth = username + ":" + password;
-        Base64.Encoder encoder = Base64.getEncoder();
-        String encodedAuth = encoder.encodeToString(auth.getBytes());
-        baseurl += "user=" + username +"&"+ "auth=" + encodedAuth;
-        HttpRequest request = HttpRequest.newBuilder().GET().uri(URI.create(baseurl)).build();
+        String encodedAuth = "Basic " + Base64.getEncoder().encodeToString(auth.getBytes());
+
+        HttpRequest request = HttpRequest.newBuilder().GET().uri(URI.create(baseurl)).header("Authentication:", encodedAuth).build();
         HttpResponse<String> response = null;
         try {
             response = client.send(request, HttpResponse.BodyHandlers.ofString());
