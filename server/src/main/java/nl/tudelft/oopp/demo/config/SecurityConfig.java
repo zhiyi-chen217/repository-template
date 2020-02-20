@@ -21,6 +21,11 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         authBuilder.userDetailsService(userDetailsService);
     }
 
+    @Override
+    public void configure(HttpSecurity httpSecurity) throws Exception {
+        httpSecurity.authorizeRequests().antMatchers("/**").authenticated().and().formLogin();
+
+    }
 
     @Bean
     public PasswordEncoder getPasswordEncoder(){
