@@ -12,8 +12,8 @@ import java.util.Base64;
 public class LoginController {
 
     @GetMapping("/")
-    public String greetings(Authentication authentication){
+    public String greetings(Authentication authentication) {
        String userName = authentication.getName();
-       return  "hello" + " " + userName;
+       return "hello " + userName;
     }
 }

@@ -4,22 +4,27 @@ import nl.tudelft.oopp.demo.entities.Users;
 import nl.tudelft.oopp.demo.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
+import java.util.Arrays;
 import java.util.Collection;
+import java.util.List;
 
 public class reserveUser implements UserDetails {
     private String pass;
     private String userName;
+    private List<GrantedAuthority> authorities;
 
     public reserveUser(Users user){
         this.userName = user.getUser_id();
         this.pass = user.getPassword();
+        this.authorities = Arrays.asList(new SimpleGrantedAuthority(user.getType()));
     }
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return null;
+        return this.authorities;
     }
 
     @Override

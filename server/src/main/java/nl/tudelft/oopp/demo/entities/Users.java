@@ -10,7 +10,7 @@ public class Users {
     @Column(name = "userId")
     private String userId;
 
-    @Column(name = "Email")
+    @Column(name = "email")
     private String Email;
 
     @Column(name = "type")
@@ -31,12 +31,24 @@ public class Users {
         return this.userId;
     }
 
+    public void setUserId(String userId) {
+        this.userId = userId;
+    }
+
     public String getType(){
         return this.type;
     }
 
+    public void setType(String type) {
+        this.type = type;
+    }
+
     public String getE_mail(){
         return this.Email;
+    }
+
+    public void setEmail(String email) {
+        Email = email;
     }
 
     public String getPassword() {
