@@ -14,6 +14,24 @@ public class ServerCommunication {
      * @return the body of a get request to the server.
      * @throws Exception if communication with the server fails.
      */
+    public static String sendLogin(String username, String password) {
+        if (password == null || username == null) return null;
+        //Parameters user and password are added to the URI
+        HttpRequest request = HttpRequest.newBuilder().GET().uri(URI.create("http://localhost:8080/login?user=" + username + "?pw=" + password)).build();
+        HttpResponse<String> response = null;
+        try {
+            response = client.send(request, HttpResponse.BodyHandlers.ofString());
+        } catch (Exception e) {
+            e.printStackTrace();
+            return "Communication with server failed";
+        }
+        if (response.statusCode() != 200) {
+            System.out.println("Status: " + response.statusCode());
+        }
+        return response.body();
+    }
+
+    //Old getQuote() method
     public static String getQuote() {
         HttpRequest request = HttpRequest.newBuilder().GET().uri(URI.create("http://localhost:8080/quote")).build();
         HttpResponse<String> response = null;
@@ -28,7 +46,6 @@ public class ServerCommunication {
         }
         return response.body();
     }
-
     public static String getRandom(){
         HttpRequest request = HttpRequest.newBuilder().GET().uri(URI.create("http://localhost:8080/banana")).build();
         HttpResponse<String> response = null;

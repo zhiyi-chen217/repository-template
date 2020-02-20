@@ -17,7 +17,7 @@ public class QuoteController {
      */
     @GetMapping("quote")
     @ResponseBody
-    public Quote getRandomQuote() {
+    public Quote printLogin() {
         Quote q1 = new Quote(
                 1,
                 "A clever person solves a problem. A wise person avoids it.",
