@@ -1,5 +1,6 @@
 package nl.tudelft.oopp.demo.config;
 
+import nl.tudelft.oopp.demo.controllers.RestAuthenticationEntryPoint;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -9,16 +10,7 @@ import org.springframework.security.config.annotation.authentication.builders.Au
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
-import org.springframework.security.core.AuthenticationException;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.NoOpPasswordEncoder;
-import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.security.web.authentication.AuthenticationFailureHandler;
-import org.springframework.security.web.authentication.DelegatingAuthenticationFailureHandler;
-import org.springframework.security.web.authentication.ForwardAuthenticationFailureHandler;
-import org.springframework.security.web.authentication.SimpleUrlAuthenticationFailureHandler;
-
-import java.util.LinkedHashMap;
 
 @EnableWebSecurity
 @Configuration
@@ -48,20 +40,13 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                     .antMatchers("/**")
                     .authenticated()
                     .and()
-                .httpBasic();
+                .httpBasic().authenticationEntryPoint(new RestAuthenticationEntryPoint());
     }
 
 
 
 
 
-    @Bean
-    public AuthenticationFailureHandler authenticationFailure(){
-        LinkedHashMap<java.lang.Class<? extends AuthenticationException>,AuthenticationFailureHandler> map
-                = new LinkedHashMap<>();
-        WrongUsernameHandler handler = new WrongUsernameHandler();
-        map.put(UsernameNotFoundException.class,handler);
-        return new DelegatingAuthenticationFailureHandler(map, new DefaultHandler());
-    }
+
 
 }
