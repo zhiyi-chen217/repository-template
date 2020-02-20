@@ -21,7 +21,6 @@ public class UserController {
     @ResponseBody
     public Users getUser() {
         userRepository.save(new Users("admin","","12345") );
-
         return userRepository.findByUserId("admin");
     }
 }
