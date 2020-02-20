@@ -12,7 +12,7 @@ import java.util.Base64;
 public class LoginController {
 
     @GetMapping("login")
-    public String greetings(@RequestHeader(name = "Authentication") Authentication authentication) {
+    public String greetings(Authentication authentication) {
        String userName = authentication.getName();
        return "hello " + userName;
     }

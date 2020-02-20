@@ -62,7 +62,7 @@ public class ServerCommunication {
         String auth = username + ":" + password;
         String encodedAuth = "Basic " + Base64.getEncoder().encodeToString(auth.getBytes());
 
-        HttpRequest request = HttpRequest.newBuilder().GET().uri(URI.create(baseurl)).header("Authentication:", encodedAuth).build();
+        HttpRequest request = HttpRequest.newBuilder().GET().uri(URI.create(baseurl)).header("Authorization", encodedAuth).build();
         HttpResponse<String> response = null;
         try {
             response = client.send(request, HttpResponse.BodyHandlers.ofString());
