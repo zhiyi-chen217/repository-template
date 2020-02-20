@@ -3,7 +3,10 @@ package nl.tudelft.oopp.demo;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import nl.tudelft.oopp.demo.entities.Quote;
+import nl.tudelft.oopp.demo.entities.Users;
 import nl.tudelft.oopp.demo.repositories.QuoteRepository;
+import nl.tudelft.oopp.demo.repositories.UserRepository;
+import org.h2.engine.User;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
@@ -11,16 +14,12 @@ import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 @DataJpaTest
 public class QuoteTest {
     @Autowired
-    private QuoteRepository quoteRepository;
+    private UserRepository userRepository;
 
     @Test
-    public void saveAndRetrieveQuote() {
-        String quoteText = "Tell me and I forget. Teach me and I remember. Involve me and I learn.";
-        String quoteAuthor = "Benjamin Franklin";
-        Quote quote = new Quote(1, quoteText, quoteAuthor);
-        quoteRepository.save(quote);
-
-        Quote quote2 = quoteRepository.getOne((long) 1);
-        assertEquals(quote, quote2);
+    public void retrieveUser() {
+        Users u1 = new Users("admin", "", "12345");
+        userRepository.save(u1);
+        assertEquals(u1, userRepository.findByUserId("admin").get());
     }
 }
