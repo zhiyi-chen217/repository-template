@@ -5,29 +5,29 @@ import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 import java.nio.charset.StandardCharsets;
-import java.util.*;
+import java.util.Base64;
 
 public class ServerCommunication {
 
     private static HttpClient client = HttpClient.newBuilder().build();
 
     //SendLogin method without encoding
-//    public static String sendLogin(String username, String password) {
-//        if (password == null || username == null) return null;
-//        //Parameters user and password are added to the URI
-//        HttpRequest request = HttpRequest.newBuilder().GET().uri(URI.create("http://localhost:8080/login?user=" + username + "?pw=" + password)).build();
-//        HttpResponse<String> response = null;
-//        try {
-//            response = client.send(request, HttpResponse.BodyHandlers.ofString());
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//            return "Communication with server failed";
-//        }
-//        if (response.statusCode() != 200) {
-//            System.out.println("Status: " + response.statusCode());
-//        }
-//        return response.body();
-//    }
+    //    public static String sendLogin(String username, String password) {
+    //        if (password == null || username == null) return null;
+    //        //Parameters user and password are added to the URI
+    //        HttpRequest request = HttpRequest.newBuilder().GET().uri(URI.create("http://localhost:8080/login?user=" + username + "?pw=" + password)).build();
+    //        HttpResponse<String> response = null;
+    //        try {
+    //            response = client.send(request, HttpResponse.BodyHandlers.ofString());
+    //        } catch (Exception e) {
+    //            e.printStackTrace();
+    //            return "Communication with server failed";
+    //        }
+    //        if (response.statusCode() != 200) {
+    //            System.out.println("Status: " + response.statusCode());
+    //        }
+    //        return response.body();
+    //    }
 
 
     //Old getQuote() method
@@ -63,7 +63,8 @@ public class ServerCommunication {
         String auth = username + ":" + password;
         String encodedAuth = "Basic " + Base64.getEncoder().encodeToString(auth.getBytes());
 
-        HttpRequest request = HttpRequest.newBuilder().GET().uri(URI.create(baseurl)).header("Authorization", encodedAuth).build();
+        URI urihttp = URI.create(baseurl);
+        HttpRequest request = HttpRequest.newBuilder().GET().uri(urihttp).header("Authorization", encodedAuth).build();
         HttpResponse<String> response = null;
         try {
             response = client.send(request, HttpResponse.BodyHandlers.ofString());

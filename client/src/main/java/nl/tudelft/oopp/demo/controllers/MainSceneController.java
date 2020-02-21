@@ -1,5 +1,8 @@
 package nl.tudelft.oopp.demo.controllers;
 
+import java.io.IOException;
+import java.net.URL;
+
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -9,13 +12,9 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
-import nl.tudelft.oopp.demo.communication.ServerCommunication;
 import nl.tudelft.oopp.demo.LoginApp;
+import nl.tudelft.oopp.demo.communication.ServerCommunication;
 import nl.tudelft.oopp.demo.views.QuoteDisplay;
-
-import java.io.IOException;
-import java.net.URL;
-
 
 public class MainSceneController {
 
@@ -44,11 +43,11 @@ public class MainSceneController {
         //LoginApp.main(new String[0]);
 
 
-//        Alert alert = new Alert(Alert.AlertType.INFORMATION);
-//        alert.setTitle("Quote for you");
-//        alert.setHeaderText(null);
-//        alert.setContentText(ServerCommunication.getQuote());
-//        alert.showAndWait();
+        //        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        //        alert.setTitle("Quote for you");
+        //        alert.setHeaderText(null);
+        //        alert.setContentText(ServerCommunication.getQuote());
+        //        alert.showAndWait();
     }
 
 }

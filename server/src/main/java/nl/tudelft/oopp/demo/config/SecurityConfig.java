@@ -1,9 +1,11 @@
 package nl.tudelft.oopp.demo.config;
 
-import org.springframework.security.authentication.AuthenticationProvider;
+import java.util.LinkedHashMap;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -18,8 +20,6 @@ import org.springframework.security.web.authentication.DelegatingAuthenticationF
 import org.springframework.security.web.authentication.ForwardAuthenticationFailureHandler;
 import org.springframework.security.web.authentication.SimpleUrlAuthenticationFailureHandler;
 
-import java.util.LinkedHashMap;
-
 @EnableWebSecurity
 @Configuration
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
@@ -27,11 +27,14 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Autowired
     reserveUserDetailsService userDetailsService;
 
+    /**Authentication provider.
+     * @return authentication provider.
+     */
     @Bean
     public AuthenticationProvider daoAuthenticationProvider() {
         DaoAuthenticationProvider provider = new DaoAuthenticationProvider();
         provider.setUserDetailsService(userDetailsService);
-        provider.setHideUserNotFoundExceptions(false) ;
+        provider.setHideUserNotFoundExceptions(false);
         provider.setPasswordEncoder(NoOpPasswordEncoder.getInstance());
         return (AuthenticationProvider) provider;
     }
@@ -54,11 +57,12 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
 
 
-
+    /**Method which is executed upon authentication failure.
+     * @return an authentication failure handler.
+     */
     @Bean
-    public AuthenticationFailureHandler authenticationFailure(){
-        LinkedHashMap<java.lang.Class<? extends AuthenticationException>,AuthenticationFailureHandler> map
-                = new LinkedHashMap<>();
+    public AuthenticationFailureHandler authenticationFailure() {
+        LinkedHashMap<java.lang.Class<? extends AuthenticationException>,AuthenticationFailureHandler> map = new LinkedHashMap<>();
         WrongUsernameHandler handler = new WrongUsernameHandler();
         map.put(UsernameNotFoundException.class,handler);
         return new DelegatingAuthenticationFailureHandler(map, new DefaultHandler());

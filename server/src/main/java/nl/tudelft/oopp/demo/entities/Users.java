@@ -1,7 +1,10 @@
 package nl.tudelft.oopp.demo.entities;
 
-import javax.persistence.*;
 import java.util.Objects;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Table;
 
 @Entity
 @Table(name = "users")
@@ -19,15 +22,20 @@ public class Users {
     @Column(name = "password")
     private String password;
 
-    public Users(String user_id, String e_mail, String password){
+    /**Constructor of the Users class.
+     *
+     */
+    public Users(String user_id, String e_mail, String password) {
         this.userId = user_id;
         this.Email = e_mail;
         this.type = "Student";
         this.password = password;
     }
-    public Users(){}
 
-    public String getUser_id(){
+    public Users() {
+    }
+
+    public String getUser_id() {
         return this.userId;
     }
 
@@ -35,7 +43,7 @@ public class Users {
         this.userId = userId;
     }
 
-    public String getType(){
+    public String getType() {
         return this.type;
     }
 
@@ -43,7 +51,7 @@ public class Users {
         this.type = type;
     }
 
-    public String getE_mail(){
+    public String getE_mail() {
         return this.Email;
     }
 
@@ -57,8 +65,12 @@ public class Users {
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
         Users users = (Users) o;
         return userId.equals(users.userId);
     }
