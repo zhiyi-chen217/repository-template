@@ -16,6 +16,6 @@ public class ServerCommunicationTest {
 
     @Test
     public void testLogIn(){
-        assertEquals("hello admin", ServerCommunication.sendLogin("admin", "12345"));
+        assertEquals("hello admin", ServerCommunication.sendLogin("admin", "12345","http://localhost:8080/login"));
     }
 }
