@@ -1,7 +1,8 @@
 package nl.tudelft.oopp.demo.config;
 
 import java.util.LinkedHashMap;
-
+import nl.tudelft.oopp.demo.controllers.RestAuthenticationEntryPoint;
+import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -12,14 +13,12 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.core.AuthenticationException;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.NoOpPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.AuthenticationFailureHandler;
 import org.springframework.security.web.authentication.DelegatingAuthenticationFailureHandler;
 import org.springframework.security.web.authentication.ForwardAuthenticationFailureHandler;
 import org.springframework.security.web.authentication.SimpleUrlAuthenticationFailureHandler;
-
 @EnableWebSecurity
 @Configuration
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
@@ -27,7 +26,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Autowired
     reserveUserDetailsService userDetailsService;
 
-    /**Authentication provider.
+    /**
+     * Authentication provider.
+     *
      * @return authentication provider.
      */
     @Bean
@@ -48,24 +49,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     public void configure(HttpSecurity httpSecurity) throws Exception {
         httpSecurity
                 .authorizeRequests()
-                    .antMatchers("/**")
-                    .authenticated()
-                    .and()
-                .httpBasic();
+                .antMatchers("/**")
+                .authenticated()
+                .and()
+                .httpBasic().authenticationEntryPoint(new RestAuthenticationEntryPoint());
     }
-
-
-
-
-    /**Method which is executed upon authentication failure.
-     * @return an authentication failure handler.
-     */
-    @Bean
-    public AuthenticationFailureHandler authenticationFailure() {
-        LinkedHashMap<java.lang.Class<? extends AuthenticationException>,AuthenticationFailureHandler> map = new LinkedHashMap<>();
-        WrongUsernameHandler handler = new WrongUsernameHandler();
-        map.put(UsernameNotFoundException.class,handler);
-        return new DelegatingAuthenticationFailureHandler(map, new DefaultHandler());
-    }
-
 }
