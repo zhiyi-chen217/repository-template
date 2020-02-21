@@ -23,18 +23,18 @@ public class LoginSceneController {
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
         alert.setTitle("Submit clicked");
         alert.setHeaderText(null);
-        alert.setContentText(ServerCommunication.sendLogin(username.getText(), password.getText()));
+        alert.setContentText(ServerCommunication.sendLoginUser(username.getText(), password.getText()));
         alert.showAndWait();
     }
 
     /**
-     * This was an attempt to retrieve the admin info via getQuote() of the serverCommunication
+     * Submit the login credentials of an admin when clicked on submit
      */
-    public void adminClicked(){
+    public void adminClicked() {
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
         alert.setTitle("Submit clicked");
         alert.setHeaderText(null);
-        alert.setContentText(ServerCommunication.getQuote());
+        alert.setContentText(ServerCommunication.sendLoginAdmin(username.getText(), password.getText()));
         alert.showAndWait();
     }
 }

@@ -52,13 +52,14 @@ public class ServerCommunication {
     }
 
     /**
-     * Send the username and password under the authentication header to the server
+     * Send the username and password under the authentication header to the server.
      * @param username the username that is inputted
      * @param password the password that the user inputs
+     * @param baseurl the url to where the request is sent
      * @return the string to present in the alert
      */
-    public static String sendLogin(String username, String password){
-        String baseurl = "http://localhost:8080/login";
+
+    public static String sendLogin(String username, String password, String baseurl) {
         String auth = username + ":" + password;
         String encodedAuth = "Basic " + Base64.getEncoder().encodeToString(auth.getBytes());
 
@@ -76,4 +77,26 @@ public class ServerCommunication {
         return response.body();
     }
 
+    /**
+     * Helper function for authentication of a normal user.
+     * @param username the username that is inputted
+     * @param password the password that the user inputs
+     * @return the string to present in the alert
+     */
+
+    public static String sendLoginUser(String username, String password) {
+        return sendLogin(username, password, "http://localhost:8080/login");
+    }
+
+    /**
+     * Helper function for authentication of an admin.
+     * Send the username and password under the authentication header to the server
+     * @param username the username that is inputted
+     * @param password the password that the user inputs
+     * @return the string to present in the alert
+     */
+
+    public static String sendLoginAdmin(String username, String password) {
+        return sendLogin(username, password, "http://localhost:8080/login/admin");
+    }
 }
