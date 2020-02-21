@@ -1,11 +1,10 @@
 package nl.tudelft.oopp.demo.entities;
 
 import javax.persistence.*;
-import java.util.Objects;
 
 @Entity
-@Table(name = "users")
-public class Users {
+@Table(name = "user")
+public class User {
     @Id
     @Column(name = "userId")
     private String userId;
@@ -19,13 +18,13 @@ public class Users {
     @Column(name = "password")
     private String password;
 
-    public Users(String user_id, String e_mail, String password){
+    public User(String user_id, String e_mail, String password){
         this.userId = user_id;
         this.Email = e_mail;
         this.type = "Student";
         this.password = password;
     }
-    public Users(){}
+    public User(){}
 
     public String getUser_id(){
         return this.userId;
@@ -59,8 +58,8 @@ public class Users {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        Users users = (Users) o;
-        return userId.equals(users.userId);
+        User user = (User) o;
+        return userId.equals(user.userId);
     }
 
 }
