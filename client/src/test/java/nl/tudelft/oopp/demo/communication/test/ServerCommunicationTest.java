@@ -10,7 +10,12 @@ import org.junit.jupiter.api.Test;
 public class ServerCommunicationTest {
 
     @Test
+    public void testRandomQuote() {
+        assertNotNull(ServerCommunication.getQuote());
+    }
+
+    @Test
     public void testLogIn(){
-        assertEquals("hello admin", ServerCommunication.sendLogin("admin", "12345","http://localhost:8080/login"));
+        assertNotNull(ServerCommunication.sendLogin("admin", "12345","http://localhost:8080/login"));
     }
 }
