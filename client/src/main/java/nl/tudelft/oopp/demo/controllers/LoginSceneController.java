@@ -31,6 +31,11 @@ public class LoginSceneController {
     }
 
     /**
+     * When this method is called, the scene gets changed to the homepage.
+     */
+
+
+    /**
      * Submit the login credentials of an admin when clicked on submit.
      */
     public void adminClicked() {

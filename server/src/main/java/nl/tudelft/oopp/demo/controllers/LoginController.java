@@ -22,7 +22,7 @@ public class LoginController {
     /**
      * Welcomes an Admin, if the user is one.
      * @return a welcome message.
-     * @throws Exception if user is not an admin.
+     * @throws AccessDeniedException if user is not an admin.
      */
 
     @GetMapping("login/admin")
