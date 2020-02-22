@@ -1,12 +1,22 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.geometry.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<VBox xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="nl.tudelft.oopp.demo.controllers.LoginSceneController">
-    <Label text="Login Please!" />
-    <TextField fx:id="username" promptText="Username" />
-    <PasswordField fx:id="password" promptText="Password" />
-    <Button fx:id="submitbutton" onAction="#submitClicked" text="Submit" />
-    <Button fx:id="adminbutton" mnemonicParsing="false" text="Admin" onAction="#adminClicked"/>
-</VBox>
+<AnchorPane prefHeight="144.0" prefWidth="192.0" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="nl.tudelft.oopp.demo.controllers.LoginSceneController">
+    <VBox layoutX="22.0" layoutY="28.0" AnchorPane.bottomAnchor="21.599999999999994" AnchorPane.leftAnchor="22.0" AnchorPane.rightAnchor="19.599999999999994" AnchorPane.topAnchor="28.0">
+        <Label text="Login Please!">
+         <VBox.margin>
+            <Insets />
+         </VBox.margin></Label>
+        <TextField fx:id="username" promptText="Username" />
+        <PasswordField fx:id="password" onAction="#submitClicked" promptText="Password" />
+      <HBox prefHeight="0.0" prefWidth="150.0">
+         <children>
+              <Button fx:id="submitbutton" onAction="#submitClicked" text="Submit" />
+              <Button fx:id="adminbutton" mnemonicParsing="false" onAction="#adminClicked" text="Admin" />
+         </children>
+      </HBox>
+    </VBox>
+</AnchorPane>

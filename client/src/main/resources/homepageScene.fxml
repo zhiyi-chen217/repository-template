@@ -6,14 +6,14 @@
 
 <AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="nl.tudelft.oopp.demo.controllers.HomepageController">
    <children>
-      <Label layoutX="148.0" layoutY="72.0" text="Welcome to *TITLE*">
+      <Label layoutX="121.0" layoutY="69.0" text="Welcome to *TITLE*" AnchorPane.bottomAnchor="271.8" AnchorPane.leftAnchor="121.0" AnchorPane.rightAnchor="120.60000000000002" AnchorPane.topAnchor="69.0">
          <font>
             <Font size="41.0" />
          </font></Label>
-      <Button layoutX="275.0" layoutY="175.0" mnemonicParsing="false" text="Button" />
-      <Button layoutX="275.0" layoutY="225.0" mnemonicParsing="false" text="Button" />
-      <Button layoutX="275.0" layoutY="275.0" mnemonicParsing="false" text="Button" />
-      <Button layoutX="275.0" layoutY="325.0" mnemonicParsing="false" text="Button" />
+      <Button layoutX="275.0" layoutY="175.0" mnemonicParsing="false" text="Button" AnchorPane.bottomAnchor="199.4" AnchorPane.leftAnchor="275.0" AnchorPane.rightAnchor="273.0" AnchorPane.topAnchor="175.0" />
+      <Button layoutX="275.0" layoutY="225.0" mnemonicParsing="false" text="Button" AnchorPane.leftAnchor="275.0" AnchorPane.rightAnchor="273.0" />
+      <Button layoutX="275.0" layoutY="275.0" mnemonicParsing="false" text="Button" AnchorPane.leftAnchor="275.0" AnchorPane.rightAnchor="273.0" />
+      <Button layoutX="275.0" layoutY="325.0" mnemonicParsing="false" text="Button" AnchorPane.leftAnchor="275.0" />
       <Button layoutX="27.0" layoutY="338.0" mnemonicParsing="false" text="Logout" />
    </children>
 </AnchorPane>
