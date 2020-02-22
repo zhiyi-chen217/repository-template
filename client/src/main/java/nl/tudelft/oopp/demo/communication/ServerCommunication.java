@@ -10,46 +10,7 @@ import java.util.Base64;
 public class ServerCommunication {
 
     private static HttpClient client = HttpClient.newBuilder().build();
-
-    //SendLogin method without encoding
-    //    public static String sendLogin(String username, String password) {
-    //        if (password == null || username == null) return null;
-    //        //Parameters user and password are added to the URI
-    //        HttpRequest request = HttpRequest.newBuilder().GET().uri(URI.create("http://localhost:8080/login?user=" + username + "?pw=" + password)).build();
-    //        HttpResponse<String> response = null;
-    //        try {
-    //            response = client.send(request, HttpResponse.BodyHandlers.ofString());
-    //        } catch (Exception e) {
-    //            e.printStackTrace();
-    //            return "Communication with server failed";
-    //        }
-    //        if (response.statusCode() != 200) {
-    //            System.out.println("Status: " + response.statusCode());
-    //        }
-    //        return response.body();
-    //    }
-
-
-    //Old getQuote() method
-    /**
-     * Retrieves a quote from the server.
-     * @return the body of a get request to the server.
-     * @throws Exception if communication with the server fails.
-     */
-    public static String getQuote() {
-        HttpRequest request = HttpRequest.newBuilder().GET().uri(URI.create("http://localhost:8080/admin")).build();
-        HttpResponse<String> response = null;
-        try {
-            response = client.send(request, HttpResponse.BodyHandlers.ofString());
-        } catch (Exception e) {
-            e.printStackTrace();
-            return "Communication with server failed";
-        }
-        if (response.statusCode() != 200) {
-            System.out.println("Status: " + response.statusCode());
-        }
-        return response.body();
-    }
+    private static String pubAuth;
 
     /**
      * Send the username and password under the authentication header to the server.
@@ -63,8 +24,10 @@ public class ServerCommunication {
         String auth = username + ":" + password;
         String encodedAuth = "Basic " + Base64.getEncoder().encodeToString(auth.getBytes());
 
+        pubAuth = encodedAuth;
         URI urihttp = URI.create(baseurl);
-        HttpRequest request = HttpRequest.newBuilder().GET().uri(urihttp).header("Authorization", encodedAuth).build();
+        HttpRequest request = HttpRequest.newBuilder().GET().uri(urihttp)
+                .header("Authorization", encodedAuth).build();
         HttpResponse<String> response = null;
         try {
             response = client.send(request, HttpResponse.BodyHandlers.ofString());
@@ -99,5 +62,9 @@ public class ServerCommunication {
 
     public static String sendLoginAdmin(String username, String password) {
         return sendLogin(username, password, "http://localhost:8080/login/admin");
+    }
+
+    public static String getPubAuth() {
+        return pubAuth;
     }
 }

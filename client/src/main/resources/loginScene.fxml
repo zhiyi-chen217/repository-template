@@ -8,5 +8,5 @@
     <TextField fx:id="username" promptText="Username" />
     <PasswordField fx:id="password" promptText="Password" />
     <Button fx:id="submitbutton" onAction="#submitClicked" text="Submit" />
-   <Button fx:id="adminbutton" mnemonicParsing="false" text="Admin" onAction="#adminClicked"/>
+    <Button fx:id="adminbutton" mnemonicParsing="false" text="Admin" onAction="#adminClicked"/>
 </VBox>

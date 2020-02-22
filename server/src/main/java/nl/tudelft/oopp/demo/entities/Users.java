@@ -14,7 +14,7 @@ public class Users {
     private String userId;
 
     @Column(name = "email")
-    private String Email;
+    private String email;
 
     @Column(name = "type")
     private String type;
@@ -25,9 +25,9 @@ public class Users {
     /**Constructor of the Users class.
      *
      */
-    public Users(String user_id, String e_mail, String password) {
-        this.userId = user_id;
-        this.Email = e_mail;
+    public Users(String userId, String email, String password) {
+        this.userId = userId;
+        this.email = email;
         this.type = "Student";
         this.password = password;
     }
@@ -52,11 +52,11 @@ public class Users {
     }
 
     public String getE_mail() {
-        return this.Email;
+        return this.email;
     }
 
     public void setEmail(String email) {
-        Email = email;
+        email = email;
     }
 
     public String getPassword() {
