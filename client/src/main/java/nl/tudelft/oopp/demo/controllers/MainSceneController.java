@@ -13,9 +13,6 @@ import javafx.stage.Stage;
 
 public class MainSceneController {
 
-
-    @FXML private Button button;
-
     /**
      * Handles clicking the button.
      */

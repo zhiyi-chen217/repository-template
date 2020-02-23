@@ -30,7 +30,7 @@ public class LoginSceneController {
 
         //WIP: probably need to add a better form of authorization here.
         if (authentication.contains(usertxt)) {
-            changeScene(event);
+            changeScene(event, usertxt);
         } else {
             Alert alert = new Alert(Alert.AlertType.INFORMATION);
             alert.setTitle("Submit clicked");
@@ -45,9 +45,14 @@ public class LoginSceneController {
      * @param event the event that triggers this method
      *
      */
-    public void changeScene(ActionEvent event) throws IOException {
-        Parent homePageParent = FXMLLoader.load(getClass().getResource("/homepageScene.fxml"));
+    public void changeScene(ActionEvent event, String usertxt) throws IOException {
+        FXMLLoader loader = new FXMLLoader();
+        loader.setLocation(getClass().getResource("/homepageScene.fxml"));
+        Parent homePageParent = loader.load();
         Scene homePageScene = new Scene(homePageParent);
+
+        HomepageController controller = loader.getController();
+        controller.setWelcomeMessage(usertxt);
 
         //Get current stage
         Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
