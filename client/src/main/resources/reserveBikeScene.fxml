@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="nl.tudelft.oopp.demo.controllers.reserveBikeController">
+    <children>
+        <Label layoutX="81.0" layoutY="22.0" text="Reserve a bike">
+            <font>
+                <Font size="15.0" />
+            </font>
+        </Label>
+        <Label layoutX="29.0" layoutY="-8.0" text="Available:" AnchorPane.bottomAnchor="252.8" AnchorPane.leftAnchor="29.0" AnchorPane.rightAnchor="120.0" AnchorPane.topAnchor="-8.0">
+            <font>
+                <Font size="15.0" />
+            </font></Label>
+        <Label layoutX="405.0" layoutY="-8.0" text="Return place:" AnchorPane.bottomAnchor="252.8" AnchorPane.leftAnchor="405.0" AnchorPane.rightAnchor="44.0" AnchorPane.topAnchor="-8.0">
+            <font>
+                <Font size="15.0" />
+            </font></Label>
+        <Button layoutX="263.0" layoutY="157.0" mnemonicParsing="false" text="Back" AnchorPane.bottomAnchor="356.8" AnchorPane.leftAnchor="20.0" />
+        <ComboBox layoutX="379.0" layoutY="90.0" prefWidth="150.0" promptText="Choose a building" />
+        <Button layoutX="379.0" layoutY="294.0" mnemonicParsing="false" prefHeight="33.0" prefWidth="85.0" text="Reserve">
+         <font>
+            <Font size="15.0" />
+         </font></Button>
+        <ListView layoutX="29.0" layoutY="90.0" prefHeight="238.0" prefWidth="200.0" />
+    </children>
+</AnchorPane>
