@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="nl.tudelft.oopp.demo.controllers.HomepageController">
+    <children>
+        <Label layoutX="27.0" layoutY="14.0" text="My reservations:" AnchorPane.bottomAnchor="270.8" AnchorPane.leftAnchor="27.0" AnchorPane.rightAnchor="122.0" AnchorPane.topAnchor="14.0">
+            <font>
+                <Font size="15.0" />
+            </font></Label>
+        <Label layoutX="27.0" layoutY="14.0" text="Calendar view:" AnchorPane.bottomAnchor="270.8" AnchorPane.leftAnchor="307.0" AnchorPane.rightAnchor="122.0" AnchorPane.topAnchor="14.0">
+            <font>
+                <Font size="15.0" />
+            </font></Label>
+        <Button layoutX="263.0" layoutY="157.0" mnemonicParsing="false" text="Back" AnchorPane.bottomAnchor="356.8" AnchorPane.leftAnchor="20.0" />
+      <ListView layoutX="27.0" layoutY="100.0" prefHeight="200.0" prefWidth="200.0" />
+      <TableView layoutX="307.0" layoutY="100.0" prefHeight="200.0" prefWidth="245.0">
+        <columns>
+          <TableColumn prefWidth="35.0" text="Mon" />
+          <TableColumn prefWidth="35.0" text="Tue" />
+          <TableColumn prefWidth="35.0" text="Wed" />
+          <TableColumn prefWidth="35.0" text="Thu" />
+          <TableColumn prefWidth="35.0" text="Fri" />
+          <TableColumn prefWidth="35.0" text="Sat" />
+          <TableColumn prefWidth="35.0" text="Sun" />
+        </columns>
+      </TableView>
+    </children>
+</AnchorPane>
