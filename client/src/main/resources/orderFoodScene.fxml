@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="nl.tudelft.oopp.demo.controllers.orderFoodController">
+    <children>
+        <Button layoutX="263.0" layoutY="157.0" mnemonicParsing="false" text="Back" AnchorPane.bottomAnchor="356.8" AnchorPane.leftAnchor="20.0" />
+      <Label layoutX="81.0" layoutY="22.0" text="Order food">
+         <font>
+            <Font size="15.0" />
+         </font>
+      </Label>
+      <Label layoutX="298.0" layoutY="178.0" text="or">
+         <font>
+            <Font size="15.0" />
+         </font>
+      </Label>
+      <Button layoutX="262.0" layoutY="236.0" mnemonicParsing="false" prefHeight="31.0" prefWidth="85.0" text="Delivery" textOverrun="CLIP" wrapText="true">
+         <font>
+            <Font size="15.0" />
+         </font>
+      </Button>
+      <Button layoutX="262.0" layoutY="110.0" mnemonicParsing="false" prefHeight="31.0" prefWidth="85.0" text="Pick up" textOverrun="CLIP" wrapText="true">
+         <font>
+            <Font size="15.0" />
+         </font>
+      </Button>
+    </children>
+</AnchorPane>
