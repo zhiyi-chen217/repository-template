@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="nl.tudelft.oopp.demo.controllers.reserveARoomController">
+    <children>
+        <Label layoutX="27.0" layoutY="14.0" text="Reserve a room:" AnchorPane.bottomAnchor="270.8" AnchorPane.leftAnchor="27.0" AnchorPane.rightAnchor="122.0" AnchorPane.topAnchor="14.0">
+            <font>
+                <Font size="15.0" />
+            </font></Label>
+        <Button layoutX="263.0" layoutY="157.0" mnemonicParsing="false" text="Back" AnchorPane.bottomAnchor="356.8" AnchorPane.leftAnchor="20.0" />
+      <CheckBox layoutX="441.0" layoutY="63.0" mnemonicParsing="false" text="TV?" />
+      <ComboBox layoutX="225.0" layoutY="59.0" prefWidth="150.0" promptText="Choose a building" />
+      <CheckBox layoutX="441.0" layoutY="84.0" mnemonicParsing="false" text="Whiteboard?" />
+      <Label layoutX="441.0" layoutY="121.0" text="Capacity:" />
+      <Spinner editable="true" layoutX="441.0" layoutY="145.0" prefHeight="25.0" prefWidth="126.0" />
+      <Button layoutX="264.0" layoutY="327.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="71.0" text="Search" />
+    </children>
+</AnchorPane>
