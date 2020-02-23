@@ -6,14 +6,18 @@
 
 <AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="nl.tudelft.oopp.demo.controllers.HomepageController">
    <children>
+      <Label layoutX="27.0" layoutY="14.0" text="Your NetID" AnchorPane.bottomAnchor="326.8" AnchorPane.leftAnchor="27.0" AnchorPane.rightAnchor="122.0" AnchorPane.topAnchor="14.0">
+         <font>
+            <Font size="15.0" />
+         </font></Label>
       <Label layoutX="121.0" layoutY="69.0" text="Welcome to *TITLE*" AnchorPane.bottomAnchor="271.8" AnchorPane.leftAnchor="121.0" AnchorPane.rightAnchor="120.60000000000002" AnchorPane.topAnchor="69.0">
          <font>
             <Font size="41.0" />
          </font></Label>
-      <Button layoutX="275.0" layoutY="175.0" mnemonicParsing="false" text="Button" AnchorPane.bottomAnchor="199.4" AnchorPane.leftAnchor="275.0" AnchorPane.rightAnchor="273.0" AnchorPane.topAnchor="175.0" />
-      <Button layoutX="275.0" layoutY="225.0" mnemonicParsing="false" text="Button" AnchorPane.leftAnchor="275.0" AnchorPane.rightAnchor="273.0" />
-      <Button layoutX="275.0" layoutY="275.0" mnemonicParsing="false" text="Button" AnchorPane.leftAnchor="275.0" AnchorPane.rightAnchor="273.0" />
-      <Button layoutX="275.0" layoutY="325.0" mnemonicParsing="false" text="Button" AnchorPane.leftAnchor="275.0" />
+      <Button layoutX="263.0" layoutY="157.0" mnemonicParsing="false" text="My reservations" AnchorPane.bottomAnchor="217.8" AnchorPane.leftAnchor="263.0" />
+      <Button layoutX="263.0" layoutY="197.0" mnemonicParsing="false" text="Reserve a room" AnchorPane.leftAnchor="263.0" />
+      <Button layoutX="266.0" layoutY="237.0" mnemonicParsing="false" text="Reserve a bike" AnchorPane.leftAnchor="266.0" />
+      <Button layoutX="274.0" layoutY="277.0" mnemonicParsing="false" text="Order food" AnchorPane.leftAnchor="274.0" />
       <Button layoutX="27.0" layoutY="338.0" mnemonicParsing="false" text="Logout" />
    </children>
 </AnchorPane>
