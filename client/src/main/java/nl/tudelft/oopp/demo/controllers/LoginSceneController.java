@@ -24,20 +24,19 @@ public class LoginSceneController {
      *
      */
     public void submitClicked(ActionEvent event) throws IOException {
-        Alert alert = new Alert(Alert.AlertType.INFORMATION);
-        alert.setTitle("Submit clicked");
-        alert.setHeaderText(null);
-
         String usertxt = username.getText();
         String pwtxt = password.getText();
         String authentication = ServerCommunication.sendLoginUser(usertxt, pwtxt);
 
-        alert.setContentText(authentication);
-        alert.show();
-
         //WIP: probably need to add a better form of authorization here.
         if (authentication.contains(usertxt)) {
             changeScene(event);
+        } else {
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setTitle("Submit clicked");
+            alert.setHeaderText(null);
+            alert.setContentText(authentication);
+            alert.show();
         }
     }
 
