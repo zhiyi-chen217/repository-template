@@ -30,15 +30,15 @@ public class FoodOrder {
     public FoodOrder() {
     }
 
-    /**
-     *
-     * @param restaurant
-     * @param user
-     * @param totalPrice
-     * @param deliverMethod
-     * @param location
+    /**Constructor of a food order.
+     * @param restaurant is the restaurant the order is placed at
+     * @param user is the user who has placed the order
+     * @param totalPrice is the total price of the order
+     * @param deliverMethod is the method of delivery
+     * @param location is the location the user is at
      */
-    public FoodOrder(Restaurant restaurant, User user, double totalPrice, String deliverMethod, String location) {
+    public FoodOrder(Restaurant restaurant, User user, double totalPrice,
+                     String deliverMethod, String location) {
         this.restaurant = restaurant;
         this.user = user;
         this.totalPrice = totalPrice;

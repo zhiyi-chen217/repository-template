@@ -38,16 +38,16 @@ public class Room {
     public Room() {
     }
 
-    /**
-     *
-     * @param roomId
-     * @param name
-     * @param capacity
-     * @param whiteboard
-     * @param tv
-     * @param building
+    /**Constructor of a room.
+     * @param roomId is the unique id of a room
+     * @param name is the name of the room
+     * @param capacity is the capacity of the room
+     * @param whiteboard is whether the room contains a whiteboard
+     * @param tv is whether the room contains the tv
+     * @param building is the building the room is located in
      */
-    public Room(String roomId, String name, int capacity, boolean whiteboard, boolean tv, Building building) {
+    public Room(String roomId, String name, int capacity, boolean whiteboard,
+                            boolean tv, Building building) {
         this.roomId = roomId;
         this.name = name;
         this.capacity = capacity;

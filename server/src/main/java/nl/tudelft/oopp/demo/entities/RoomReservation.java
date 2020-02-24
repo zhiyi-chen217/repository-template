@@ -9,8 +9,8 @@ import java.util.Objects;
 public class RoomReservation {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "Id")
-    private Long Id;
+    @Column(name = "id")
+    private Long id;
 
     @ManyToOne
     @JoinColumn(name = "user")
@@ -29,7 +29,13 @@ public class RoomReservation {
     public RoomReservation() {
     }
 
-    public RoomReservation(User user, Timestamp beginTime, int numberOfSlots, Room room){
+    /**Constructor of a room reservation.
+     * @param user is the user who has placed a reservation
+     * @param beginTime is the time the reservation starts
+     * @param numberOfSlots is the amount of consecutive slots of a certain fixed length
+     * @param room is the room which is reserved
+     */
+    public RoomReservation(User user, Timestamp beginTime, int numberOfSlots, Room room) {
         this.user = user;
         this.beginTime = beginTime;
         this.numberOfSlots = numberOfSlots;
@@ -78,8 +84,12 @@ public class RoomReservation {
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
         RoomReservation that = (RoomReservation) o;
         return that.getId().equals(Id);
     }

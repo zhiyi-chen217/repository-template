@@ -21,12 +21,18 @@ public class User {
     @Column(name = "password")
     private String password;
 
+    /**Constructor of the User class.
+     * @param userId is the id of the user
+     * @param email is the email address of the user
+     * @param password is the password of the user
+     */
     public User(String userId, String email, String password) {
         this.userId = userId;
         this.email = email;
         this.type = "Student";
         this.password = password;
     }
+
     public User() {
     }
 
@@ -60,8 +66,12 @@ public class User {
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
         User user = (User) o;
         return userId.equals(user.userId);
     }
