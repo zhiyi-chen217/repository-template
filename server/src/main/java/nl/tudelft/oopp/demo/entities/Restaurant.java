@@ -12,8 +12,10 @@ public class Restaurant {
     private String name;
 
     @ManyToOne
-    @JoinColumn
+    @JoinColumn(name = "ofBuilding")
     private Building ofBuilding;
+
+
 
     public Restaurant() {
     }

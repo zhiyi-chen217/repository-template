@@ -11,18 +11,18 @@ public class BikeReservation {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "Id")
-    private String Id;
+    private Long Id;
 
-    @OneToOne
-    @JoinColumn
+    @ManyToOne
+    @JoinColumn(name = "user")
     private User user;
 
-    @OneToOne
-    @JoinColumn
+    @ManyToOne
+    @JoinColumn(name = "rentBuilding")
     private Building rentBuilding;
 
-    @OneToOne
-    @JoinColumn
+    @ManyToOne
+    @JoinColumn(name = "returnBuilding")
     private Building returnBuilding;
 
     @Column(name = "beginTime")
@@ -43,11 +43,11 @@ public class BikeReservation {
 
     }
 
-    public String getId() {
+    public Long getId() {
         return Id;
     }
 
-    public void setId(String id) {
+    public void setId(Long id) {
         Id = id;
     }
 

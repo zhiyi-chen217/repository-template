@@ -11,12 +11,14 @@ public class FoodOrder {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "Id")
-    private String Id;
+    private Long Id;
 
-    @JoinColumn
+    @ManyToOne
+    @JoinColumn(name = "restaurant")
     private Restaurant restaurant;
 
-    @JoinColumn
+    @ManyToOne
+    @JoinColumn(name = "user")
     private User user;
 
     @Column(name = "totalPrice")
@@ -39,11 +41,11 @@ public class FoodOrder {
         this.location = location;
     }
 
-    public String getId() {
+    public Long getId() {
         return Id;
     }
 
-    public void setId(String id) {
+    public void setId(Long id) {
         Id = id;
     }
 
