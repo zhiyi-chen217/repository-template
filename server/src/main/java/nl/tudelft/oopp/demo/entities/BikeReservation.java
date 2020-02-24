@@ -33,15 +33,16 @@ public class BikeReservation {
     public BikeReservation() {
     }
 
-    /**
+    /**Constructor for a bike reservation.
      *
-     * @param user
-     * @param rentBuilding
-     * @param returnBuilding
-     * @param beginTime
-     * @param numberOfSlots
+     * @param user The user which makes the reservation.
+     * @param rentBuilding the building from which the bike will be rented.
+     * @param returnBuilding the building the bike will be returned.
+     * @param beginTime the time the bike will be picked up
+     * @param numberOfSlots the amount of time slots the bike is rented.
      */
-    public BikeReservation(User user, Building rentBuilding, Building returnBuilding, Timestamp beginTime, int numberOfSlots) {
+    public BikeReservation(User user, Building rentBuilding,
+                           Building returnBuilding, Timestamp beginTime, int numberOfSlots) {
         this.user = user;
         this.returnBuilding = returnBuilding;
         this.rentBuilding = rentBuilding;

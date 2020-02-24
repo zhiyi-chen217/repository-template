@@ -29,15 +29,16 @@ public class Building {
     public Building() {
     }
 
-    /**
+    /**Constructor for the building class.
      *
-     * @param name
-     * @param location
-     * @param openingHour
-     * @param closingHour
-     * @param bikes
+     * @param name The name of the building
+     * @param location the location of the building
+     * @param openingHour the hour at which the building opens
+     * @param closingHour the hour at which the building closes
+     * @param bikes the amount of bikes at the building
      */
-    public Building(String name, String location, double openingHour, double closingHour, int bikes) {
+    public Building(String name, String location, double openingHour,
+                    double closingHour, int bikes) {
         this.name = name;
         this.location = location;
         this.openingHour = openingHour;
