@@ -1,4 +1,4 @@
 package nl.tudelft.oopp.demo.controllers;
 
-public class foodShopController {
+public class ReserveBikeController {
 }
