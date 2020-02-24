@@ -9,12 +9,12 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 
-public class QuoteDisplay extends Application {
+public class LoginDisplay extends Application {
 
     @Override
     public void start(Stage primaryStage) throws IOException {
         FXMLLoader loader = new FXMLLoader();
-        URL xmlUrl = getClass().getResource("/mainScene.fxml");
+        URL xmlUrl = getClass().getResource("/loginScene.fxml");
         loader.setLocation(xmlUrl);
         Parent root = loader.load();
 
