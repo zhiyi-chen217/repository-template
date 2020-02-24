@@ -1,9 +1,6 @@
 package nl.tudelft.oopp.demo.entities;
 
 import javax.persistence.*;
-import javax.swing.*;
-import java.sql.PreparedStatement;
-import java.util.Objects;
 
 @Entity
 @Table(name = "FoodOrder")
@@ -11,7 +8,7 @@ public class FoodOrder {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "Id")
-    private Long Id;
+    private Long id;
 
     @ManyToOne
     @JoinColumn(name = "restaurant")
@@ -33,7 +30,15 @@ public class FoodOrder {
     public FoodOrder() {
     }
 
-    public FoodOrder(Restaurant restaurant, User user, double totalPrice, String deliverMethod, String location){
+    /**
+     *
+     * @param restaurant
+     * @param user
+     * @param totalPrice
+     * @param deliverMethod
+     * @param location
+     */
+    public FoodOrder(Restaurant restaurant, User user, double totalPrice, String deliverMethod, String location) {
         this.restaurant = restaurant;
         this.user = user;
         this.totalPrice = totalPrice;
@@ -42,11 +47,11 @@ public class FoodOrder {
     }
 
     public Long getId() {
-        return Id;
+        return id;
     }
 
     public void setId(Long id) {
-        Id = id;
+        this.id = id;
     }
 
     public Restaurant getRestaurant() {
@@ -91,10 +96,14 @@ public class FoodOrder {
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
         FoodOrder foodOrder = (FoodOrder) o;
-        return foodOrder.getId().equals(Id);
+        return foodOrder.getId().equals(id);
     }
 
 

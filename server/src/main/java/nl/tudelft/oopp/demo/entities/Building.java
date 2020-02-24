@@ -1,9 +1,6 @@
 package nl.tudelft.oopp.demo.entities;
 
 import javax.persistence.*;
-import java.lang.reflect.Array;
-import java.util.*;
-
 
 @Entity
 @Table(name = "building")
@@ -32,7 +29,15 @@ public class Building {
     public Building() {
     }
 
-    public Building(String name, String location, double openingHour, double closingHour, int bikes){
+    /**
+     *
+     * @param name
+     * @param location
+     * @param openingHour
+     * @param closingHour
+     * @param bikes
+     */
+    public Building(String name, String location, double openingHour, double closingHour, int bikes) {
         this.name = name;
         this.location = location;
         this.openingHour = openingHour;
@@ -92,8 +97,12 @@ public class Building {
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
         Building building = (Building) o;
         return this.name.equals(building.name);
     }

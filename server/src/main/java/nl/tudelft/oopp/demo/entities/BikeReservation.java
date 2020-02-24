@@ -1,8 +1,7 @@
 package nl.tudelft.oopp.demo.entities;
 
-import javax.persistence.*;
 import java.sql.Timestamp;
-import java.util.Objects;
+import javax.persistence.*;
 
 
 @Entity
@@ -11,7 +10,7 @@ public class BikeReservation {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "Id")
-    private Long Id;
+    private Long id;
 
     @ManyToOne
     @JoinColumn(name = "user")
@@ -34,7 +33,15 @@ public class BikeReservation {
     public BikeReservation() {
     }
 
-    public BikeReservation(User user, Building rentBuilding, Building returnBuilding, Timestamp beginTime, int numberOfSlots){
+    /**
+     *
+     * @param user
+     * @param rentBuilding
+     * @param returnBuilding
+     * @param beginTime
+     * @param numberOfSlots
+     */
+    public BikeReservation(User user, Building rentBuilding, Building returnBuilding, Timestamp beginTime, int numberOfSlots) {
         this.user = user;
         this.returnBuilding = returnBuilding;
         this.rentBuilding = rentBuilding;
@@ -44,11 +51,11 @@ public class BikeReservation {
     }
 
     public Long getId() {
-        return Id;
+        return id;
     }
 
     public void setId(Long id) {
-        Id = id;
+        this.id = id;
     }
 
     public User getUser() {
@@ -93,10 +100,14 @@ public class BikeReservation {
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
         BikeReservation that = (BikeReservation) o;
-        return that.getId().equals(Id);
+        return that.getId().equals(id);
     }
 
 }

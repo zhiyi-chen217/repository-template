@@ -1,7 +1,6 @@
 package nl.tudelft.oopp.demo.entities;
 
 import javax.persistence.*;
-import java.util.Objects;
 
 
 @Entity
@@ -36,9 +35,19 @@ public class Room {
     @Column(name = "tv")
     private boolean tv;
 
-    public Room() { }
+    public Room() {
+    }
 
-    public Room(String roomId, String name, int capacity, boolean whiteboard, boolean tv, Building building){
+    /**
+     *
+     * @param roomId
+     * @param name
+     * @param capacity
+     * @param whiteboard
+     * @param tv
+     * @param building
+     */
+    public Room(String roomId, String name, int capacity, boolean whiteboard, boolean tv, Building building) {
         this.roomId = roomId;
         this.name = name;
         this.capacity = capacity;
@@ -124,8 +133,12 @@ public class Room {
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
         Room room = (Room) o;
         return roomId.equals(room.roomId);
 

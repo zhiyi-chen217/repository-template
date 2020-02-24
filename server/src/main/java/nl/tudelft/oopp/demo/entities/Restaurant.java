@@ -1,7 +1,8 @@
 package nl.tudelft.oopp.demo.entities;
 
-import javax.persistence.*;
 import java.util.Objects;
+import javax.persistence.*;
+
 
 @Entity
 @Table(name = "restaurant")
@@ -20,7 +21,7 @@ public class Restaurant {
     public Restaurant() {
     }
 
-    public Restaurant(String name, Building ofBuilding){
+    public Restaurant(String name, Building ofBuilding) {
         this.name = name;
         this.ofBuilding = ofBuilding;
     }
@@ -43,8 +44,12 @@ public class Restaurant {
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
         Restaurant that = (Restaurant) o;
         return Objects.equals(name, that.name);
     }
