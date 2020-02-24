@@ -43,11 +43,11 @@ public class RoomReservation {
     }
 
     public Long getId() {
-        return Id;
+        return id;
     }
 
     public void setId(Long id) {
-        Id = id;
+        id = id;
     }
 
     public User getUser() {
@@ -91,7 +91,7 @@ public class RoomReservation {
             return false;
         }
         RoomReservation that = (RoomReservation) o;
-        return that.getId().equals(Id);
+        return that.getId().equals(id);
     }
 
 
