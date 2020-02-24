@@ -36,15 +36,15 @@ public class SignUpController {
     public void signUp(ActionEvent event) {
         failtext.setText("");
         String netidstr = netid.getText();
-        String emailstr1 = email1.getText();
-        String emailstr2 = email2.getText();
-        String passstr1 = pass1.getText();
-        String passstr2 = pass2.getText();
 
         if (netidstr.length() == 0) {
             failtext.setText("Please insert a valid netid.");
             return;
         }
+
+        String emailstr1 = email1.getText();
+        String emailstr2 = email2.getText();
+
         if (emailstr1.length() == 0) {
             failtext.setText("Please insert a valid email address.");
             return;
@@ -53,6 +53,10 @@ public class SignUpController {
             failtext.setText("Please make sure the two email addresses are the same..");
             return;
         }
+
+        String passstr1 = pass1.getText();
+        String passstr2 = pass2.getText();
+
         if (passstr1.length() == 0) {
             failtext.setText("Please insert a valid password.");
             return;
