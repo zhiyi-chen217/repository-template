@@ -13,11 +13,9 @@ public class FoodOrder {
     @Column(name = "Id")
     private String Id;
 
-    @OneToOne
     @JoinColumn
     private Restaurant restaurant;
 
-    @OneToOne
     @JoinColumn
     private User user;
 

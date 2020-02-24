@@ -5,60 +5,29 @@ import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 import java.nio.charset.StandardCharsets;
-import java.util.*;
+import java.util.Base64;
 
 public class ServerCommunication {
 
     private static HttpClient client = HttpClient.newBuilder().build();
+    private static String pubAuth;
 
-    //SendLogin method without encoding
-//    public static String sendLogin(String username, String password) {
-//        if (password == null || username == null) return null;
-//        //Parameters user and password are added to the URI
-//        HttpRequest request = HttpRequest.newBuilder().GET().uri(URI.create("http://localhost:8080/login?user=" + username + "?pw=" + password)).build();
-//        HttpResponse<String> response = null;
-//        try {
-//            response = client.send(request, HttpResponse.BodyHandlers.ofString());
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//            return "Communication with server failed";
-//        }
-//        if (response.statusCode() != 200) {
-//            System.out.println("Status: " + response.statusCode());
-//        }
-//        return response.body();
-//    }
-
-
-    //Old getQuote() method
     /**
-     * Retrieves a quote from the server.
-     * @return the body of a get request to the server.
-     * @throws Exception if communication with the server fails.
+     * Send the username and password under the authentication header to the server.
+     * @param username the username that is inputted
+     * @param password the password that the user inputs
+     * @param baseurl the url to where the request is sent
+     * @return the string to present in the alert
      */
-    public static String getQuote() {
-        HttpRequest request = HttpRequest.newBuilder().GET().uri(URI.create("http://localhost:8080/quote")).build();
-        HttpResponse<String> response = null;
-        try {
-            response = client.send(request, HttpResponse.BodyHandlers.ofString());
-        } catch (Exception e) {
-            e.printStackTrace();
-            return "Communication with server failed";
-        }
-        if (response.statusCode() != 200) {
-            System.out.println("Status: " + response.statusCode());
-        }
-        return response.body();
-    }
 
-
-    public static String sendLogin(String username, String password){
-        String baseurl = "http://localhost:8080/login?";
+    public static String sendLogin(String username, String password, String baseurl) {
         String auth = username + ":" + password;
-        Base64.Encoder encoder = Base64.getEncoder();
-        String encodedAuth = encoder.encodeToString(auth.getBytes());
-        baseurl += "user=" + username +"&"+ "auth=" + encodedAuth;
-        HttpRequest request = HttpRequest.newBuilder().GET().uri(URI.create(baseurl)).build();
+        String encodedAuth = "Basic " + Base64.getEncoder().encodeToString(auth.getBytes());
+
+        pubAuth = encodedAuth;
+        URI urihttp = URI.create(baseurl);
+        HttpRequest request = HttpRequest.newBuilder().GET().uri(urihttp)
+                .header("Authorization", encodedAuth).build();
         HttpResponse<String> response = null;
         try {
             response = client.send(request, HttpResponse.BodyHandlers.ofString());
@@ -72,4 +41,30 @@ public class ServerCommunication {
         return response.body();
     }
 
+    /**
+     * Helper function for authentication of a normal user.
+     * @param username the username that is inputted
+     * @param password the password that the user inputs
+     * @return the string to present in the alert
+     */
+
+    public static String sendLoginUser(String username, String password) {
+        return sendLogin(username, password, "http://localhost:8080/login");
+    }
+
+    /**
+     * Helper function for authentication of an admin.
+     * Send the username and password under the authentication header to the server
+     * @param username the username that is inputted
+     * @param password the password that the user inputs
+     * @return the string to present in the alert
+     */
+
+    public static String sendLoginAdmin(String username, String password) {
+        return sendLogin(username, password, "http://localhost:8080/login/admin");
+    }
+
+    public static String getPubAuth() {
+        return pubAuth;
+    }
 }

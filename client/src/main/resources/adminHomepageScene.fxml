@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="nl.tudelft.oopp.demo.controllers.AdminHomepageController">
+    <children>
+        <Label layoutX="27.0" layoutY="14.0" text="Your NetID" AnchorPane.bottomAnchor="326.8" AnchorPane.leftAnchor="27.0" AnchorPane.rightAnchor="122.0" AnchorPane.topAnchor="14.0">
+            <font>
+                <Font size="15.0" />
+            </font></Label>
+        <Label layoutX="121.0" layoutY="69.0" text="Welcome to *TITLE*" AnchorPane.bottomAnchor="271.8" AnchorPane.leftAnchor="121.0" AnchorPane.rightAnchor="120.60000000000002" AnchorPane.topAnchor="69.0">
+            <font>
+                <Font size="41.0" />
+            </font></Label>
+        <Button layoutX="239.0" layoutY="157.0" mnemonicParsing="false" text="Add/Delete rooms" AnchorPane.bottomAnchor="217.8" AnchorPane.leftAnchor="239.0" />
+        <Button layoutX="242.0" layoutY="197.0" mnemonicParsing="false" text="Add/Delete bikes" AnchorPane.leftAnchor="242.0" />
+        <Button layoutX="231.0" layoutY="237.0" mnemonicParsing="false" text="Edit food shop menus" AnchorPane.leftAnchor="231.0" />
+        <Button layoutX="27.0" layoutY="338.0" mnemonicParsing="false" text="Logout" />
+    </children>
+</AnchorPane>

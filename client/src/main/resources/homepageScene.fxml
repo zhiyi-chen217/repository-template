@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="nl.tudelft.oopp.demo.controllers.HomepageController">
+   <children>
+      <Label layoutX="27.0" layoutY="14.0" text="Your NetID" AnchorPane.bottomAnchor="326.8" AnchorPane.leftAnchor="27.0" AnchorPane.rightAnchor="122.0" AnchorPane.topAnchor="14.0">
+         <font>
+            <Font size="15.0" />
+         </font></Label>
+      <Label layoutX="121.0" layoutY="69.0" text="Welcome to *TITLE*" AnchorPane.bottomAnchor="271.8" AnchorPane.leftAnchor="121.0" AnchorPane.rightAnchor="120.60000000000002" AnchorPane.topAnchor="69.0">
+         <font>
+            <Font size="41.0" />
+         </font></Label>
+      <Button layoutX="263.0" layoutY="157.0" mnemonicParsing="false" text="My reservations" AnchorPane.bottomAnchor="217.8" AnchorPane.leftAnchor="263.0" />
+      <Button layoutX="263.0" layoutY="197.0" mnemonicParsing="false" text="Reserve a room" AnchorPane.leftAnchor="263.0" />
+      <Button layoutX="266.0" layoutY="237.0" mnemonicParsing="false" text="Reserve a bike" AnchorPane.leftAnchor="266.0" />
+      <Button layoutX="274.0" layoutY="277.0" mnemonicParsing="false" text="Order food" AnchorPane.leftAnchor="274.0" />
+      <Button layoutX="27.0" layoutY="338.0" mnemonicParsing="false" text="Logout" />
+      <Label fx:id="welcomeLabel" layoutX="14.0" layoutY="14.0" prefHeight="18.0" prefWidth="192.0" style="-fx-font-style: italic;" text="Welcome *user*" AnchorPane.bottomAnchor="368.0" AnchorPane.leftAnchor="14.0" AnchorPane.rightAnchor="394.0" AnchorPane.topAnchor="14.0">
+          <font>
+              <Font size="13.0" />
+          </font></Label>
+   </children>
+</AnchorPane>
