@@ -1,20 +1,18 @@
 package nl.tudelft.oopp.demo.controllers;
 
 import java.nio.file.AccessDeniedException;
-import java.util.Base64;
-
-import org.springframework.beans.factory.annotation.Autowired;
+import java.sql.SQLException;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 public class LoginController {
 
+
     @GetMapping("login")
-    public String greetings(Authentication authentication) {
+    public String greetings(Authentication authentication) throws SQLException {
         String userName = authentication.getName();
         return "hello " + userName;
     }
