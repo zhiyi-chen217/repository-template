@@ -16,4 +16,6 @@ public class LoginController {
        String userName = authentication.getName();
        return "hello " + userName;
     }
+
+
 }
