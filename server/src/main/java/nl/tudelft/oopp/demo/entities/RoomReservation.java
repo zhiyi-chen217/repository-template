@@ -47,7 +47,7 @@ public class RoomReservation {
     }
 
     public void setId(Long id) {
-        id = id;
+        this.id = id;
     }
 
     public User getUser() {
