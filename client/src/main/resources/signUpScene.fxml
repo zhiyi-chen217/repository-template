@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="nl.tudelft.oopp.demo.controllers.SignUpController">
+   <children>
+      <TextField fx:id="netid" layoutX="226.0" layoutY="83.0" />
+      <TextField fx:id="email1" layoutX="226.0" layoutY="121.0" />
+      <TextField fx:id="email2" layoutX="226.0" layoutY="159.0" />
+      <PasswordField fx:id="pass1" layoutX="226.0" layoutY="200.0" />
+      <PasswordField fx:id="pass2" layoutX="226.0" layoutY="244.0" />
+      <Label layoutX="224.0" layoutY="26.0" text="Sign up here:">
+         <font>
+            <Font size="26.0" />
+         </font>
+      </Label>
+      <Label layoutX="59.0" layoutY="87.0" text="Enter your NetID:" />
+      <Label layoutX="59.0" layoutY="125.0" text="Enter your e-mail adress:" />
+      <Label layoutX="59.0" layoutY="163.0" text="Enter your e-mail adress again:" />
+      <Label layoutX="59.0" layoutY="204.0" text="Enter your password:" />
+      <Label layoutX="59.0" layoutY="248.0" text="Enter your password again:" />
+      <Button layoutX="273.0" layoutY="319.0" mnemonicParsing="false" onAction="#signUp" text="Submit" />
+      <Label fx:id="failtext" layoutX="286.0" layoutY="369.0" />
+   </children>
+</AnchorPane>
