@@ -11,3 +11,4 @@ public class HomepageController {
         welcomeLabel.setText("Welcome " + message);
     }
 }
+

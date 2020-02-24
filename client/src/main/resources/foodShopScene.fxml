@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="nl.tudelft.oopp.demo.controllers.FoodShopController">
+    <children>
+        <Label layoutX="404.0" layoutY="-15.0" text="Select food:" AnchorPane.bottomAnchor="299.8" AnchorPane.leftAnchor="404.0" AnchorPane.rightAnchor="45.0" AnchorPane.topAnchor="-15.0">
+            <font>
+                <Font size="15.0" />
+            </font></Label>
+        <Button layoutX="263.0" layoutY="157.0" mnemonicParsing="false" text="Back" AnchorPane.bottomAnchor="356.8" AnchorPane.leftAnchor="20.0" />
+        <ComboBox layoutX="20.0" layoutY="59.0" prefWidth="150.0" promptText="Choose a building" />
+        <Button layoutX="264.0" layoutY="343.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="71.0" text="Buy" />
+      <ComboBox layoutX="20.0" layoutY="187.0" prefWidth="150.0" promptText="Choose a shop" />
+      <ListView layoutX="347.0" layoutY="59.0" prefHeight="200.0" prefWidth="200.0" />
+    </children>
+</AnchorPane>
