@@ -2,6 +2,7 @@ package nl.tudelft.oopp.demo.controllers;
 
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.http.ResponseEntity;
+import org.springframework.orm.jpa.JpaObjectRetrievalFailureException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 
@@ -18,5 +19,10 @@ public class ExceptionController {
     @ExceptionHandler(value = {EmptyResultDataAccessException.class})
     public ResponseEntity invalidEntityName() {
         return ResponseEntity.badRequest().body("invalid Entity required");
+    }
+
+    @ExceptionHandler(value = {JpaObjectRetrievalFailureException.class})
+    public ResponseEntity entityNotFound(JpaObjectRetrievalFailureException e){
+        return ResponseEntity.badRequest().body(e.getMessage());
     }
 }
