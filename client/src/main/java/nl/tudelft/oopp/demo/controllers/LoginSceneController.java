@@ -41,9 +41,9 @@ public class LoginSceneController {
             alert.setHeaderText(null);
             alert.setContentText("Please fill out all the fields");
             alert.show();
-        } else if (authentication.contains("admin")) {
+        } else if (authentication.equals("hello admin")) { // we should change this
             changeScene(event, usertxt, "/adminHomepageScene.fxml");
-        } else if (authentication.contains(usertxt)) {
+        } else if (authentication.equals("hello " + usertxt)) { // this too
             changeScene(event, usertxt, "/homepageScene.fxml");
         } else {
             Alert alert = new Alert(Alert.AlertType.INFORMATION);
