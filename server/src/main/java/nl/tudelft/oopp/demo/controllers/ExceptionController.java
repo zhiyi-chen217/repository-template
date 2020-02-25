@@ -29,7 +29,8 @@ public class ExceptionController {
      * @param e the thrown exception
      * @return a badRequest ResponseEntity
      */
-    @ExceptionHandler(value = {JpaObjectRetrievalFailureException.class, RedundantentityException.class})
+    @ExceptionHandler(value = {JpaObjectRetrievalFailureException.class,
+            RedundantentityException.class})
     public ResponseEntity entityNotFound(JpaObjectRetrievalFailureException e) {
         return ResponseEntity.badRequest().body(e.getMessage());
     }

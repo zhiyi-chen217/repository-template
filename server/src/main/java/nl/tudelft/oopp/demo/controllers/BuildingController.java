@@ -27,7 +27,8 @@ public class BuildingController {
      * @return
      */
     @PostMapping("admin/buildings")
-    public String newBuilding(@RequestBody Building building, HttpServletResponse httpResponse) throws RedundantentityException {
+    public String newBuilding(@RequestBody Building building,
+                              HttpServletResponse httpResponse) throws RedundantentityException {
         Optional<Building> buildingOptional =  buildingRepository.findByName(building.getName());
         if (buildingOptional.isPresent()) {
             throw new RedundantentityException("The building already exists");

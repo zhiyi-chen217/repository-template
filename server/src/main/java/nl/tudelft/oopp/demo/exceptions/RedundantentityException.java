@@ -6,5 +6,6 @@ public class RedundantentityException extends Exception {
         super(s);
     }
 
-    public RedundantentityException() {}
+    public RedundantentityException() {
+    }
 }

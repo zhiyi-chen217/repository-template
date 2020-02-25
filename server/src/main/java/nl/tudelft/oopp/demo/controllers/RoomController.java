@@ -32,8 +32,8 @@ public class RoomController {
      * @throws InvalidforeginkeyException the referenced building is not found
      */
     @PostMapping("admin/room")
-    public ResponseEntity createRoom(@RequestBody Room room) throws InvalidforeginkeyException
-            , RedundantentityException {
+    public ResponseEntity createRoom(@RequestBody Room room) throws InvalidforeginkeyException,
+            RedundantentityException {
         Optional<Room> temp = roomRepository.findById(room.getRoomId());
         if (temp.isPresent()) {
             throw new RedundantentityException("The room already exists");
