@@ -3,11 +3,13 @@ package nl.tudelft.oopp.demo.controllers;
 import nl.tudelft.oopp.demo.entities.Building;
 import nl.tudelft.oopp.demo.repositories.BuildingRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletResponse;
+import java.util.LinkedList;
+import java.util.List;
 import java.util.Optional;
 
 /**
@@ -35,5 +37,57 @@ public class BuildingController {
         httpResponse.setStatus(201);
         buildingRepository.save(building);
         return "Saved successfully";
+    }
+
+    /**
+     * This method receive a Building object to be updated and tries to update it.
+     * @param building the new information for the about to be updated building
+     * @param httpResponse the HttpResponse for this operation
+     * @return an HttpResponse indicating the status of the operation
+     */
+    @PutMapping("admin/buildings")
+    public String updateBuilding(@RequestBody Building building, HttpServletResponse httpResponse) {
+        Optional<Building> buildingOptional =  buildingRepository.findByName(building.getName());
+        if (buildingOptional.isEmpty()) {
+            httpResponse.setStatus(400);
+            return "building does not exist";
+        }
+        httpResponse.setStatus(201);
+        buildingRepository.save(building);
+        return "Updated successfully";
+    }
+
+    /**
+     * This method retrieves all building entities if not specific building specified,
+     * or return that specific if it is present.
+     * @param name the name of the required building
+     * @param httpResponse the generated httpResponse
+     * @return an HttpResponse indicating the status of the operation
+     */
+    @GetMapping("buildings")
+    public ResponseEntity readBuilding(@RequestParam Optional<String> name,
+                                       HttpServletResponse httpResponse) {
+        if (name.isEmpty()) {
+            return ResponseEntity.accepted().body(buildingRepository.findAll());
+        }
+
+        Optional<Building> building = buildingRepository.findByName(name.get());
+        if (building.isPresent()) {
+            return ResponseEntity.accepted().body(building);
+        }
+        return ResponseEntity.badRequest().body("The building does not exist");
+    }
+
+    /**
+     * This method tries to delete the provided building.
+     * @param names a list of names of the specified building
+     * @return an HttpResponse indicating the status of the operation
+     */
+    @DeleteMapping("admin/buildings")
+    public ResponseEntity deleteBuilding(@RequestParam List<String> names) {
+        for (String name: names) {
+            buildingRepository.deleteById(name);
+        }
+        return ResponseEntity.accepted().body("all deleted");
     }
 }
