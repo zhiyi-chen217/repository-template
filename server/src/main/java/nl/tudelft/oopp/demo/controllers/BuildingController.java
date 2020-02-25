@@ -1,14 +1,13 @@
 package nl.tudelft.oopp.demo.controllers;
 
 import nl.tudelft.oopp.demo.entities.Building;
+import nl.tudelft.oopp.demo.exceptions.RedundantentityException;
 import nl.tudelft.oopp.demo.repositories.BuildingRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletResponse;
-import java.util.LinkedList;
 import java.util.List;
 import java.util.Optional;
 
@@ -28,11 +27,10 @@ public class BuildingController {
      * @return
      */
     @PostMapping("admin/buildings")
-    public String newBuilding(@RequestBody Building building, HttpServletResponse httpResponse) {
+    public String newBuilding(@RequestBody Building building, HttpServletResponse httpResponse) throws RedundantentityException {
         Optional<Building> buildingOptional =  buildingRepository.findByName(building.getName());
         if (buildingOptional.isPresent()) {
-            httpResponse.setStatus(400);
-            return "building already exists";
+            throw new RedundantentityException("The building already exists");
         }
         httpResponse.setStatus(201);
         buildingRepository.save(building);

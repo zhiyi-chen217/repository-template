@@ -9,4 +9,5 @@ public class InvalidforeginkeyException extends Exception {
         super(s);
     }
 
+    public InvalidforeginkeyException() {}
 }

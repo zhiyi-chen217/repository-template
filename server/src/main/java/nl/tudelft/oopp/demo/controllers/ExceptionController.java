@@ -1,5 +1,6 @@
 package nl.tudelft.oopp.demo.controllers;
 
+import nl.tudelft.oopp.demo.exceptions.RedundantentityException;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.http.ResponseEntity;
 import org.springframework.orm.jpa.JpaObjectRetrievalFailureException;
@@ -23,11 +24,12 @@ public class ExceptionController {
 
     /**
      * This ExceptionHandler returns a badRequest ResponseEntity,
-     * when trying to retrieve non-existing entities(e.g. invalid foreign key).
+     * when trying to retrieve non-existing entities(e.g. invalid foreign key),
+     * when trying to add redundant entities.
      * @param e the thrown exception
      * @return a badRequest ResponseEntity
      */
-    @ExceptionHandler(value = {JpaObjectRetrievalFailureException.class})
+    @ExceptionHandler(value = {JpaObjectRetrievalFailureException.class, RedundantentityException.class})
     public ResponseEntity entityNotFound(JpaObjectRetrievalFailureException e) {
         return ResponseEntity.badRequest().body(e.getMessage());
     }

@@ -2,6 +2,7 @@ package nl.tudelft.oopp.demo.controllers;
 
 import nl.tudelft.oopp.demo.entities.Room;
 import nl.tudelft.oopp.demo.exceptions.InvalidforeginkeyException;
+import nl.tudelft.oopp.demo.exceptions.RedundantentityException;
 import nl.tudelft.oopp.demo.repositories.BuildingRepository;
 import nl.tudelft.oopp.demo.repositories.RoomRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,10 +32,11 @@ public class RoomController {
      * @throws InvalidforeginkeyException the referenced building is not found
      */
     @PostMapping("admin/room")
-    public ResponseEntity createRoom(@RequestBody Room room) throws InvalidforeginkeyException {
+    public ResponseEntity createRoom(@RequestBody Room room) throws InvalidforeginkeyException
+            , RedundantentityException {
         Optional<Room> temp = roomRepository.findById(room.getRoomId());
         if (temp.isPresent()) {
-            return ResponseEntity.badRequest().body("The room already exists");
+            throw new RedundantentityException("The room already exists");
         }
         roomRepository.save(room);
         return  ResponseEntity.accepted().body("saved successfully");

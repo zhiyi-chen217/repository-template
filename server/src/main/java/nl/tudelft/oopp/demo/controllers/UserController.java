@@ -1,28 +1,41 @@
 package nl.tudelft.oopp.demo.controllers;
 
-import java.util.Optional;
-import nl.tudelft.oopp.demo.entities.User;
-import nl.tudelft.oopp.demo.repositories.UserRepository;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
+import java.nio.file.AccessDeniedException;
+import java.sql.SQLException;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.RestController;
+
+@RestController
+public class LoginController {
 
 
-@Controller
-public class UserController {
-
-    @Autowired
-    private UserRepository userRepository;
+    @GetMapping("login")
+    public String greetings(Authentication authentication) throws SQLException {
+        String userName = authentication.getName();
+        return "hello " + userName;
+    }
 
     /**
-     * get the admin user account.
-     * @return admin user
+     * Welcomes an Admin, if the user is one.
+     * @return a welcome message.
+     * @throws AccessDeniedException if user is not an admin.
      */
-    @GetMapping("quote")
-    @ResponseBody
-    public Optional<User> getUser() {
-        userRepository.save(new User("admin","","12345"));
-        return userRepository.findByUserId("admin");
+
+    @GetMapping("login/admin")
+    public String greetingsAdmin(Authentication authentication) throws AccessDeniedException {
+        String userName = authentication.getName();
+        try {
+            if (!authentication.getAuthorities().contains(new SimpleGrantedAuthority("Admin"))) {
+                throw new AccessDeniedException("You are not an admin");
+            }
+        } catch (AccessDeniedException e) {
+            e.printStackTrace();
+            return e.getMessage();
+        }
+        return "hello Admin " + userName;
     }
+
+
 }
