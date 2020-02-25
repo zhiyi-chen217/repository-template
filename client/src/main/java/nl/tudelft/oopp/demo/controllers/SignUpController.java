@@ -88,20 +88,9 @@ public class SignUpController {
         }
 
         ServerCommunication.sendSignUp(netidstr, emailstr1, passstr1);
-        
-        try {
-            Parent signupPageParent = FXMLLoader.load(getClass().getResource("/loginScene.fxml"));
-            Scene signupPageScene = new Scene(signupPageParent);
-            Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-            stage.setScene(signupPageScene);
-            stage.setTitle("TU Delft Campus Reservation System - Create an account");
-            stage.getIcons().add(new Image("https://simchavos.com/tu.png"));
-            stage.show();
-        } catch (IOException e) {
-            Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setContentText("An error occurred, please try again.");
-        }
 
-
+        //Put confirmation alert here (from response)
+        Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        stage.close();
     }
 }

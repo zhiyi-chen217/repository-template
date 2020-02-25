@@ -13,6 +13,7 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.stage.Stage;
+import javafx.stage.Window;
 import nl.tudelft.oopp.demo.communication.ServerCommunication;
 
 public class LoginSceneController {
@@ -20,6 +21,8 @@ public class LoginSceneController {
     private TextField username;
     @FXML
     private TextField password;
+
+    private Stage mainStage;
 
     /**
      * Submit the login credentials when clicked on submit.
@@ -67,10 +70,13 @@ public class LoginSceneController {
 
         //Get current stage
         Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-        stage.setScene(homePageScene);
+        stage.close();
+        mainStage.setScene(homePageScene);
         stage.getIcons().add(new Image("https://simchavos.com/tu.png"));
+    }
 
-        stage.show();
+    public void setMainStage(Stage stage) {
+        this.mainStage = stage;
     }
 
     /**
