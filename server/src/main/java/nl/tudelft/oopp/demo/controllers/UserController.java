@@ -16,6 +16,9 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
+/**
+ * This class contains rest endpoints supporting CRUD operations for user entity.
+ */
 @RestController
 public class UserController {
 
@@ -49,13 +52,18 @@ public class UserController {
         return "hello Admin " + userName;
     }
 
+    /**
+     * This method is the rest endpoint for sign up procedure.
+     * @param user the user to be registered
+     * @return the generated http response
+     * @throws RedundantentityException thrown when the user already exists
+     */
     @PostMapping("signup")
     public ResponseEntity signUpUser(@RequestBody User user) throws RedundantentityException {
         Optional<User> temp = userRepository.findById(user.getUser_id());
-        if(temp.isPresent()){
+        if (temp.isPresent()) {
             throw new RedundantentityException("The user already exists");
         }
-
         user.setType("Student");
         userRepository.save(user);
         return ResponseEntity.accepted().body("saved successfully");
