@@ -7,7 +7,7 @@ import org.springframework.context.annotation.Configuration;
 
 /**
  * This class is for setting up the MySQL database and use Connection pooling
- * to reduce the effort of continuously creating and closing connections
+ * to reduce the effort of continuously creating and closing connections.
  */
 @Configuration
 public class MysqlConfig {
@@ -15,6 +15,10 @@ public class MysqlConfig {
     private static HikariConfig config = new HikariConfig();
 
 
+    /**
+     * This method creates the datasource.
+     * @return
+     */
     @Bean(destroyMethod = "close")
     public HikariDataSource dataSource() {
         HikariDataSource dataSource = new HikariDataSource();
