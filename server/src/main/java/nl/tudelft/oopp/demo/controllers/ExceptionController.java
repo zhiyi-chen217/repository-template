@@ -21,8 +21,14 @@ public class ExceptionController {
         return ResponseEntity.badRequest().body("invalid Entity required");
     }
 
+    /**
+     * This ExceptionHandler returns a badRequest ResponseEntity,
+     * when trying to retrieve non-existing entities(e.g. invalid foreign key).
+     * @param e the thrown exception
+     * @return a badRequest ResponseEntity
+     */
     @ExceptionHandler(value = {JpaObjectRetrievalFailureException.class})
-    public ResponseEntity entityNotFound(JpaObjectRetrievalFailureException e){
+    public ResponseEntity entityNotFound(JpaObjectRetrievalFailureException e) {
         return ResponseEntity.badRequest().body(e.getMessage());
     }
 }

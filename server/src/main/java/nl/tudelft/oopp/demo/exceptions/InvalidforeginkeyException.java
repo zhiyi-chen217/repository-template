@@ -1,8 +1,11 @@
 package nl.tudelft.oopp.demo.exceptions;
 
-public class InvalidforeginkeyException extends Exception{
+/**
+ * This is an costumed exception class for handling violating foreign key constraints.
+ */
+public class InvalidforeginkeyException extends Exception {
 
-    public InvalidforeginkeyException(String s){
+    public InvalidforeginkeyException(String s) {
         super(s);
     }
 
