@@ -10,10 +10,12 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
+import javafx.scene.image.Image;
 import javafx.stage.Stage;
 import nl.tudelft.oopp.demo.communication.ServerCommunication;
 
 import java.io.IOException;
+import java.util.regex.Pattern;
 
 
 public class SignUpController {
@@ -38,7 +40,11 @@ public class SignUpController {
         String netidstr = netid.getText();
 
         if (netidstr.length() == 0) {
-            failtext.setText("Please insert a valid netid.");
+            failtext.setText("Please insert a valid NetID.");
+            return;
+        }
+        if (!netidstr.matches("[a-zA-Z0-9]+")) {
+            failtext.setText("Please insert a valid NetID.");
             return;
         }
 
@@ -46,11 +52,22 @@ public class SignUpController {
         String emailstr2 = email2.getText();
 
         if (emailstr1.length() == 0) {
-            failtext.setText("Please insert a valid email address.");
+            failtext.setText("Please enter a valid email address.");
             return;
         }
         if (!emailstr1.equals(emailstr2)) {
-            failtext.setText("Please make sure the two email addresses are the same..");
+            failtext.setText("Please make sure the two email addresses are the same.");
+            return;
+        }
+
+        String emailRegex = "^[a-zA-Z0-9_+&*-]+(?:\\."+
+                "[a-zA-Z0-9_+&*-]+)*@" +
+                "(?:[a-zA-Z0-9-]+\\.)+[a-z" +
+                "A-Z]{2,7}$";
+        Pattern pat = Pattern.compile(emailRegex);
+
+        if (!pat.matcher(emailstr1).matches()) {
+            failtext.setText("Please enter a valid email address.");
             return;
         }
 
@@ -65,6 +82,10 @@ public class SignUpController {
             failtext.setText("Please make sure the two passwords match.");
             return;
         }
+        if (passstr1.length() < 8) {
+            failtext.setText("Password needs to be 8 characters or longer.");
+            return;
+        }
 
         ServerCommunication.sendSignUp(netidstr, emailstr1, passstr1);
         
@@ -73,6 +94,8 @@ public class SignUpController {
             Scene signupPageScene = new Scene(signupPageParent);
             Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
             stage.setScene(signupPageScene);
+            stage.setTitle("TU Delft Campus Reservation System - Create an account");
+            stage.getIcons().add(new Image("https://simchavos.com/tu.png"));
             stage.show();
         } catch (IOException e) {
             Alert alert = new Alert(Alert.AlertType.ERROR);
