@@ -1,6 +1,8 @@
 package nl.tudelft.oopp.demo.controllers;
 
 import java.io.IOException;
+
+import com.sun.javafx.image.impl.General;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -36,8 +38,10 @@ public class LoginSceneController {
             alert.setHeaderText(null);
             alert.setContentText("Please fill out all the fields");
             alert.show();
+        } else if (authentication.contains("admin")) {
+            changeScene(event, usertxt, "/adminHomepageScene.fxml");
         } else if (authentication.contains(usertxt)) {
-            changeScene(event, usertxt);
+            changeScene(event, usertxt, "/homepageScene.fxml");
         } else {
             Alert alert = new Alert(Alert.AlertType.INFORMATION);
             alert.setTitle("Submit clicked");
@@ -52,13 +56,13 @@ public class LoginSceneController {
      * @param event the event that triggers this method
      *
      */
-    public void changeScene(ActionEvent event, String usertxt) throws IOException {
+    public void changeScene(ActionEvent event, String usertxt, String path) throws IOException {
         FXMLLoader loader = new FXMLLoader();
-        loader.setLocation(getClass().getResource("/homepageScene.fxml"));
+        loader.setLocation(getClass().getResource(path));
         Parent homePageParent = loader.load();
         Scene homePageScene = new Scene(homePageParent);
 
-        HomepageController controller = loader.getController();
+        GeneralHomepageController controller = loader.getController();
         controller.setWelcomeMessage(usertxt);
 
         //Get current stage
