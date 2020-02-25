@@ -22,4 +22,7 @@
    <cursor>
       <Cursor fx:constant="DEFAULT" />
    </cursor>
+    <stylesheets>
+        <URL value="@stylesheets/sheetMainScene.css" />
+    </stylesheets>
 </AnchorPane>
