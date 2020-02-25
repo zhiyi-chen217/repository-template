@@ -2,13 +2,25 @@ package nl.tudelft.oopp.demo.controllers;
 
 import java.nio.file.AccessDeniedException;
 import java.sql.SQLException;
+import java.util.Optional;
+
+import nl.tudelft.oopp.demo.entities.User;
+import nl.tudelft.oopp.demo.exceptions.RedundantentityException;
+import nl.tudelft.oopp.demo.repositories.UserRepository;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 public class UserController {
+
+    @Autowired
+    private UserRepository userRepository;
 
 
     @GetMapping("login")
@@ -37,5 +49,15 @@ public class UserController {
         return "hello Admin " + userName;
     }
 
+    @PostMapping("signup")
+    public ResponseEntity signUpUser(@RequestBody User user) throws RedundantentityException {
+        Optional<User> temp = userRepository.findById(user.getUser_id());
+        if(temp.isPresent()){
+            throw new RedundantentityException("The user already exists");
+        }
 
+        user.setType("Student");
+        userRepository.save(user);
+        return ResponseEntity.accepted().body("saved successfully");
+    }
 }
