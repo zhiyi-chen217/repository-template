@@ -30,7 +30,13 @@ public class LoginSceneController {
         String authentication = ServerCommunication.sendLoginUser(usertxt, pwtxt);
 
         //WIP: probably need to add a better form of authorization here.
-        if (authentication.contains(usertxt)) {
+        if (usertxt.length() == 0 || pwtxt.length() == 0) {
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setTitle("Error");
+            alert.setHeaderText(null);
+            alert.setContentText("Please fill out all the fields");
+            alert.show();
+        } else if (authentication.contains(usertxt)) {
             changeScene(event, usertxt);
         } else {
             Alert alert = new Alert(Alert.AlertType.INFORMATION);
