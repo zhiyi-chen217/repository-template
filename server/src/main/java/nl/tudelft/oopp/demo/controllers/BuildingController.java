@@ -75,7 +75,7 @@ public class BuildingController {
         if (building.isPresent()) {
             return ResponseEntity.accepted().body(building);
         }
-        return ResponseEntity.badRequest().body("The building does not exist");
+        return ResponseEntity.badRequest().body("The entity does not exist");
     }
 
     /**
