@@ -25,7 +25,7 @@ public class BuildingController {
      * @param httpResponse - the http response
      * @return
      */
-    @PostMapping("buildings")
+    @PostMapping("admin/buildings")
     public String newBuilding(@RequestBody Building building, HttpServletResponse httpResponse) {
         Optional<Building> buildingOptional =  buildingRepository.findByName(building.getName());
         if (buildingOptional.isPresent()) {
