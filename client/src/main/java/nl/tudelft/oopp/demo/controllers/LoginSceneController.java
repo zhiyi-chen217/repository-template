@@ -9,6 +9,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.TextField;
+import javafx.scene.image.Image;
 import javafx.stage.Stage;
 import nl.tudelft.oopp.demo.communication.ServerCommunication;
 
@@ -57,6 +58,8 @@ public class LoginSceneController {
         //Get current stage
         Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         stage.setScene(homePageScene);
+        stage.getIcons().add(new Image("https://simchavos.com/tu.png"));
+
         stage.show();
     }
 

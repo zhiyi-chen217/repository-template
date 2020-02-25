@@ -7,6 +7,7 @@ import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.image.Image;
 import javafx.stage.Stage;
 
 public class MainDisplay extends Application {
@@ -19,6 +20,8 @@ public class MainDisplay extends Application {
         Parent root = loader.load();
 
         primaryStage.setScene(new Scene(root));
+        primaryStage.setTitle("TU Delft Campus Reservation System - Reserve rooms, bikes and food");
+        primaryStage.getIcons().add(new Image("https://simchavos.com/tu.png"));
         primaryStage.show();
     }
 

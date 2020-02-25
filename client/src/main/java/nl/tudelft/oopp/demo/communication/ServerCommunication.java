@@ -41,6 +41,10 @@ public class ServerCommunication {
         return response.body();
     }
 
+    public static String sendSignUp(String netid, String email, String password) {
+        return null;
+    }
+
     /**
      * Helper function for authentication of a normal user.
      * @param username the username that is inputted
@@ -66,5 +70,9 @@ public class ServerCommunication {
 
     public static String getPubAuth() {
         return pubAuth;
+    }
+
+    public static void resetPubAuth() {
+        pubAuth = null;
     }
 }
