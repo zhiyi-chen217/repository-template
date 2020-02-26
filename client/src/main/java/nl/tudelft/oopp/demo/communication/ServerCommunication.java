@@ -41,7 +41,7 @@ public class ServerCommunication {
         return response;
     }
 
-    public static String sendSignUp(String netid, String email, String password) {
+    public static HttpResponse<String> sendSignUp(String netid, String email, String password) {
         return null;
     }
 

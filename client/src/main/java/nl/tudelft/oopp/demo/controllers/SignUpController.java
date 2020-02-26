@@ -15,6 +15,7 @@ import javafx.stage.Stage;
 import nl.tudelft.oopp.demo.communication.ServerCommunication;
 
 import java.io.IOException;
+import java.net.http.HttpResponse;
 import java.util.regex.Pattern;
 
 
@@ -77,9 +78,19 @@ public class SignUpController {
             return;
         }
 
-        ServerCommunication.sendSignUp(netidstr, emailstr1, passstr1);
+        HttpResponse<String> response = ServerCommunication.sendSignUp(netidstr, emailstr1, passstr1);
 
-        //Put confirmation alert here (from response)
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        if (response.statusCode() == 200) {
+            alert.setTitle("Signup successful");
+            alert.setContentText(response.body());
+        } else {
+            alert.setTitle("Signup unsuccessful");
+            alert.setContentText("This username already exists");
+        }
+        alert.setHeaderText(null);
+        alert.showAndWait();
+
         Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         stage.close();
     }
