@@ -6,7 +6,9 @@ import nl.tudelft.oopp.demo.exceptions.RedundantentityException;
 import nl.tudelft.oopp.demo.repositories.BuildingRepository;
 import nl.tudelft.oopp.demo.repositories.RoomRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.http.ResponseEntity;
+import org.springframework.orm.jpa.JpaObjectRetrievalFailureException;
 import org.springframework.web.bind.annotation.*;
 
 import javax.persistence.EntityNotFoundException;
@@ -35,12 +37,17 @@ public class RoomController {
     @PostMapping("admin/room")
     public ResponseEntity createRoom(@RequestBody Room room) throws InvalidforeginkeyException,
             RedundantentityException {
-        Optional<Room> temp = roomRepository.findById(room.getRoomId());
-        if (temp.isPresent()) {
-            throw new RedundantentityException("The room already exists");
+        try {
+            Optional<Room> temp = roomRepository.findById(room.getRoomId());
+            if (temp.isPresent()) {
+                throw new RedundantentityException("The room already exists");
+            }
+            roomRepository.save(room);
+            return ResponseEntity.accepted().body("saved successfully");
         }
-        roomRepository.save(room);
-        return  ResponseEntity.accepted().body("saved successfully");
+        catch (JpaObjectRetrievalFailureException e){
+            throw new InvalidforeginkeyException("The referenced building does not exist.");
+        }
     }
 
 
@@ -87,13 +94,14 @@ public class RoomController {
      */
     @DeleteMapping("admin/room")
     public ResponseEntity deleteRoom(@RequestParam List<String> roomIds){
-        for(String roomId:roomIds){
-            roomRepository.deleteById(roomId);
+        try {
+            for (String roomId : roomIds) {
+                roomRepository.deleteById(roomId);
+            }
+            return ResponseEntity.accepted().body("All deleted!");
         }
-        return ResponseEntity.accepted().body("All deleted!");
+        catch (EmptyResultDataAccessException e){
+            throw new EmptyResultDataAccessException("Cannot delete non-existing room",1);
+        }
     }
-
-
-
-
 }
