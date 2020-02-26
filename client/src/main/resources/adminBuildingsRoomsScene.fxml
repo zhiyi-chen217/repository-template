@@ -12,12 +12,12 @@
             </font></Label>
         <Button layoutX="263.0" layoutY="157.0" mnemonicParsing="false" onAction="#changeSceneHomepage" text="Back" AnchorPane.bottomAnchor="356.8" AnchorPane.leftAnchor="20.0" />
         <ComboBox layoutX="20.0" layoutY="59.0" prefWidth="150.0" promptText="Choose a building" />
-      <ListView layoutX="284.0" layoutY="59.0" prefHeight="252.0" prefWidth="200.0" />
-      <Button layoutX="20.0" layoutY="319.0" mnemonicParsing="false" onAction="#stageAddBuilding" text="Add building" />
-      <Button layoutX="495.0" layoutY="59.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="83.0" text="Delete room" />
-      <Button layoutX="284.0" layoutY="319.0" mnemonicParsing="false" text="Delete building" />
-      <Button layoutX="116.0" layoutY="319.0" mnemonicParsing="false" onAction="#stageAddRoom" text="Add room" />
-      <Button layoutX="503.0" layoutY="94.0" mnemonicParsing="false" onAction="#stageEditRoom" text="Edit room" />
-      <Button layoutX="186.0" layoutY="59.0" mnemonicParsing="false" onAction="#stageEditBuilding" text="Edit building" />
+      <ListView fx:id="roomListView" layoutX="284.0" layoutY="59.0" prefHeight="252.0" prefWidth="200.0" />
+      <Button fx:id="addBuildingButton" layoutX="20.0" layoutY="319.0" mnemonicParsing="false" onAction="#stageAddBuilding" text="Add building" />
+      <Button fx:id="deleteRoomButton" layoutX="495.0" layoutY="59.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="83.0" text="Delete room" />
+      <Button fx:id="deleteBuildingButton" layoutX="284.0" layoutY="319.0" mnemonicParsing="false" text="Delete building" />
+      <Button fx:id="addRoomButton" layoutX="116.0" layoutY="319.0" mnemonicParsing="false" onAction="#stageAddRoom" text="Add room" />
+      <Button fx:id="editRoomButton" layoutX="503.0" layoutY="94.0" mnemonicParsing="false" onAction="#stageEditRoom" text="Edit room" />
+      <Button fx:id="editBuildingButton" layoutX="186.0" layoutY="59.0" mnemonicParsing="false" onAction="#stageEditBuilding" text="Edit building" />
     </children>
 </AnchorPane>

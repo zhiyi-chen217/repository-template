@@ -22,9 +22,9 @@ public class MysqlConfig {
     @Bean(destroyMethod = "close")
     public HikariDataSource dataSource() {
         HikariDataSource dataSource = new HikariDataSource();
-        config.setJdbcUrl("jdbc:mysql://projects-db.ewi.tudelft.nl/projects_OOPP53");
-        config.setUsername("pu_OOPP53");
-        config.setPassword("iQvefOwHCEDp");
+        config.setJdbcUrl("jdbc:mysql://projects-db.ewi.tudelft.nl/projects_oopp5353");
+        config.setUsername("pu_oopp5353");
+        config.setPassword("WZijSwzXlaBG");
         HikariDataSource ds = new HikariDataSource(config);
         return ds;
     }

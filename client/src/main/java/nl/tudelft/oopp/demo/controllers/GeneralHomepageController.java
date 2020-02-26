@@ -64,7 +64,10 @@ public class GeneralHomepageController {
         stage.show();
     }
 
-    public void newStage(ActionEvent event, String path) throws IOException {
+    /** Creates a new stage from the specified fxml file.
+     * @param path the path to the fxml file that should be loaded into the scene
+     */
+    public void newStage(String path) throws IOException {
         Parent buildingRoomParent = FXMLLoader.load(getClass().getResource(path));
         Scene buildings = new Scene(buildingRoomParent);
         Stage stage = new Stage();
