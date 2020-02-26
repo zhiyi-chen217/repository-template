@@ -1,6 +1,7 @@
 package nl.tudelft.oopp.demo.controllers;
 
 import java.io.IOException;
+import java.net.http.HttpResponse;
 
 import com.sun.javafx.image.impl.General;
 import javafx.event.ActionEvent;
@@ -32,7 +33,7 @@ public class LoginSceneController {
     public void submitClicked(ActionEvent event) throws IOException {
         String usertxt = username.getText();
         String pwtxt = password.getText();
-        String authentication = ServerCommunication.sendLoginUser(usertxt, pwtxt);
+        HttpResponse<String> authentication = ServerCommunication.sendLoginUser(usertxt, pwtxt);
 
         //WIP: probably need to add a better form of authorization here.
         if (usertxt.length() == 0 || pwtxt.length() == 0) {
@@ -41,15 +42,21 @@ public class LoginSceneController {
             alert.setHeaderText(null);
             alert.setContentText("Please fill out all the fields");
             alert.show();
-        } else if (authentication.equals("hello admin")) { // we should change this
-            changeScene(event, usertxt, "/adminHomepageScene.fxml");
-        } else if (authentication.equals("hello " + usertxt)) { // this too
-            changeScene(event, usertxt, "/homepageScene.fxml");
+        } else if (authentication != null && authentication.statusCode() == 200) {
+            if (usertxt.equals("admin")) {
+                changeScene(event, usertxt, "/adminHomepageScene.fxml");
+            } else {
+                changeScene(event, usertxt, "/homepageScene.fxml");
+            }
         } else {
             Alert alert = new Alert(Alert.AlertType.INFORMATION);
-            alert.setTitle("Submit clicked");
+            alert.setTitle("Login alert");
             alert.setHeaderText(null);
-            alert.setContentText(authentication);
+            if (authentication == null) {
+                alert.setContentText("Connection with server failed");
+            } else {
+                alert.setContentText(authentication.body());
+            }
             alert.show();
         }
     }
@@ -89,7 +96,7 @@ public class LoginSceneController {
         alert.setHeaderText(null);
         String usertxt = username.getText();
         String pwtxt = password.getText();
-        alert.setContentText(ServerCommunication.sendLoginAdmin(usertxt, pwtxt));
+        alert.setContentText(ServerCommunication.sendLoginAdmin(usertxt, pwtxt).body());
         alert.showAndWait();
     }
 }
