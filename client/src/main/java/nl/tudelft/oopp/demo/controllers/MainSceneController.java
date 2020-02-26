@@ -42,6 +42,7 @@ public class MainSceneController {
             loginStage.setScene(loginPageScene);
             loginStage.setTitle("TU Delft Campus Reservation System");
             loginStage.getIcons().add(new Image("https://simchavos.com/tu.png"));
+            loginStage.setResizable(false);
             loginStage.show();
         } else {
             Alert alert = new Alert(Alert.AlertType.ERROR);

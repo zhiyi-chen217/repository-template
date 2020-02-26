@@ -14,6 +14,7 @@ import javafx.stage.Stage;
 import nl.tudelft.oopp.demo.communication.ServerCommunication;
 import nl.tudelft.oopp.demo.views.MainDisplay;
 
+import javax.swing.*;
 import java.io.IOException;
 
 public class GeneralHomepageController {
@@ -56,9 +57,20 @@ public class GeneralHomepageController {
      */
 
     public void changeScene(ActionEvent event, String path) throws IOException {
+        Parent parent = FXMLLoader.load(getClass().getResource(path));
+        Scene scene = new Scene(parent);
+        Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        stage.setScene(scene);
+        stage.show();
+    }
+
+    /** Creates a new stage from the specified fxml file.
+     * @param path the path to the fxml file that should be loaded into the scene
+     */
+    public void newStage(String path) throws IOException {
         Parent buildingRoomParent = FXMLLoader.load(getClass().getResource(path));
         Scene buildings = new Scene(buildingRoomParent);
-        Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        Stage stage = new Stage();
         stage.setScene(buildings);
         stage.show();
     }
