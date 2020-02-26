@@ -11,5 +11,13 @@ public class AdminBuildingsRoomsController extends GeneralHomepageController {
     public void stageAddBuilding(ActionEvent event) throws IOException {
         newStage(event, "/addABuilding.fxml");
     }
-
+    public void stageAddRoom(ActionEvent event) throws IOException {
+        newStage(event, "/addARoomScene.fxml");
+    }
+    public void stageEditRoom(ActionEvent event) throws IOException {
+        newStage(event, "/editRoomScene.fxml");
+    }
+    public void stageEditBuilding(ActionEvent event) throws IOException {
+        newStage(event, "/editBuildingScene.fxml");
+    }
 }
