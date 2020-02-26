@@ -1,6 +1,11 @@
 package nl.tudelft.oopp.demo.controllers;
 
-public class HomepageController extends GeneralHomepageController {
+import javafx.fxml.FXML;
 
+public class HomepageController extends GeneralHomepageController {
+    @FXML
+    public void initialize() {
+        setWelcomeMessage();
+    }
 }
 

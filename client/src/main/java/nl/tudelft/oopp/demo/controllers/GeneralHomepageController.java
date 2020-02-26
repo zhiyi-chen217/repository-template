@@ -1,5 +1,6 @@
 package nl.tudelft.oopp.demo.controllers;
 
+import com.sun.javafx.image.impl.General;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -11,17 +12,21 @@ import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.stage.Stage;
 import nl.tudelft.oopp.demo.communication.ServerCommunication;
+import nl.tudelft.oopp.demo.views.MainDisplay;
 
 import java.io.IOException;
 
 public class GeneralHomepageController {
+
+    private static String username;
+
     @FXML
     private Label welcomeLabel;
     @FXML
     private Button logoutBtn;
 
-    public void setWelcomeMessage(String message) {
-        welcomeLabel.setText("Welcome " + message);
+    public void setWelcomeMessage() {
+        welcomeLabel.setText("Welcome " + username);
     }
 
     /**This function makes sure the user is logged out once the logout button is pressed.
@@ -31,6 +36,7 @@ public class GeneralHomepageController {
      */
     public void logout(ActionEvent event) throws IOException {
         ServerCommunication.resetPubAuth();
+        GeneralHomepageController.setUsername("");
         FXMLLoader loader = new FXMLLoader();
         loader.setLocation(getClass().getResource("/mainScene.fxml"));
         Parent homePageParent = loader.load();
@@ -55,5 +61,13 @@ public class GeneralHomepageController {
         Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         stage.setScene(buildings);
         stage.show();
+    }
+
+    public static void setUsername(String username) {
+        GeneralHomepageController.username = username;
+    }
+
+    public static String getUsername() {
+        return username;
     }
 }

@@ -14,6 +14,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.stage.Stage;
 import nl.tudelft.oopp.demo.communication.ServerCommunication;
+import nl.tudelft.oopp.demo.views.MainDisplay;
 
 public class LoginSceneController {
     @FXML
@@ -41,6 +42,7 @@ public class LoginSceneController {
             alert.setContentText("Please fill out all the fields");
             alert.show();
         } else if (authentication != null && authentication.statusCode() == 200) {
+            GeneralHomepageController.setUsername(usertxt);
             if (usertxt.equals("admin")) {
                 changeScene(event, usertxt, "/adminHomepageScene.fxml");
             } else {
@@ -69,9 +71,6 @@ public class LoginSceneController {
         loader.setLocation(getClass().getResource(path));
         Parent homePageParent = loader.load();
         Scene homePageScene = new Scene(homePageParent);
-
-        GeneralHomepageController controller = loader.getController();
-        controller.setWelcomeMessage(usertxt);
 
         //Get current stage
         Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
