@@ -17,25 +17,32 @@ public class MainSceneController {
 
     @FXML
     private Button signUp;
+
     /**
      * Handles clicking the button.
      */
 
     public void btnClicked(ActionEvent event) throws IOException {
         Parent loginPageParent;
+        FXMLLoader loader = new FXMLLoader();
         if (event.getSource().equals(signUp)) {
-            loginPageParent = FXMLLoader.load(getClass().getResource("/signUpScene.fxml"));
+            loader.setLocation(getClass().getResource("/signUpScene.fxml"));
+            loginPageParent = loader.load();
         } else {
-            loginPageParent = FXMLLoader.load(getClass().getResource("/loginScene.fxml"));
+            loader.setLocation(getClass().getResource("/loginScene.fxml"));
+            loginPageParent = loader.load();
+            if (loginPageParent != null) {
+                LoginSceneController loginCtrl = loader.getController();
+                loginCtrl.setMainStage((Stage) ((Node) event.getSource()).getScene().getWindow());
+            }
         }
         if (loginPageParent != null) {
-            //Get current stage
             Scene loginPageScene = new Scene(loginPageParent);
-            Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-            stage.setScene(loginPageScene);
-            stage.setTitle("TU Delft Campus Reservation System");
-            stage.getIcons().add(new Image("https://simchavos.com/tu.png"));
-            stage.show();
+            Stage loginStage = new Stage();
+            loginStage.setScene(loginPageScene);
+            loginStage.setTitle("TU Delft Campus Reservation System");
+            loginStage.getIcons().add(new Image("https://simchavos.com/tu.png"));
+            loginStage.show();
         } else {
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setContentText("An error occurred, please try again.");
