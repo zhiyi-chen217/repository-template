@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="nl.tudelft.oopp.demo.controllers.AdminBuildingsRoomsController">
+    <children>
+        <Label layoutX="74.0" layoutY="-27.0" text="Add or delete buildings and rooms" AnchorPane.bottomAnchor="311.8" AnchorPane.leftAnchor="74.0" AnchorPane.rightAnchor="75.0" AnchorPane.topAnchor="-27.0">
+            <font>
+                <Font size="15.0" />
+            </font></Label>
+        <Button layoutX="263.0" layoutY="157.0" mnemonicParsing="false" onAction="#changeSceneHomepage" text="Back" AnchorPane.bottomAnchor="356.8" AnchorPane.leftAnchor="20.0" />
+        <ComboBox layoutX="20.0" layoutY="59.0" prefWidth="150.0" promptText="Choose a building" />
+      <ListView layoutX="284.0" layoutY="59.0" prefHeight="252.0" prefWidth="200.0" />
+      <Button layoutX="20.0" layoutY="319.0" mnemonicParsing="false" text="Add building" />
+      <Button layoutX="284.0" layoutY="319.0" mnemonicParsing="false" text="Delete building" />
+      <VBox alignment="TOP_CENTER" layoutX="500.0" layoutY="59.0" prefHeight="188.0" prefWidth="85.0" spacing="10.0" AnchorPane.bottomAnchor="153.0" AnchorPane.leftAnchor="500.0" AnchorPane.rightAnchor="14.799999999999997" AnchorPane.topAnchor="59.0">
+         <children>
+            <Button mnemonicParsing="false" text="Add room" />
+            <Button mnemonicParsing="false" prefHeight="25.0" prefWidth="83.0" text="Delete room" />
+         </children>
+      </VBox>
+    </children>
+</AnchorPane>

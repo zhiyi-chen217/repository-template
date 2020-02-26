@@ -25,7 +25,7 @@ public class ServerCommunication {
      * @return the string to present in the alert
      */
 
-    public static String sendLogin(String username, String password, String baseurl) {
+    public static HttpResponse<String> sendLogin(String username, String password, String baseurl) {
         String auth = username + ":" + password;
         String encodedAuth = "Basic " + Base64.getEncoder().encodeToString(auth.getBytes());
 
@@ -38,12 +38,12 @@ public class ServerCommunication {
             response = client.send(request, HttpResponse.BodyHandlers.ofString());
         } catch (Exception e) {
             e.printStackTrace();
-            return "Communication with server failed";
+            return null;
         }
         if (response.statusCode() != 200) {
             System.out.println("Status: " + response.statusCode());
         }
-        return response.body();
+        return response;
     }
 
     public static CloseableHttpResponse sendSignUp(String netid, String email, String password) throws IOException {
@@ -63,8 +63,9 @@ public class ServerCommunication {
         httpPost.setEntity(new StringEntity(json));
         CloseableHttpResponse response = httpClient.execute(httpPost);
         return response;
-
     }
+
+
 
     /**
      * Helper function for authentication of a normal user.
@@ -73,7 +74,7 @@ public class ServerCommunication {
      * @return the string to present in the alert
      */
 
-    public static String sendLoginUser(String username, String password) {
+    public static HttpResponse<String> sendLoginUser(String username, String password) {
         return sendLogin(username, password, "http://localhost:8080/login");
     }
 
@@ -85,10 +86,10 @@ public class ServerCommunication {
      * @return the string to present in the alert
      */
 
-    public static String sendLoginAdmin(String username, String password) {
+    public static HttpResponse<String> sendLoginAdmin(String username, String password) {
         return sendLogin(username, password, "http://localhost:8080/login/admin");
     }
-
+    
     public static String getPubAuth() {
         return pubAuth;
     }

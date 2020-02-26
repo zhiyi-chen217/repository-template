@@ -1,22 +1,31 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import java.net.*?>
 <?import javafx.geometry.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
 
 <AnchorPane prefHeight="144.0" prefWidth="192.0" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="nl.tudelft.oopp.demo.controllers.LoginSceneController">
-    <VBox spacing="3" layoutX="22.0" layoutY="28.0" AnchorPane.bottomAnchor="21.599999999999994" AnchorPane.leftAnchor="22.0" AnchorPane.rightAnchor="19.599999999999994" AnchorPane.topAnchor="28.0">
-        <Label text="Login Please!">
+    <VBox alignment="CENTER" layoutX="22.0" layoutY="28.0" spacing="3" AnchorPane.bottomAnchor="21.599999999999994" AnchorPane.leftAnchor="22.0" AnchorPane.rightAnchor="19.599999999999994" AnchorPane.topAnchor="28.0">
+        <Label text="Login Please!" textFill="WHITE">
          <VBox.margin>
             <Insets />
-         </VBox.margin></Label>
-        <TextField fx:id="username" promptText="Username" />
+         </VBox.margin>
+         <font>
+            <Font size="14.0" />
+         </font></Label>
+        <TextField fx:id="username" onAction="#submitClicked" promptText="Username" />
         <PasswordField fx:id="password" onAction="#submitClicked" promptText="Password" />
-      <HBox prefHeight="0.0" prefWidth="150.0">
+      <HBox alignment="TOP_CENTER" prefHeight="0.0" prefWidth="150.0" VBox.vgrow="ALWAYS">
          <children>
-              <Button fx:id="submitbutton" onAction="#submitClicked" text="Submit" />
-              <Button fx:id="adminbutton" mnemonicParsing="false" onAction="#adminClicked" text="Admin" />
+              <Button fx:id="submitbutton" alignment="CENTER" onAction="#submitClicked" text="Submit" HBox.hgrow="ALWAYS">
+              </Button>
+              <Button fx:id="adminbutton" mnemonicParsing="false" onAction="#adminClicked" text="Admin" HBox.hgrow="ALWAYS" />
          </children>
       </HBox>
     </VBox>
+    <stylesheets>
+        <URL value="@stylesheets/stylesheet.css" />
+    </stylesheets>
 </AnchorPane>
