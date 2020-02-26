@@ -12,9 +12,6 @@ public class Food {
     @Column(name = "food")
     private String name;
 
-    @ManyToMany
-    @JoinColumn
-    private Set<Restaurant> restaurant;
 
     @Column(name = "price")
     private double price;
@@ -33,14 +30,6 @@ public class Food {
 
     public void setName(String name) {
         this.name = name;
-    }
-
-    public Set<Restaurant> getRestaurant() {
-        return restaurant;
-    }
-
-    public void setRestaurant(Set<Restaurant> restaurant) {
-        this.restaurant = restaurant;
     }
 
     public double getPrice() {
