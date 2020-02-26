@@ -15,8 +15,8 @@ public class UserTest {
 
     @Test
     public void retrieveUser() {
-        User u1 = new User("admin", "", "12345");
-        userRepository.save(u1);
-        assertEquals(u1, userRepository.findByUserId("admin").get());
+        User u = new User("admin", "", "12345");
+        userRepository.save(u);
+        assertEquals(u, userRepository.findByUserId("admin").get());
     }
 }

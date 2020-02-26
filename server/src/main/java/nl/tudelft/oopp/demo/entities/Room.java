@@ -6,6 +6,7 @@ import javax.persistence.*;
 @Entity
 @Table(name = "room")
 public class Room {
+
     @Id
     @Column(name = "roomId")
     private String roomId;
@@ -17,7 +18,6 @@ public class Room {
     private int capacity;
 
     @ManyToOne
-    @JoinColumn
     private Building building;
 
     @Column(name = "description")
