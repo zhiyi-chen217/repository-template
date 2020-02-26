@@ -3,7 +3,6 @@ package nl.tudelft.oopp.demo.controllers;
 import java.io.IOException;
 import java.net.http.HttpResponse;
 
-import com.sun.javafx.image.impl.General;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -14,7 +13,6 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.stage.Stage;
-import javafx.stage.Window;
 import nl.tudelft.oopp.demo.communication.ServerCommunication;
 
 public class LoginSceneController {

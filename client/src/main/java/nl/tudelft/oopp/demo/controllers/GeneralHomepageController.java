@@ -42,4 +42,18 @@ public class GeneralHomepageController {
         stage.getIcons().add(new Image("https://simchavos.com/tu.png"));
         stage.show();
     }
+
+    /** This method changes the scene to the referenced fxml file.
+     *
+     * @param event the event that triggers the change of the scene
+     * @param path the path to the FXML file
+     */
+
+    public void changeScene(ActionEvent event, String path) throws IOException {
+        Parent buildingRoomParent = FXMLLoader.load(getClass().getResource(path));
+        Scene buildings = new Scene(buildingRoomParent);
+        Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        stage.setScene(buildings);
+        stage.show();
+    }
 }

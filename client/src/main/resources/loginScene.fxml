@@ -15,7 +15,7 @@
          <font>
             <Font size="14.0" />
          </font></Label>
-        <TextField fx:id="username" promptText="Username" />
+        <TextField fx:id="username" onAction="#submitClicked" promptText="Username" />
         <PasswordField fx:id="password" onAction="#submitClicked" promptText="Password" />
       <HBox alignment="TOP_CENTER" prefHeight="0.0" prefWidth="150.0" VBox.vgrow="ALWAYS">
          <children>

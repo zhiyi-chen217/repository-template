@@ -1,4 +1,11 @@
 package nl.tudelft.oopp.demo.controllers;
 
-public class AdminBuildingsRoomsController {
+import javafx.event.ActionEvent;
+
+import java.io.IOException;
+
+public class AdminBuildingsRoomsController extends GeneralHomepageController {
+    public void changeSceneHomepage(ActionEvent event) throws IOException {
+        changeScene(event, "/adminHomepageScene.fxml");
+    }
 }
