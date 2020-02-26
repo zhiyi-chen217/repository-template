@@ -22,6 +22,7 @@ import java.net.URISyntaxException;
 import java.net.http.HttpResponse;
 import java.sql.Time;
 import java.time.LocalTime;
+import java.util.List;
 import java.util.Optional;
 import java.util.regex.Pattern;
 
@@ -49,7 +50,7 @@ public class SignUpController {
                 "", 3);
 
          */
-        //CloseableHttpResponse re = ServerCommunication.readBuilding(null);
+        //CloseableHttpResponse re = ServerCommunication.deleteBuilding(List.of("bb", "b1"));
         //System.out.println(EntityUtils.toString(re.getEntity()));
         failtext.setText("");
         String netidstr = netid.getText();

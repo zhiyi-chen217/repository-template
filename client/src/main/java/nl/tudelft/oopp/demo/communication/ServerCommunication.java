@@ -1,9 +1,6 @@
 package nl.tudelft.oopp.demo.communication;
 
-import org.apache.http.client.methods.CloseableHttpResponse;
-import org.apache.http.client.methods.HttpGet;
-import org.apache.http.client.methods.HttpPost;
-import org.apache.http.client.methods.HttpPut;
+import org.apache.http.client.methods.*;
 import org.apache.http.client.utils.URIBuilder;
 import org.apache.http.entity.ContentType;
 import org.apache.http.entity.StringEntity;
@@ -19,6 +16,7 @@ import java.net.http.HttpResponse;
 import java.sql.Time;
 import java.time.LocalTime;
 import java.util.Base64;
+import java.util.List;
 import java.util.Optional;
 
 public class ServerCommunication {
@@ -118,6 +116,16 @@ public class ServerCommunication {
         return httpClient.execute(httpGet);
     }
 
+    public static CloseableHttpResponse deleteBuilding(List<String> name) throws IOException, URISyntaxException {
+        URIBuilder builder = new URIBuilder("http://localhost:8080/admin/buildings");
+        HttpDelete httpDelete = new HttpDelete();
+        httpDelete.setHeader("Authorization", "Basic YWRtaW46MTIzNDU=");
+        for (String s: name) {
+            builder.addParameter("names", s);
+        }
+        httpDelete.setURI(builder.build());
+        return httpClient.execute(httpDelete);
+    }
 
 
 
