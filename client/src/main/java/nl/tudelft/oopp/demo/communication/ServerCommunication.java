@@ -1,10 +1,15 @@
 package nl.tudelft.oopp.demo.communication;
 
+import org.apache.http.client.methods.CloseableHttpResponse;
+import org.apache.http.client.methods.HttpPost;
+import org.apache.http.entity.StringEntity;
+import org.apache.http.impl.client.*;
+
+import java.io.IOException;
 import java.net.URI;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
-import java.nio.charset.StandardCharsets;
 import java.util.Base64;
 
 public class ServerCommunication {
@@ -41,8 +46,24 @@ public class ServerCommunication {
         return response.body();
     }
 
-    public static String sendSignUp(String netid, String email, String password) {
-        return null;
+    public static CloseableHttpResponse sendSignUp(String netid, String email, String password) throws IOException {
+//        Map<String, String> attributes = new HashMap<>();
+//        attributes.put("userId", netid);
+//        attributes.put("email", email);
+//        attributes.put("password", password);
+//
+//        ObjectMapper objectMapper = new ObjectMapper();
+//        String requestBody = objectMapper.
+//                .writeValueAsString(attributes);
+        CloseableHttpClient httpClient = HttpClients.createDefault();
+        HttpPost httpPost = new HttpPost("http://localhost:8080/signup");
+        String json = "{\"userId\" : \"" + netid + "\""
+                + "\"email\" : \"" + email + "\""
+                + "\"password\" : \"" + password + "\"}";
+        httpPost.setEntity(new StringEntity(json));
+        CloseableHttpResponse response = httpClient.execute(httpPost);
+        return response;
+
     }
 
     /**

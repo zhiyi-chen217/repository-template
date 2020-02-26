@@ -35,7 +35,7 @@ public class SignUpController {
     /**
      * Send the sign up details to the server.
      */
-    public void signUp(ActionEvent event) {
+    public void signUp(ActionEvent event) throws IOException {
         failtext.setText("");
         String netidstr = netid.getText();
 
