@@ -18,7 +18,12 @@ import org.apache.http.client.methods.CloseableHttpResponse;
 import org.apache.http.util.EntityUtils;
 
 import java.io.IOException;
+import java.net.URISyntaxException;
 import java.net.http.HttpResponse;
+import java.sql.Time;
+import java.time.LocalTime;
+import java.util.List;
+import java.util.Optional;
 import java.util.regex.Pattern;
 
 
@@ -39,7 +44,14 @@ public class SignUpController {
     /**
      * Send the sign up details to the server.
      */
-    public void signUp(ActionEvent event) throws IOException {
+    public void signUp(ActionEvent event) throws IOException, URISyntaxException {
+        /*CloseableHttpResponse re = ServerCommunication.updateBuilding("bb", "loc",
+                LocalTime.of(12,00), LocalTime.of(19, 00),
+                "", 3);
+
+         */
+        //CloseableHttpResponse re = ServerCommunication.deleteBuilding(List.of("bb", "b1"));
+        //System.out.println(EntityUtils.toString(re.getEntity()));
         failtext.setText("");
         String netidstr = netid.getText();
 

@@ -1,22 +1,28 @@
 package nl.tudelft.oopp.demo.communication;
 
-import org.apache.http.client.methods.CloseableHttpResponse;
-import org.apache.http.client.methods.HttpPost;
+import org.apache.http.client.methods.*;
+import org.apache.http.client.utils.URIBuilder;
 import org.apache.http.entity.ContentType;
 import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.*;
+import org.json.JSONObject;
 
 import java.io.IOException;
 import java.net.URI;
+import java.net.URISyntaxException;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 import java.sql.Time;
+import java.time.LocalTime;
 import java.util.Base64;
+import java.util.List;
+import java.util.Optional;
 
 public class ServerCommunication {
 
     private static HttpClient client = HttpClient.newBuilder().build();
+    private static CloseableHttpClient httpClient = HttpClients.createDefault();
     private static String pubAuth;
 
     /**
@@ -49,7 +55,6 @@ public class ServerCommunication {
     }
 
     public static CloseableHttpResponse sendSignUp(String netid, String email, String password) throws IOException {
-        CloseableHttpClient httpClient = HttpClients.createDefault();
         HttpPost httpPost = new HttpPost("http://localhost:8080/signup");
         String json = "{\"userId\" : \"" + netid + "\","
                 + "\"email\" : \"" + email + "\","
@@ -62,12 +67,65 @@ public class ServerCommunication {
     }
 
     public static CloseableHttpResponse createBuilding(String name, String location,
-                                                       Time openingHour, Time closingHour,
-                                                       String picturesPath, int bikes) {
-        return null;
+                                                       LocalTime openingHour, LocalTime closingHour,
+                                                       String picturesPath, int bikes) throws IOException {
+        JSONObject json = new JSONObject();
+        json.put("name", name);
+        json.put("location", location);
+        json.put("openingHour", openingHour);
+        json.put("closingHour", closingHour);
+        json.put("picturesPath", picturesPath);
+        json.put("bikes", bikes);
+        HttpPost httpPost = new HttpPost("http://localhost:8080/admin/buildings");
+        httpPost.setHeader("Content-type", "application/json");
+        httpPost.setHeader("Authorization", pubAuth);
+        httpPost.setEntity(new StringEntity(json.toString()));
+        CloseableHttpResponse response = httpClient.execute(httpPost);
+        return response;
     }
 
+    public static CloseableHttpResponse updateBuilding(String name, String location,
+                                                       LocalTime openingHour, LocalTime closingHour,
+                                                       String picturesPath, int bikes) throws IOException {
+        JSONObject json = new JSONObject();
+        json.put("name", name);
+        json.put("location", location);
+        json.put("openingHour", openingHour);
+        json.put("closingHour", closingHour);
+        json.put("picturesPath", picturesPath);
+        json.put("bikes", bikes);
+        CloseableHttpClient httpClient = HttpClients.createDefault();
+        HttpPut httpPut = new HttpPut("http://localhost:8080/admin/buildings");
+        httpPut.setHeader("Content-type", "application/json");
+        httpPut.setHeader("Authorization", pubAuth);
+        httpPut.setEntity(new StringEntity(json.toString()));
+        CloseableHttpResponse response = httpClient.execute(httpPut);
+        return response;
+    }
 
+    public static CloseableHttpResponse readBuilding(String name) throws IOException, URISyntaxException {
+        URIBuilder builder = new URIBuilder("http://localhost:8080/buildings");
+        HttpGet httpGet = new HttpGet();
+        httpGet.setHeader("Authorization", pubAuth);
+        if (name == null) {
+            httpGet.setURI(builder.build());
+            return httpClient.execute(httpGet);
+        }
+        builder.addParameter("name", name);
+        httpGet.setURI(builder.build());
+        return httpClient.execute(httpGet);
+    }
+
+    public static CloseableHttpResponse deleteBuilding(List<String> name) throws IOException, URISyntaxException {
+        URIBuilder builder = new URIBuilder("http://localhost:8080/admin/buildings");
+        HttpDelete httpDelete = new HttpDelete();
+        httpDelete.setHeader("Authorization", "Basic YWRtaW46MTIzNDU=");
+        for (String s: name) {
+            builder.addParameter("names", s);
+        }
+        httpDelete.setURI(builder.build());
+        return httpClient.execute(httpDelete);
+    }
 
 
 
