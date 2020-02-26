@@ -31,7 +31,8 @@ public class ExceptionController {
      */
     @ExceptionHandler(value = {JpaObjectRetrievalFailureException.class,
             RedundantentityException.class})
-    public ResponseEntity entityNotFound(JpaObjectRetrievalFailureException e) {
+    public ResponseEntity entityNotFound(Exception e) {
         return ResponseEntity.badRequest().body(e.getMessage());
     }
+
 }

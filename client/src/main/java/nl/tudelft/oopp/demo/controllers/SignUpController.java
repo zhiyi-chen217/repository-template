@@ -15,6 +15,8 @@ import javafx.stage.Stage;
 import nl.tudelft.oopp.demo.communication.ServerCommunication;
 
 import org.apache.http.client.methods.CloseableHttpResponse;
+import org.apache.http.util.EntityUtils;
+
 import java.io.IOException;
 import java.net.http.HttpResponse;
 import java.util.regex.Pattern;
@@ -82,17 +84,17 @@ public class SignUpController {
         CloseableHttpResponse response = ServerCommunication.sendSignUp(netidstr, emailstr1, passstr1);
 
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
-        if (response.getStatusLine().getStatusCode() == 200) {
+        if (response.getStatusLine().getStatusCode() == 202) {
             alert.setTitle("Signup successful");
-            alert.setContentText(String.valueOf(response.getEntity().getContent()));
         } else {
             alert.setTitle("Signup unsuccessful");
-            alert.setContentText(String.valueOf(response.getEntity().getContent()) + response.getStatusLine().getStatusCode());
         }
+        alert.setContentText(EntityUtils.toString(response.getEntity(), "UTF-8"));
         alert.setHeaderText(null);
         alert.showAndWait();
-
-        Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-        stage.close();
+        if (response.getStatusLine().getStatusCode() == 202) {
+            Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+            stage.close();
+        }
     }
 }
