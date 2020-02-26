@@ -39,35 +39,25 @@ public class SignUpController {
         failtext.setText("");
         String netidstr = netid.getText();
 
-        if (netidstr.length() == 0) {
-            failtext.setText("Please insert a valid NetID.");
-            return;
-        }
-        if (!netidstr.matches("[a-zA-Z0-9]+")) {
+        if (netidstr.length() == 0 || !netidstr.matches("[a-zA-Z0-9]+")) {
             failtext.setText("Please insert a valid NetID.");
             return;
         }
 
         String emailstr1 = email1.getText();
         String emailstr2 = email2.getText();
-
-        if (emailstr1.length() == 0) {
-            failtext.setText("Please enter a valid email address.");
-            return;
-        }
-        if (!emailstr1.equals(emailstr2)) {
-            failtext.setText("Please make sure the two email addresses are the same.");
-            return;
-        }
-
         String emailRegex = "^[a-zA-Z0-9_+&*-]+(?:\\."
                 + "[a-zA-Z0-9_+&*-]+)*@"
                 + "(?:[a-zA-Z0-9-]+\\.)+[a-z"
                 + "A-Z]{2,7}$";
         Pattern pat = Pattern.compile(emailRegex);
 
-        if (!pat.matcher(emailstr1).matches()) {
+        if (emailstr1.length() == 0 || !pat.matcher(emailstr1).matches()) {
             failtext.setText("Please enter a valid email address.");
+            return;
+        }
+        if (!emailstr1.equals(emailstr2)) {
+            failtext.setText("Please make sure the two email addresses are the same.");
             return;
         }
 
