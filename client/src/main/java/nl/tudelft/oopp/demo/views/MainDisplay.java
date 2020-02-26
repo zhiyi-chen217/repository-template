@@ -22,6 +22,7 @@ public class MainDisplay extends Application {
         primaryStage.setScene(new Scene(root));
         primaryStage.setTitle("TU Delft Campus Reservation System - Reserve rooms, bikes and food");
         primaryStage.getIcons().add(new Image("https://simchavos.com/tu.png"));
+        primaryStage.setResizable(false);
         primaryStage.show();
     }
 
