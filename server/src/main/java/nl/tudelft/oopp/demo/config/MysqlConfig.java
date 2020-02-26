@@ -28,4 +28,5 @@ public class MysqlConfig {
         HikariDataSource ds = new HikariDataSource(config);
         return ds;
     }
+
 }

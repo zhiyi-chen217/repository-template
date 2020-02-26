@@ -4,6 +4,7 @@ import nl.tudelft.oopp.demo.entities.Building;
 import nl.tudelft.oopp.demo.exceptions.RedundantentityException;
 import nl.tudelft.oopp.demo.repositories.BuildingRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -84,9 +85,14 @@ public class BuildingController {
      */
     @DeleteMapping("admin/buildings")
     public ResponseEntity deleteBuilding(@RequestParam List<String> names) {
-        for (String name: names) {
-            buildingRepository.deleteById(name);
+        try {
+            for (String name : names) {
+                buildingRepository.deleteById(name);
+            }
+            return ResponseEntity.accepted().body("all deleted");
         }
-        return ResponseEntity.accepted().body("all deleted");
+        catch (EmptyResultDataAccessException e){
+            throw new EmptyResultDataAccessException("Cannot delete non-existing building",1);
+        }
     }
 }

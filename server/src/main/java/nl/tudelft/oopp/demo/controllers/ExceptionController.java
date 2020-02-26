@@ -1,5 +1,6 @@
 package nl.tudelft.oopp.demo.controllers;
 
+import nl.tudelft.oopp.demo.exceptions.InvalidforeginkeyException;
 import nl.tudelft.oopp.demo.exceptions.RedundantentityException;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.http.ResponseEntity;
@@ -17,9 +18,9 @@ public class ExceptionController {
      * when the asked entity does not exist.
      * @return a badRequest ResponseEntity
      */
-    @ExceptionHandler(value = {EmptyResultDataAccessException.class})
-    public ResponseEntity invalidEntityName() {
-        return ResponseEntity.badRequest().body("invalid Entity required");
+    @ExceptionHandler(value = {EmptyResultDataAccessException.class, InvalidforeginkeyException.class})
+    public ResponseEntity invalidEntityName(Exception e) {
+        return ResponseEntity.badRequest().body(e.getMessage());
     }
 
     /**
