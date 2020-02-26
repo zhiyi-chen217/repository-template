@@ -11,6 +11,7 @@ import java.net.URI;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
+import java.sql.Time;
 import java.util.Base64;
 
 public class ServerCommunication {
@@ -58,6 +59,12 @@ public class ServerCommunication {
         httpPost.setHeader("Content-type", "application/json");
         CloseableHttpResponse response = httpClient.execute(httpPost);
         return response;
+    }
+
+    public static CloseableHttpResponse createBuilding(String name, String location,
+                                                       Time openingHour, Time closingHour,
+                                                       String picturesPath, int bikes) {
+        return null;
     }
 
 

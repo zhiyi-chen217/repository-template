@@ -1,6 +1,7 @@
 package nl.tudelft.oopp.demo.entities;
 
 import javax.persistence.*;
+import java.sql.Time;
 
 @Entity
 @Table(name = "building")
@@ -13,10 +14,10 @@ public class Building {
     private String location;
 
     @Column(name = "openingHour")
-    private double openingHour;
+    private Time openingHour;
 
     @Column(name = "closingHour")
-    private double closingHour;
+    private Time closingHour;
 
     @Column(name = "picturesPath")
     private String picturesPath;
@@ -37,8 +38,8 @@ public class Building {
      * @param closingHour the hour at which the building closes
      * @param bikes the amount of bikes at the building
      */
-    public Building(String name, String location, double openingHour,
-                    double closingHour, int bikes) {
+    public Building(String name, String location, Time openingHour,
+                    Time closingHour, int bikes) {
         this.name = name;
         this.location = location;
         this.openingHour = openingHour;
@@ -64,19 +65,19 @@ public class Building {
     }
 
 
-    public double getOpeningHour() {
+    public Time getOpeningHour() {
         return openingHour;
     }
 
-    public void setOpeningHour(double openingHour) {
+    public void setOpeningHour(Time openingHour) {
         this.openingHour = openingHour;
     }
 
-    public double getClosingHour() {
+    public Time getClosingHour() {
         return closingHour;
     }
 
-    public void setClosingHour(double closingHour) {
+    public void setClosingHour(Time closingHour) {
         this.closingHour = closingHour;
     }
 

@@ -33,7 +33,7 @@ public class BuildingController {
         if (buildingOptional.isPresent()) {
             throw new RedundantentityException("The building already exists");
         }
-        httpResponse.setStatus(201);
+        httpResponse.setStatus(202);
         buildingRepository.save(building);
         return "Saved successfully";
     }
