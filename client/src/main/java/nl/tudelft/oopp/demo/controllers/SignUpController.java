@@ -22,6 +22,7 @@ import java.net.URISyntaxException;
 import java.net.http.HttpResponse;
 import java.sql.Time;
 import java.time.LocalTime;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.regex.Pattern;
@@ -55,7 +56,7 @@ public class SignUpController {
 //        CloseableHttpResponse re = ServerCommunication.updateRoom("ewi02", "01", 9,
 //                "b1", "", "ALL_CAN_USE", "", true, true);
 //        System.out.println(re.getStatusLine().getStatusCode());
-        CloseableHttpResponse re = ServerCommunication.readRoom(null, null);
+        CloseableHttpResponse re = ServerCommunication.deleteRoom(List.of("ewi01"));
         System.out.println(EntityUtils.toString(re.getEntity()));
         failtext.setText("");
         String netidstr = netid.getText();

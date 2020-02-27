@@ -191,6 +191,17 @@ public class ServerCommunication {
         return httpClient.execute(httpGet);
     }
 
+    public static CloseableHttpResponse deleteRoom(List<String> roomIds) throws IOException, URISyntaxException {
+        URIBuilder uri = new URIBuilder("http://localhost:8080/admin/room");
+        for (String s: roomIds) {
+            uri.addParameter("roomIds", s);
+        }
+        HttpDelete httpDelete = new HttpDelete();
+        httpDelete.setHeader("Authorization", pubAuth);
+        httpDelete.setURI(uri.build());
+        return httpClient.execute(httpDelete);
+    }
+
 
     /**
      * Helper function for authentication of a normal user.
