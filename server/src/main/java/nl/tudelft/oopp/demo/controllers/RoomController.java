@@ -1,5 +1,6 @@
 package nl.tudelft.oopp.demo.controllers;
 
+import nl.tudelft.oopp.demo.entities.Building;
 import nl.tudelft.oopp.demo.entities.Room;
 import nl.tudelft.oopp.demo.exceptions.InvalidforeginkeyException;
 import nl.tudelft.oopp.demo.exceptions.RedundantentityException;
@@ -75,7 +76,12 @@ public class RoomController {
      * @return
      */
     @GetMapping("rooms")
-    public ResponseEntity readRoom(@RequestParam Optional<String> roomId){
+    public ResponseEntity readRoom(@RequestParam Optional<String> roomId, @RequestParam Optional<String> building){
+        if(building.isPresent()){
+            Building temp = new Building();
+            temp.setName(building.get());
+            return ResponseEntity.accepted().body(roomRepository.findByBuilding(temp));
+        }
         if(roomId.isEmpty()){
             return ResponseEntity.accepted().body(roomRepository.findAll());
         }
