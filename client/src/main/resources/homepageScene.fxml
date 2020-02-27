@@ -1,25 +1,54 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.net.URL?>
+<?import java.net.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
+<?import javafx.scene.shape.*?>
 <?import javafx.scene.text.*?>
 
-<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="nl.tudelft.oopp.demo.controllers.HomepageController">
+<AnchorPane prefHeight="525.2" prefWidth="788.4" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="nl.tudelft.oopp.demo.controllers.HomepageController">
    <children>
-      <Label fx:id="welcomeLabel" layoutX="14.0" layoutY="14.0" prefHeight="18.0" prefWidth="192.0" style="-fx-font-style: italic;" text="Welcome *user*" AnchorPane.bottomAnchor="368.0" AnchorPane.leftAnchor="14.0" AnchorPane.rightAnchor="394.0" AnchorPane.topAnchor="14.0">
+      <Label fx:id="welcomeLabel" alignment="CENTER" contentDisplay="CENTER" prefHeight="105.0" prefWidth="247.0" style="-fx-font-style: italic;" text="Welcome *user*" textAlignment="CENTER" AnchorPane.bottomAnchor="421.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="541.0" AnchorPane.topAnchor="0.0">
           <font>
               <Font size="13.0" />
           </font></Label>
-      <Label layoutX="121.0" layoutY="69.0" text="Welcome to *TITLE*" AnchorPane.bottomAnchor="271.8" AnchorPane.leftAnchor="121.0" AnchorPane.rightAnchor="120.60000000000002" AnchorPane.topAnchor="69.0">
+      <Label layoutX="415.0" layoutY="-39.0" text="Welcome to *TITLE*" AnchorPane.bottomAnchor="379.8" AnchorPane.leftAnchor="415.0" AnchorPane.rightAnchor="-173.39999999999998" AnchorPane.topAnchor="-39.0">
          <font>
             <Font size="41.0" />
          </font></Label>
-      <Button layoutX="263.0" layoutY="157.0" mnemonicParsing="false" text="My reservations" AnchorPane.bottomAnchor="217.8" AnchorPane.leftAnchor="263.0" />
-      <Button layoutX="263.0" layoutY="197.0" mnemonicParsing="false" text="Reserve a room" AnchorPane.leftAnchor="263.0" />
-      <Button layoutX="266.0" layoutY="237.0" mnemonicParsing="false" text="Reserve a bike" AnchorPane.leftAnchor="266.0" />
-      <Button layoutX="274.0" layoutY="277.0" mnemonicParsing="false" text="Order food" AnchorPane.leftAnchor="274.0" />
-      <Button fx:id="logoutBtn" layoutX="27.0" layoutY="338.0" mnemonicParsing="false" text="Logout" onAction="#logout" />
+      <VBox alignment="BOTTOM_LEFT" layoutY="105.0" prefHeight="419.0" prefWidth="247.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0">
+         <children>
+            <Button mnemonicParsing="false" onAction="#changeSceneRooms" prefHeight="104.8" prefWidth="268.0" text="Reserve a room">
+               <font>
+                  <Font size="20.0" />
+               </font></Button>
+            <Button mnemonicParsing="false" onAction="#changeSceneBikes" prefHeight="104.8" prefWidth="254.0" text="Reserve a bike">
+               <font>
+                  <Font size="20.0" />
+               </font></Button>
+            <Button mnemonicParsing="false" prefHeight="104.8" prefWidth="273.0" text="Order food">
+               <font>
+                  <Font size="20.0" />
+               </font></Button>
+            <Button fx:id="logoutBtn" mnemonicParsing="false" onAction="#logout" prefHeight="104.8" prefWidth="247.0" text="Logout">
+               <font>
+                  <Font size="20.0" />
+               </font></Button>
+         </children>
+      </VBox>
+      <Button layoutX="656.0" layoutY="228.0" mnemonicParsing="false" text="Calendar view" />
+      <Line endX="-184.80001831054688" endY="367.20001220703125" layoutX="432.0" layoutY="157.0" startX="-184.99996948242188" startY="-157.0" stroke="#27ace8" strokeWidth="2.0" />
+      <StackPane layoutX="337.0" layoutY="262.0" prefHeight="247.0" prefWidth="410.0">
+         <children>
+            <TableView prefHeight="204.0" prefWidth="410.0">
+              <columns>
+                <TableColumn prefWidth="75.0" text="C1" />
+                <TableColumn prefWidth="75.0" text="C2" />
+              </columns>
+            </TableView>
+            <Rectangle arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="222.0" stroke="BLACK" strokeType="INSIDE" style="-fx-background-color: #27ACE8;     -fx-opacity: 0.1;" width="409.0" StackPane.alignment="BOTTOM_CENTER" />
+         </children>
+      </StackPane>
    </children>
     <stylesheets>
         <URL value="@stylesheets/sheetHomepageScene.css" />

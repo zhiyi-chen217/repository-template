@@ -75,6 +75,14 @@ public class GeneralHomepageController {
         stage.show();
     }
 
+    public void changeSceneHomepage(ActionEvent event) throws IOException {
+        changeScene(event, "/homepageScene.fxml");
+    }
+
+    public void changeSceneAdminHomepage(ActionEvent event) throws IOException {
+        changeScene(event, "/adminHomepageScene.fxml");
+    }
+
     public static void setUsername(String username) {
         GeneralHomepageController.username = username;
     }

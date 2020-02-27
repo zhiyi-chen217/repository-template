@@ -2,20 +2,24 @@
 
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
+<?import javafx.scene.shape.*?>
 <?import javafx.scene.text.*?>
 
 <AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="nl.tudelft.oopp.demo.controllers.ReserveARoomController">
     <children>
-        <Label layoutX="27.0" layoutY="14.0" text="Reserve a room:" AnchorPane.bottomAnchor="270.8" AnchorPane.leftAnchor="27.0" AnchorPane.rightAnchor="122.0" AnchorPane.topAnchor="14.0">
+        <Label layoutX="38.0" layoutY="14.0" text="Reserve a room:" AnchorPane.bottomAnchor="270.8" AnchorPane.leftAnchor="38.0" AnchorPane.rightAnchor="111.0" AnchorPane.topAnchor="14.0">
             <font>
                 <Font size="15.0" />
             </font></Label>
-        <Button layoutX="263.0" layoutY="157.0" mnemonicParsing="false" text="Back" AnchorPane.bottomAnchor="356.8" AnchorPane.leftAnchor="20.0" />
-      <CheckBox layoutX="441.0" layoutY="63.0" mnemonicParsing="false" text="TV?" />
-      <ComboBox layoutX="225.0" layoutY="59.0" prefWidth="150.0" promptText="Choose a building" />
-      <CheckBox layoutX="441.0" layoutY="84.0" mnemonicParsing="false" text="Whiteboard?" />
-      <Label layoutX="441.0" layoutY="121.0" text="Capacity:" />
-      <Spinner editable="true" layoutX="441.0" layoutY="145.0" prefHeight="25.0" prefWidth="126.0" />
-      <Button layoutX="264.0" layoutY="327.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="71.0" text="Search" />
+        <Button layoutX="38.0" layoutY="20.0" mnemonicParsing="false" onAction="#changeSceneHomepage" text="Back" AnchorPane.bottomAnchor="357.1" AnchorPane.leftAnchor="38.0" />
+      <CheckBox layoutX="44.0" layoutY="218.0" mnemonicParsing="false" text="TV?" />
+      <ComboBox layoutX="38.0" layoutY="103.0" prefWidth="150.0" promptText="Choose a building" />
+      <CheckBox layoutX="43.0" layoutY="255.0" mnemonicParsing="false" text="Whiteboard?" />
+      <Label layoutX="41.0" layoutY="146.0" text="Capacity:" />
+      <Spinner editable="true" layoutX="40.0" layoutY="174.0" prefHeight="25.0" prefWidth="126.0" />
+      <Button layoutX="40.0" layoutY="315.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="71.0" text="Search" />
+      <Button fx:id="continueButton" layoutX="471.0" layoutY="278.0" mnemonicParsing="false" text="Continue" />
+      <Line endX="-100.00001525878906" endY="-341.0" layoutX="300.0" layoutY="341.0" startX="-100.00001525878906" startY="59.000030517578125" stroke="#aaa6a6" />
+      <ListView fx:id="roomListView" layoutX="226.0" layoutY="68.0" prefHeight="236.0" prefWidth="220.0" />
     </children>
 </AnchorPane>

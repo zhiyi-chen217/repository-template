@@ -1,5 +1,13 @@
 .root{
     -fx-background-color: #27ACE8;
+    -fx-background-image: url("../images/OOPP_background_ewi.jpg");
+    -fx-background-size:100% auto;
+    -fx-background-size:auto 100%;
+}
+
+.table-view{
+    -fx-background-color: transparent;
+    -fx-color-label-visible: false;
 }
 
 .button{
@@ -9,4 +17,10 @@
 .button:hover {
     -fx-border-color: #000000;
     -fx-border-width: 1px;
+    -fx-background-color: #27ACE8;
+}
+
+.rectangle {
+    -fx-background-color: #27ACE8;
+    -fx-opacity: 0.2;
 }

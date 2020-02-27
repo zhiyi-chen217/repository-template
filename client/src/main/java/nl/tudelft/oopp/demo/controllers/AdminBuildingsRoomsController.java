@@ -1,11 +1,12 @@
 package nl.tudelft.oopp.demo.controllers;
 
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.ListView;
 
 import java.io.IOException;
+import java.net.URISyntaxException;
 
 public class AdminBuildingsRoomsController extends GeneralHomepageController {
 
@@ -16,12 +17,13 @@ public class AdminBuildingsRoomsController extends GeneralHomepageController {
     @FXML private Button editRoomButton;
     @FXML private Button deleteRoomButton;
     @FXML private ListView<String> roomListView;
+    @FXML private ComboBox<String> buildingComboBox;
 
     /**
      * Initialization method that is run when the scene is loading.
      */
     @FXML
-    public void initialize() {
+    public void initialize() throws IOException, URISyntaxException {
         editBuildingButton.setDisable(true);
         deleteBuildingButton.setVisible(false);
         editRoomButton.setVisible(false);
@@ -29,23 +31,19 @@ public class AdminBuildingsRoomsController extends GeneralHomepageController {
         roomListView.setVisible(false);
     }
 
-    public void changeSceneHomepage(ActionEvent event) throws IOException {
-        changeScene(event, "/adminHomepageScene.fxml");
-    }
-
-    public void stageAddBuilding(ActionEvent event) throws IOException {
+    public void stageAddBuilding() throws IOException {
         newStage("/addABuilding.fxml");
     }
 
-    public void stageAddRoom(ActionEvent event) throws IOException {
+    public void stageAddRoom() throws IOException {
         newStage("/addARoomScene.fxml");
     }
 
-    public void stageEditRoom(ActionEvent event) throws IOException {
+    public void stageEditRoom() throws IOException {
         newStage("/editRoomScene.fxml");
     }
 
-    public void stageEditBuilding(ActionEvent event) throws IOException {
+    public void stageEditBuilding() throws IOException {
         newStage("/editBuildingScene.fxml");
     }
 }
