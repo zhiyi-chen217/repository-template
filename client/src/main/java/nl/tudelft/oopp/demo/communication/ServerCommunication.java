@@ -8,6 +8,7 @@ import org.apache.http.impl.client.*;
 import org.json.JSONObject;
 
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.net.http.HttpClient;
@@ -23,7 +24,7 @@ public class ServerCommunication {
 
     private static HttpClient client = HttpClient.newBuilder().build();
     private static CloseableHttpClient httpClient = HttpClients.createDefault();
-    private static String pubAuth;
+    private static String pubAuth = "Basic YWRtaW46MTIzNDU=";
 
     /**
      * Send the username and password under the authentication header to the server.
@@ -70,7 +71,6 @@ public class ServerCommunication {
                 + "\"email\" : \"" + email + "\","
                 + "\"password\" : \"" + password + "\"}";
         httpPost.setEntity(new StringEntity(json));
-        //httpPost.setHeader("Accept", "application/json");
         httpPost.setHeader("Content-type", "application/json");
         CloseableHttpResponse response = httpClient.execute(httpPost);
         return response;
@@ -173,7 +173,7 @@ public class ServerCommunication {
             throws IOException, URISyntaxException {
         URIBuilder builder = new URIBuilder("http://localhost:8080/admin/buildings");
         HttpDelete httpDelete = new HttpDelete();
-        httpDelete.setHeader("Authorization", "Basic YWRtaW46MTIzNDU=");
+        httpDelete.setHeader("Authorization", pubAuth);
         for (String s: name) {
             builder.addParameter("names", s);
         }
@@ -181,6 +181,80 @@ public class ServerCommunication {
         return httpClient.execute(httpDelete);
     }
 
+    public static CloseableHttpResponse createRoom(String roomId, String name, int capacity,
+                                                   String building, String description, String type,
+                                                   String picturesPath, boolean whiteboard, boolean tv)
+            throws IOException {
+        JSONObject json = new JSONObject();
+        JSONObject innerJson = new JSONObject();
+        innerJson.put("name", building);
+        json.put("roomId", roomId)
+                .put("name", name)
+                .put("capacity", capacity)
+                .put("building", innerJson)
+                .put("description", description)
+                .put("picturesPath", picturesPath)
+                .put("type", type)
+                .put("whiteboard", whiteboard)
+                .put("tv", tv);
+        HttpPost httpPost = new HttpPost("http://localhost:8080/admin/room");
+        httpPost.setHeader("Authorization", pubAuth);
+        httpPost.setEntity(new StringEntity(json.toString()));
+        httpPost.setHeader("Content-type", "application/json");
+        return httpClient.execute(httpPost);
+    }
+
+    public static CloseableHttpResponse updateRoom(String roomId, String name, int capacity,
+                                                   String building, String description, String type,
+                                                   String picturesPath, boolean whiteboard, boolean tv)
+            throws IOException {
+        JSONObject json = new JSONObject();
+        JSONObject innerJson = new JSONObject();
+        innerJson.put("name", building);
+        json.put("roomId", roomId)
+                .put("name", name)
+                .put("capacity", capacity)
+                .put("building", innerJson)
+                .put("description", description)
+                .put("picturesPath", picturesPath)
+                .put("type", type)
+                .put("whiteboard", whiteboard)
+                .put("tv", tv);
+        HttpPut httpPut = new HttpPut("http://localhost:8080/admin/room");
+        httpPut.setHeader("Authorization", pubAuth);
+        httpPut.setEntity(new StringEntity(json.toString()));
+        httpPut.setHeader("Content-type", "application/json");
+        return httpClient.execute(httpPut);
+    }
+
+    public static CloseableHttpResponse readRoom(String roomId, String building) throws IOException, URISyntaxException {
+        URIBuilder uri = new URIBuilder("http://localhost:8080/rooms");
+        HttpGet httpGet = new HttpGet();
+        httpGet.setHeader("Authorization", pubAuth);
+        if(building != null){
+            uri.addParameter("building", building);
+            httpGet.setURI(uri.build());
+            return httpClient.execute(httpGet);
+        }
+        if(roomId != null){
+            uri.addParameter("roomId", roomId);
+            httpGet.setURI(uri.build());
+            return httpClient.execute(httpGet);
+        }
+        httpGet.setURI(uri.build());
+        return httpClient.execute(httpGet);
+    }
+
+    public static CloseableHttpResponse deleteRoom(List<String> roomIds) throws IOException, URISyntaxException {
+        URIBuilder uri = new URIBuilder("http://localhost:8080/admin/room");
+        for (String s: roomIds) {
+            uri.addParameter("roomIds", s);
+        }
+        HttpDelete httpDelete = new HttpDelete();
+        httpDelete.setHeader("Authorization", pubAuth);
+        httpDelete.setURI(uri.build());
+        return httpClient.execute(httpDelete);
+    }
 
 
     /**
