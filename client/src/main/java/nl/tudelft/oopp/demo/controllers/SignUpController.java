@@ -56,8 +56,8 @@ public class SignUpController {
 //        CloseableHttpResponse re = ServerCommunication.updateRoom("ewi02", "01", 9,
 //                "b1", "", "ALL_CAN_USE", "", true, true);
 //        System.out.println(re.getStatusLine().getStatusCode());
-        CloseableHttpResponse re = ServerCommunication.deleteRoom(List.of("ewi01"));
-        System.out.println(EntityUtils.toString(re.getEntity()));
+        //CloseableHttpResponse re = ServerCommunication.deleteRoom(List.of("ewi01"));
+        //System.out.println(EntityUtils.toString(re.getEntity()));
         failtext.setText("");
         String netidstr = netid.getText();
 

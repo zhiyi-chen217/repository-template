@@ -17,7 +17,7 @@ public class Room {
     @Column(name = "capacity")
     private int capacity;
 
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne
     private Building building;
 
     @Column(name = "description")
