@@ -12,6 +12,7 @@ import org.springframework.orm.jpa.JpaObjectRetrievalFailureException;
 import org.springframework.web.bind.annotation.*;
 
 import javax.persistence.EntityNotFoundException;
+import java.lang.module.ResolutionException;
 import java.util.List;
 import java.util.Optional;
 
@@ -80,11 +81,13 @@ public class RoomController {
             return ResponseEntity.accepted().body(roomRepository.findAll());
         }
         Optional<Room> tempRoom = roomRepository.findByRoomId(roomId.get());
-        if (tempRoom.isPresent()) {
-            return ResponseEntity.accepted().body(tempRoom);
+        if(tempRoom.isPresent()){
+            return ResponseEntity.accepted().body(tempRoom.get());
         }
         return ResponseEntity.badRequest().body("The room does not exist!");
     }
+
+
 
     /**
      * This method receives a list of roomId
