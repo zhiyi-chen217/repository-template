@@ -54,7 +54,17 @@ public class ServerCommunication {
         return response;
     }
 
-    public static CloseableHttpResponse sendSignUp(String netid, String email, String password) throws IOException {
+    /**
+     * Sending the signup info to the server, so it can be stored in the database.
+     * @param netid the username of the user signing up
+     * @param email the email address of the user signing up
+     * @param password the password of the user signing up
+     * @return a ClosableHttpResponse containing text about the success of signing up.
+     * @throws IOException if something goes wrong with sending the info
+     */
+
+    public static CloseableHttpResponse sendSignUp(String netid,
+                             String email, String password) throws IOException {
         HttpPost httpPost = new HttpPost("http://localhost:8080/signup");
         String json = "{\"userId\" : \"" + netid + "\","
                 + "\"email\" : \"" + email + "\","
@@ -66,9 +76,22 @@ public class ServerCommunication {
         return response;
     }
 
+    /**
+     * Sends the info about a building to the server so it can be stored in the database.
+     * @param name the name of the building
+     * @param location the location of the building
+     * @param openingHour the opening hour of the building
+     * @param closingHour the closing hour of the building
+     * @param picturesPath the path of the picture of the building
+     * @param bikes the amount of bikes at the building
+     * @return a ClosableHttpResponse which contains info about if the building is saved
+     * @throws IOException if anything goes wrong with communicating with the server
+     */
+
     public static CloseableHttpResponse createBuilding(String name, String location,
                                                        LocalTime openingHour, LocalTime closingHour,
-                                                       String picturesPath, int bikes) throws IOException {
+                                                       String picturesPath, int bikes)
+            throws IOException {
         JSONObject json = new JSONObject();
         json.put("name", name);
         json.put("location", location);
@@ -84,9 +107,22 @@ public class ServerCommunication {
         return response;
     }
 
+    /**
+     * Sending the details to update a building in the database.
+     * @param name the name of the building to be updated
+     * @param location the updated location of the building
+     * @param openingHour the updated opening hour of the building
+     * @param closingHour the updated closing hour of the building
+     * @param picturesPath the updated pictures path of the building
+     * @param bikes the updated amount of bikes at the building
+     * @return a ClosableHttpResponse containing info about the success of updating a building
+     * @throws IOException if anything goes wrong with communicating with the server
+     */
+
     public static CloseableHttpResponse updateBuilding(String name, String location,
                                                        LocalTime openingHour, LocalTime closingHour,
-                                                       String picturesPath, int bikes) throws IOException {
+                                                       String picturesPath, int bikes)
+            throws IOException {
         JSONObject json = new JSONObject();
         json.put("name", name);
         json.put("location", location);
@@ -103,7 +139,16 @@ public class ServerCommunication {
         return response;
     }
 
-    public static CloseableHttpResponse readBuilding(String name) throws IOException, URISyntaxException {
+    /**
+     * read the info of a building.
+     * @param name the name of a building
+     * @return a ClosableHttpResponse containing info about the building
+     * @throws IOException if anything goes wrong with communicating with the server
+     * @throws URISyntaxException if the uri has any syntax errors
+     */
+
+    public static CloseableHttpResponse readBuilding(String name)
+            throws IOException, URISyntaxException {
         URIBuilder builder = new URIBuilder("http://localhost:8080/buildings");
         HttpGet httpGet = new HttpGet();
         httpGet.setHeader("Authorization", pubAuth);
@@ -116,7 +161,16 @@ public class ServerCommunication {
         return httpClient.execute(httpGet);
     }
 
-    public static CloseableHttpResponse deleteBuilding(List<String> name) throws IOException, URISyntaxException {
+    /**
+     * Send a name to the server so it can delete a building out the database.
+     * @param name the name of the building to be deleted
+     * @return a ClosableHttpResponse containing about the success of deleting the building
+     * @throws IOException if anything goes wrong with the communication with the server
+     * @throws URISyntaxException if there is any syntax error in the uri
+     */
+
+    public static CloseableHttpResponse deleteBuilding(List<String> name)
+            throws IOException, URISyntaxException {
         URIBuilder builder = new URIBuilder("http://localhost:8080/admin/buildings");
         HttpDelete httpDelete = new HttpDelete();
         httpDelete.setHeader("Authorization", "Basic YWRtaW46MTIzNDU=");

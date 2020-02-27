@@ -93,7 +93,8 @@ public class SignUpController {
             return;
         }
 
-        CloseableHttpResponse response = ServerCommunication.sendSignUp(netidstr, emailstr1, passstr1);
+        CloseableHttpResponse response = ServerCommunication
+                .sendSignUp(netidstr, emailstr1, passstr1);
 
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
         if (response.getStatusLine().getStatusCode() == 202) {
