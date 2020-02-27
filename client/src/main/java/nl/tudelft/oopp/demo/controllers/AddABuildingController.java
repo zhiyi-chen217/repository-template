@@ -42,6 +42,7 @@ public class AddABuildingController {
      * @param event the event that called this function
      */
     public void addBuilding(ActionEvent event) {
+        failtext.setText("");
         String bldName = buildingName.getText();
         String bldoh = buildingOpeningHour.getText();
         String bldch = buildingClosingHour.getText();
@@ -53,28 +54,35 @@ public class AddABuildingController {
         }
 
         String timeRegex = "^([0-9]|0[0-9]|1[0-9]|2[0-3]):[0-5][0-9]$";
-        Pattern pat = Pattern.compile(timeRegex);
+        Pattern pat1 = Pattern.compile(timeRegex);
+        Pattern pat2 = Pattern.compile(timeRegex);
 
-        if (!pat.matcher(bldoh).matches()) {
+        if (!pat1.matcher(bldoh).matches()) {
             failtext.setText("Please input a valid opening time.");
             return;
         }
 
-        if (!pat.matcher(bldch).matches()) {
-            failtext.setText("Please input a valid closing time");
+        if (!pat2.matcher(bldch).matches()) {
+            failtext.setText("Please input a valid closing time.");
+            return;
         }
 
         String[] oharr = bldoh.split(":");
         String[] charr = bldch.split(":");
         LocalTime oh;
-        oh = LocalTime.of(Integer.parseInt(oharr[1]), Integer.parseInt(oharr[2]));
+        oh = LocalTime.of(Integer.parseInt(oharr[0]), Integer.parseInt(oharr[1]));
         LocalTime ch;
-        ch = LocalTime.of(Integer.parseInt(charr[1]), Integer.parseInt(charr[2]));
+        ch = LocalTime.of(Integer.parseInt(charr[0]), Integer.parseInt(charr[1]));
+
+        if (oh.isAfter(ch) || ch.equals(oh)) {
+            failtext.setText("Please input a opening time that is before closing time.");
+            return;
+        }
 
         String bldpp = buildingPicturesPath.getText();
         String bldloc = buildingLocation.getText();
         if (bldpp.length() == 0) {
-            failtext.setText("Please make sure there is a valid picture path");
+            failtext.setText("Please make sure there is a valid picture path.");
             return;
         }
 
@@ -83,11 +91,13 @@ public class AddABuildingController {
             return;
         }
 
-        int bldBikes = Integer.parseInt(buildingBikes.getText());
-        if (bldBikes < 0) {
-            failtext.setText("Please make sure there is not a negative number of bikes.");
+        String bldBikes = buildingBikes.getText();
+        if (bldBikes.length() == 0 || !bldBikes.matches("\\d+")) {
+            failtext.setText("Please make sure the number of bikes is correct.");
             return;
         }
+        int bldBikesint = Integer.parseInt(bldBikes);
+
 
         CloseableHttpResponse response;
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
@@ -95,7 +105,7 @@ public class AddABuildingController {
 
         try {
             response = ServerCommunication
-                    .createBuilding(bldName, bldloc, oh, ch, bldpp, bldBikes);
+                    .createBuilding(bldName, bldloc, oh, ch, bldpp, bldBikesint);
             statusCode = response.getStatusLine().getStatusCode();
             alert.setContentText(EntityUtils.toString(response.getEntity(), "UTF-8"));
         } catch (Exception e) {
