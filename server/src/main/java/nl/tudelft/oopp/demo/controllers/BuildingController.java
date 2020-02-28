@@ -90,8 +90,7 @@ public class BuildingController {
                 buildingRepository.deleteById(name);
             }
             return ResponseEntity.accepted().body("all deleted");
-        }
-        catch (EmptyResultDataAccessException e){
+        } catch (EmptyResultDataAccessException e) {
             throw new EmptyResultDataAccessException("Cannot delete non-existing building",1);
         }
     }

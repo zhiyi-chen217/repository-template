@@ -1,38 +1,25 @@
 package nl.tudelft.oopp.demo.entities;
 
-import javax.persistence.*;
+import org.json.JSONObject;
 
-
-@Entity
-@Table(name = "room")
 public class  Room {
 
-    @Id
-    @Column(name = "roomId")
     private String roomId;
 
-    @Column(name = "name")
     private String name;
 
-    @Column(name = "capacity")
     private int capacity;
 
-    @ManyToOne
     private Building building;
 
-    @Column(name = "description")
     private String description;
 
-    @Column(name = "type")
     private String type;
 
-    @Column(name = "picturesPath")
     private String picturesPath;
 
-    @Column(name = "whiteboard")
     private boolean whiteboard;
 
-    @Column(name = "tv")
     private boolean tv;
 
     public Room() {
@@ -47,7 +34,7 @@ public class  Room {
      * @param building is the building the room is located in
      */
     public Room(String roomId, String name, int capacity, boolean whiteboard,
-                            boolean tv, Building building) {
+                boolean tv, Building building) {
         this.roomId = roomId;
         this.name = name;
         this.capacity = capacity;
@@ -57,6 +44,17 @@ public class  Room {
         this.whiteboard = whiteboard;
         this.tv = tv;
         this.building = building;
+    }
+    public Room(JSONObject room){
+        this.roomId = room.getString("roomId");
+        this.name = room.getString("name");
+        this.capacity = room.getInt("capacity");
+        this.description = room.getString("description");
+        this.type = room.getString("type");
+        this.picturesPath = room.getString("picturesPath");
+        this.whiteboard = room.getBoolean("whiteboard");
+        this.tv = room.getBoolean("tv");
+        this.building = new Building(room.getJSONObject("building"));
     }
 
     public String getRoomId() {
@@ -129,6 +127,11 @@ public class  Room {
 
     public void setBuilding(Building building) {
         this.building = building;
+    }
+
+    @Override
+    public String toString() {
+        return this.name;
     }
 
     @Override

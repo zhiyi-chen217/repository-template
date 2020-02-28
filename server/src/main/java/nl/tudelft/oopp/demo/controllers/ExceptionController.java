@@ -18,7 +18,8 @@ public class ExceptionController {
      * when the asked entity does not exist.
      * @return a badRequest ResponseEntity
      */
-    @ExceptionHandler(value = {EmptyResultDataAccessException.class, InvalidforeginkeyException.class})
+    @ExceptionHandler(value = {EmptyResultDataAccessException.class,
+            InvalidforeginkeyException.class})
     public ResponseEntity invalidEntityName(Exception e) {
         return ResponseEntity.badRequest().body(e.getMessage());
     }

@@ -14,14 +14,18 @@ import javafx.scene.image.Image;
 import javafx.stage.Stage;
 import nl.tudelft.oopp.demo.communication.ServerCommunication;
 
+import nl.tudelft.oopp.demo.entities.Building;
+import nl.tudelft.oopp.demo.entities.Room;
 import org.apache.http.client.methods.CloseableHttpResponse;
 import org.apache.http.util.EntityUtils;
+import org.json.JSONObject;
 
 import java.io.IOException;
 import java.net.URISyntaxException;
 import java.net.http.HttpResponse;
 import java.sql.Time;
 import java.time.LocalTime;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.regex.Pattern;
@@ -50,7 +54,12 @@ public class SignUpController {
                 "", 3);
 
          */
-        //CloseableHttpResponse re = ServerCommunication.deleteBuilding(List.of("bb", "b1"));
+        CloseableHttpResponse re = ServerCommunication.readRoom("ewi01", null);
+        System.out.println(new Room(new JSONObject(EntityUtils.toString(re.getEntity()))).toString());
+//        CloseableHttpResponse re = ServerCommunication.updateRoom("ewi02", "01", 9,
+//                "b1", "", "ALL_CAN_USE", "", true, true);
+//        System.out.println(re.getStatusLine().getStatusCode());
+        //CloseableHttpResponse re = ServerCommunication.deleteRoom(List.of("ewi01"));
         //System.out.println(EntityUtils.toString(re.getEntity()));
         failtext.setText("");
         String netidstr = netid.getText();
@@ -93,7 +102,8 @@ public class SignUpController {
             return;
         }
 
-        CloseableHttpResponse response = ServerCommunication.sendSignUp(netidstr, emailstr1, passstr1);
+        CloseableHttpResponse response = ServerCommunication
+                .sendSignUp(netidstr, emailstr1, passstr1);
 
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
         if (response.getStatusLine().getStatusCode() == 202) {
