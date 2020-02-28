@@ -74,7 +74,7 @@ public class GeneralHomepageController {
         Parent parent;
         try {
             parent = FXMLLoader.load(getClass().getResource(path));
-        } catch (IOException e) {
+        } catch (Exception e) {
             e.printStackTrace();
             Alert alert = new Alert(Alert.AlertType.INFORMATION);
             alert.setTitle("Loading failed");
