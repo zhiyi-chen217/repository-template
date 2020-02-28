@@ -20,6 +20,7 @@ import org.apache.http.util.EntityUtils;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
+import javax.swing.*;
 import java.io.IOException;
 import java.net.URISyntaxException;
 import java.util.ArrayList;
@@ -88,24 +89,24 @@ public class AdminBuildingsRoomsController extends GeneralHomepageController {
         Room selected = rooms.stream().filter(s -> s.getName().equals(temp))
                 .collect(Collectors.toList()).get(0);
         EditRoomController.setRoom(selected);
-        newStage("/editRoomScene.fxml");
+        newStage("/editRoomScene.fxml", editRoomButton);
     }
 
-    public void stageEditBuilding(ActionEvent event) throws IOException {
+    public void stageEditBuilding() throws IOException {
         Building building = buildingChoiceBox.getValue();
         EditBuildingController.setBuilding(building);
 
-        FXMLLoader loader = new FXMLLoader();
-        loader.setLocation(getClass().getResource("/editBuildingScene.fxml"));
-        Parent homePageParent = loader.load();
-        Scene homePageScene = new Scene(homePageParent);
-
-        //Get current stage
-        Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-        stage.setScene(homePageScene);
-        stage.getIcons().add(new Image("https://simchavos.com/tu.png"));
-        stage.show();
-        //newStage("/editBuildingScene.fxml");
+//        FXMLLoader loader = new FXMLLoader();
+//        loader.setLocation(getClass().getResource("/editBuildingScene.fxml"));
+//        Parent homePageParent = loader.load();
+//        Scene homePageScene = new Scene(homePageParent);
+//
+//        //Get current stage
+//        Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+//        stage.setScene(homePageScene);
+//        stage.getIcons().add(new Image("https://simchavos.com/tu.png"));
+//        stage.show();
+        newStage("/editBuildingScene.fxml", editBuildingButton);
     }
 
     /** Once a building is selected, the scene is somewhat changed.
