@@ -39,7 +39,7 @@ public class AdminBuildingsRoomsController extends GeneralHomepageController {
     @FXML private ChoiceBox<Building> buildingChoiceBox;
 
     private static ObservableList<Building> buildings;
-    private static ObservableList<Room> rooms = FXCollections.observableArrayList();
+    private static ObservableList<Room> rooms;
 
     /**
      * Initialization method that is run when the scene is loading.
@@ -117,6 +117,7 @@ public class AdminBuildingsRoomsController extends GeneralHomepageController {
 
     public void changeSelectedEvent(Observable v, Building oldBuilding, Building newBuilding)
             throws IOException, URISyntaxException {
+        rooms = FXCollections.observableArrayList();
         JSONArray jsonArray = new JSONArray(EntityUtils.toString(ServerCommunication
                 .readRoom(null, newBuilding.getName()).getEntity()));
         ObservableList<String> allRoom = FXCollections.observableArrayList();
