@@ -31,7 +31,6 @@ public class GeneralHomepageController {
     public void logout(ActionEvent event) {
         ServerCommunication.resetPubAuth();
         GeneralHomepageController.setUsername("");
-
         changeScene(event,"/mainScene.fxml");
     }
 
@@ -49,15 +48,22 @@ public class GeneralHomepageController {
         stage.show();
     }
 
-    /** Creates a new stage from the specified fxml file.
+    /** Creates a new stage from the specified fxml file and then
+     * optionally disables the node that caused the stage creation.
+     *
      * @param path the path to the fxml file that should be loaded into the scene
+     * @param node the node which causes the new stage to be made
      */
-    public void newStage(String path) {
+    public void newStage(String path, Node node) {
+        Stage newStage = new Stage();
         Parent parent = loadFxml(path);
         Scene buildings = new Scene(parent);
-        Stage stage = new Stage();
-        stage.setScene(buildings);
-        stage.show();
+        newStage.setScene(buildings);
+        newStage.show();
+        newStage.toFront();
+        if (node != null) {
+            node.disableProperty().bind(newStage.showingProperty());
+        }
     }
 
     /**

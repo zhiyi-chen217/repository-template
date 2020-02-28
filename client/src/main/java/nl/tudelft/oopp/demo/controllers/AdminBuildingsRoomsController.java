@@ -32,18 +32,18 @@ public class AdminBuildingsRoomsController extends GeneralHomepageController {
     }
 
     public void stageAddBuilding() {
-        newStage("/addABuilding.fxml");
+        newStage("/addABuilding.fxml", addBuildingButton);
     }
 
     public void stageAddRoom() {
-        newStage("/addARoomScene.fxml");
+        newStage("/addARoomScene.fxml", addRoomButton);
     }
 
     public void stageEditRoom() {
-        newStage("/editRoomScene.fxml");
+        newStage("/editRoomScene.fxml", editRoomButton);
     }
 
     public void stageEditBuilding() {
-        newStage("/editBuildingScene.fxml");
+        newStage("/editBuildingScene.fxml", editBuildingButton);
     }
 }
