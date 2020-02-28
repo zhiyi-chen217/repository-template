@@ -4,10 +4,16 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Node;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.ListView;
+import javafx.scene.image.Image;
+import javafx.stage.Stage;
 import nl.tudelft.oopp.demo.communication.ServerCommunication;
 import nl.tudelft.oopp.demo.entities.Building;
 import org.apache.http.util.EntityUtils;
@@ -27,7 +33,7 @@ public class AdminBuildingsRoomsController extends GeneralHomepageController {
     @FXML private Button deleteRoomButton;
     @FXML private ListView<String> roomListView;
     @FXML private ChoiceBox<Building> buildingChoiceBox;
-    private static ObservableList<Building> buildings = FXCollections.observableArrayList();
+    private static ObservableList<Building> buildings;
 
     /**
      * Initialization method that is run when the scene is loading.
@@ -39,7 +45,7 @@ public class AdminBuildingsRoomsController extends GeneralHomepageController {
         editRoomButton.setVisible(false);
         deleteRoomButton.setVisible(false);
         roomListView.setVisible(false);
-
+        buildings = FXCollections.observableArrayList();
         JSONArray jsonArray = new JSONArray(EntityUtils.toString(ServerCommunication.readBuilding(null)
                                         .getEntity()));
         for (int i = 0; i < jsonArray.length(); i++) {
@@ -61,7 +67,33 @@ public class AdminBuildingsRoomsController extends GeneralHomepageController {
         newStage("/editRoomScene.fxml");
     }
 
-    public void stageEditBuilding() throws IOException {
-        newStage("/editBuildingScene.fxml");
+    public void stageEditBuilding(ActionEvent event) throws IOException {
+        Building building = buildingChoiceBox.getValue();
+        EditBuildingController.setBuilding(building);
+
+        FXMLLoader loader = new FXMLLoader();
+        loader.setLocation(getClass().getResource("/editBuildingScene.fxml"));
+        Parent homePageParent = loader.load();
+        Scene homePageScene = new Scene(homePageParent);
+
+        //Get current stage
+        Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        stage.setScene(homePageScene);
+        stage.getIcons().add(new Image("https://simchavos.com/tu.png"));
+        stage.show();
+        //newStage("/editBuildingScene.fxml");
+    }
+
+    /** Once a building is selected, the scene is somewhat changed.
+     *
+     * @param event The event which calls this function
+     */
+    public void selectBuilding(ActionEvent event) {
+        editBuildingButton.setDisable(false);
+        deleteBuildingButton.setVisible(true);
+        editRoomButton.setVisible(true);
+        deleteRoomButton.setVisible(true);
+        roomListView.setVisible(true);
+
     }
 }

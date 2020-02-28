@@ -11,7 +11,7 @@
                 <Font size="15.0" />
             </font></Label>
         <Button layoutX="263.0" layoutY="157.0" mnemonicParsing="false" onAction="#changeSceneAdminHomepage" text="Back" AnchorPane.bottomAnchor="356.8" AnchorPane.leftAnchor="20.0" />
-        <ChoiceBox fx:id="buildingChoiceBox" layoutX="20.0" layoutY="59.0" prefWidth="150.0" />
+        <ChoiceBox fx:id="buildingChoiceBox" layoutX="20.0" layoutY="59.0" prefWidth="150.0" onAction="#selectBuilding" />
       <ListView fx:id="roomListView" layoutX="284.0" layoutY="59.0" prefHeight="252.0" prefWidth="200.0" />
       <Button fx:id="addBuildingButton" layoutX="20.0" layoutY="319.0" mnemonicParsing="false" onAction="#stageAddBuilding" text="Add building" />
       <Button fx:id="deleteRoomButton" layoutX="495.0" layoutY="59.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="83.0" text="Delete room" />

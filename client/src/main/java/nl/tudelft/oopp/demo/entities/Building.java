@@ -30,6 +30,7 @@ public class Building {
                 Integer.parseInt(temp2[1]), Integer.parseInt(temp2[2]));
         this.closingHour = closingHour;
         this.bikes = (Integer) building.get("bikes");
+        this.picturesPath = building.getString("picturesPath");
     }
 
     /**Constructor for the building class.
