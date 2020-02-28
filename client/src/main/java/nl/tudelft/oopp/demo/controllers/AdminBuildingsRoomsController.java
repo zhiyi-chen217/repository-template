@@ -117,14 +117,19 @@ public class AdminBuildingsRoomsController extends GeneralHomepageController {
     public void deleteBuilding() {
         Building building = buildingChoiceBox.getValue();
         String name = building.getName();
-        List<String> list = new ArrayList<>();
-        list.add(name);
-
         Alert alert;
         try {
-            CloseableHttpResponse response = ServerCommunication.deleteBuilding(list);
+            CloseableHttpResponse response = ServerCommunication.deleteBuilding(name);
             alert = new Alert(Alert.AlertType.CONFIRMATION);
             alert.setContentText(EntityUtils.toString(response.getEntity(), "UTF-8"));
+            if (response.getStatusLine().getStatusCode() == 202) {
+                ObservableList<Building> tempB = buildingChoiceBox.getItems();
+                tempB.remove(building);
+                buildingChoiceBox.setItems(tempB);
+                ObservableList<String> tempR = roomListView.getItems();
+                tempR.removeAll();
+                roomListView.setItems(tempR);
+            }
         } catch (Exception e) {
             alert = new Alert(Alert.AlertType.ERROR);
             alert.setContentText("Something went wrong, please try again.");
