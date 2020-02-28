@@ -6,7 +6,6 @@ import javafx.scene.control.ComboBox;
 import javafx.scene.control.ListView;
 
 import java.io.IOException;
-import java.net.URISyntaxException;
 
 public class AdminBuildingsRoomsController extends GeneralHomepageController {
 
@@ -23,7 +22,7 @@ public class AdminBuildingsRoomsController extends GeneralHomepageController {
      * Initialization method that is run when the scene is loading.
      */
     @FXML
-    public void initialize() throws IOException, URISyntaxException {
+    public void initialize() {
         editBuildingButton.setDisable(true);
         deleteBuildingButton.setVisible(false);
         editRoomButton.setVisible(false);
