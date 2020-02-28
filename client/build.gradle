@@ -2,20 +2,11 @@ plugins {
     id 'org.openjfx.javafxplugin' version '0.0.8'
 }
 
-repositories {
-    jcenter()
-}
-
 mainClassName = "nl.tudelft.oopp.demo.MainApp"
 
 dependencies {
     testCompile("org.junit.jupiter:junit-jupiter-api:5.6.0")
     testRuntime("org.junit.jupiter:junit-jupiter-engine:5.6.0")
-    compile 'org.apache.httpcomponents:httpclient:4.5.11'
-    compile group: 'org.json', name: 'json', version: '20190722'
-    compile 'org.kordamp.ikonli:ikonli-javafx:11.3.5'
-    compile 'org.kordamp.ikonli:ikonli-material-pack:11.3.5'
-    compile 'org.kordamp.ikonli:ikonli-elusive-pack:11.3.5'
 }
 
 javafx {
