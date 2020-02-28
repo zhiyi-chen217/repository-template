@@ -101,7 +101,7 @@ public class AddABuildingController {
 
         CloseableHttpResponse response;
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
-        int statusCode = 200;
+        int statusCode = 0;
 
         try {
             response = ServerCommunication

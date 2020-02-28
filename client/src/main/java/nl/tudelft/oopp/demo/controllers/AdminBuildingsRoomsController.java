@@ -81,6 +81,8 @@ public class AdminBuildingsRoomsController extends GeneralHomepageController {
     }
 
     public void stageAddRoom() {
+        Building building = buildingChoiceBox.getValue();
+        AddARoomController.setBuilding(building);
         newStage("/addARoomScene.fxml", addRoomButton);
     }
 

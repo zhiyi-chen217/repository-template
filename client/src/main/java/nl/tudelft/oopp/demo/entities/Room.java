@@ -93,8 +93,16 @@ public class  Room {
         return type;
     }
 
-    public void setType(String type) {
-        this.type = type;
+    /**
+     * Sets the type of room according to a boolean value.
+     * @param type true if type should be employee only, false otherwise
+     */
+    public void setType(Boolean type) {
+        if (type) {
+            this.type = "Employee";
+        } else {
+            this.type = "AllCanUse";
+        }
     }
 
     public String getPicturesPath() {
