@@ -129,6 +129,8 @@ public class  Room {
         this.building = building;
     }
 
+    public String getBuildingName() { return this.building.getName(); }
+
     @Override
     public String toString() {
         return this.name;
