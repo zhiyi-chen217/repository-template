@@ -75,12 +75,12 @@ public class AdminBuildingsRoomsController extends GeneralHomepageController {
         );
     }
 
-    public void stageAddBuilding() throws IOException {
-        newStage("/addABuilding.fxml");
+    public void stageAddBuilding() {
+        newStage("/addABuilding.fxml", addBuildingButton);
     }
 
-    public void stageAddRoom() throws IOException {
-        newStage("/addARoomScene.fxml");
+    public void stageAddRoom() {
+        newStage("/addARoomScene.fxml", addRoomButton);
     }
 
     public void stageEditRoom() throws IOException {

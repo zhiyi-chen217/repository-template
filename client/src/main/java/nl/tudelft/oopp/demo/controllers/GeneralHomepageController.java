@@ -1,20 +1,16 @@
 package nl.tudelft.oopp.demo.controllers;
 
-import com.sun.javafx.image.impl.General;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Label;
-import javafx.scene.image.Image;
 import javafx.stage.Stage;
 import nl.tudelft.oopp.demo.communication.ServerCommunication;
-import nl.tudelft.oopp.demo.views.MainDisplay;
 
-import javax.swing.*;
 import java.io.IOException;
 
 public class GeneralHomepageController {
@@ -23,8 +19,6 @@ public class GeneralHomepageController {
 
     @FXML
     private Label welcomeLabel;
-    @FXML
-    private Button logoutBtn;
 
     public void setWelcomeMessage() {
         welcomeLabel.setText("Welcome " + username);
@@ -33,21 +27,11 @@ public class GeneralHomepageController {
     /**This function makes sure the user is logged out once the logout button is pressed.
      *
      * @param event the event which causes this logout function to start
-     * @throws IOException the exception can be thrown if the fxml loader cant load the resource
      */
-    public void logout(ActionEvent event) throws IOException {
+    public void logout(ActionEvent event) {
         ServerCommunication.resetPubAuth();
         GeneralHomepageController.setUsername("");
-        FXMLLoader loader = new FXMLLoader();
-        loader.setLocation(getClass().getResource("/mainScene.fxml"));
-        Parent homePageParent = loader.load();
-        Scene homePageScene = new Scene(homePageParent);
-
-        //Get current stage
-        Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-        stage.setScene(homePageScene);
-        stage.getIcons().add(new Image("https://simchavos.com/tu.png"));
-        stage.show();
+        changeScene(event,"/mainScene.fxml");
     }
 
     /** This method changes the scene to the referenced fxml file.
@@ -56,30 +40,57 @@ public class GeneralHomepageController {
      * @param path the path to the FXML file
      */
 
-    public void changeScene(ActionEvent event, String path) throws IOException {
-        Parent parent = FXMLLoader.load(getClass().getResource(path));
-        Scene scene = new Scene(parent);
+    public void changeScene(ActionEvent event, String path) {
+        Parent parent = loadFxml(path);
         Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        Scene scene = new Scene(parent);
         stage.setScene(scene);
         stage.show();
     }
 
-    /** Creates a new stage from the specified fxml file.
+    /** Creates a new stage from the specified fxml file and then
+     * optionally disables the node that caused the stage creation.
+     *
      * @param path the path to the fxml file that should be loaded into the scene
+     * @param node the node which causes the new stage to be made
      */
-    public void newStage(String path) throws IOException {
-        Parent buildingRoomParent = FXMLLoader.load(getClass().getResource(path));
-        Scene buildings = new Scene(buildingRoomParent);
-        Stage stage = new Stage();
-        stage.setScene(buildings);
-        stage.show();
+    public void newStage(String path, Node node) {
+        Stage newStage = new Stage();
+        Parent parent = loadFxml(path);
+        Scene buildings = new Scene(parent);
+        newStage.setScene(buildings);
+        newStage.show();
+        newStage.toFront();
+        if (node != null) {
+            node.disableProperty().bind(newStage.showingProperty());
+        }
     }
 
-    public void changeSceneHomepage(ActionEvent event) throws IOException {
+    /**
+     * Load the provided FXML file.
+     * @param path the path to the FXML file
+     */
+    public Parent loadFxml(String path) {
+        Parent parent;
+        try {
+            parent = FXMLLoader.load(getClass().getResource(path));
+        } catch (Exception e) {
+            e.printStackTrace();
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setTitle("Loading failed");
+            alert.setContentText("Loading failed");
+            alert.setHeaderText(null);
+            alert.showAndWait();
+            return null;
+        }
+        return parent;
+    }
+
+    public void changeSceneHomepage(ActionEvent event) {
         changeScene(event, "/homepageScene.fxml");
     }
 
-    public void changeSceneAdminHomepage(ActionEvent event) throws IOException {
+    public void changeSceneAdminHomepage(ActionEvent event) {
         changeScene(event, "/adminHomepageScene.fxml");
     }
 

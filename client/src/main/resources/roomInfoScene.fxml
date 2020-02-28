@@ -1,14 +1,37 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.*?>
-<?import java.util.*?>
-<?import javafx.scene.*?>
 <?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
 <?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
 
-<AnchorPane xmlns="http://javafx.com/javafx"
-            xmlns:fx="http://javafx.com/fxml"
-            fx:controller="$CONTROLLER_NAME$"
-            prefHeight="400.0" prefWidth="600.0">
-
+<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="nl.tudelft.oopp.demo.controllers.RoomInfoController">
+   <children>
+      <VBox layoutX="342.0" layoutY="53.0">
+         <children>
+            <Label text="Available timeslots">
+               <font>
+                  <Font size="14.0" />
+               </font>
+            </Label>
+            <ListView prefHeight="269.0" prefWidth="200.0" VBox.vgrow="ALWAYS" />
+            <Button alignment="CENTER_RIGHT" contentDisplay="CENTER" mnemonicParsing="false" text="Confirm" VBox.vgrow="ALWAYS" />
+         </children>
+      </VBox>
+      <Label layoutX="34.0" layoutY="40.0" text="Room Name">
+         <font>
+            <Font size="18.0" />
+         </font></Label>
+      <Button mnemonicParsing="false" text="Back" />
+      <VBox layoutX="34.0" layoutY="77.0">
+         <children>
+            <ImageView fitHeight="157.0" fitWidth="286.0" pickOnBounds="true" preserveRatio="true" />
+            <Label alignment="TOP_LEFT" prefHeight="40.0" prefWidth="286.0" text="Description" VBox.vgrow="ALWAYS" />
+            <Label prefHeight="18.0" prefWidth="285.0" text="Capacity" VBox.vgrow="ALWAYS" />
+            <Label text="TV:" VBox.vgrow="ALWAYS" />
+            <Label text="Whiteboard:" VBox.vgrow="ALWAYS" />
+            <Label text="(Employee only)" VBox.vgrow="ALWAYS" />
+         </children>
+      </VBox>
+   </children>
 </AnchorPane>
