@@ -9,21 +9,20 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.ChoiceBox;
-import javafx.scene.control.ComboBox;
-import javafx.scene.control.ListView;
+import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.stage.Stage;
 import nl.tudelft.oopp.demo.communication.ServerCommunication;
 import nl.tudelft.oopp.demo.entities.Building;
 import nl.tudelft.oopp.demo.entities.Room;
+import org.apache.http.client.methods.CloseableHttpResponse;
 import org.apache.http.util.EntityUtils;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.io.IOException;
 import java.net.URISyntaxException;
+import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.stream.Collector;
@@ -119,7 +118,30 @@ public class AdminBuildingsRoomsController extends GeneralHomepageController {
         editRoomButton.setVisible(true);
         deleteRoomButton.setVisible(true);
         roomListView.setVisible(true);
+    }
 
+    public void deleteBuilding() {
+        Building building = buildingChoiceBox.getValue();
+        String name = building.getName();
+        List<String> list = new ArrayList<>();
+        list.add(name);
+
+        Alert alert;
+        try {
+            CloseableHttpResponse response = ServerCommunication.deleteBuilding(list);
+            alert = new Alert(Alert.AlertType.CONFIRMATION);
+            alert.setContentText(EntityUtils.toString(response.getEntity(), "UTF-8"));
+        } catch (Exception e) {
+            alert = new Alert(Alert.AlertType.ERROR);
+            alert.setContentText("Something went wrong, please try again.");
+            alert.setHeaderText(null);
+            alert.setTitle("Error");
+            alert.showAndWait();
+            return;
+        }
+        alert.setTitle("Success!");
+        alert.setHeaderText(null);
+        alert.showAndWait();
     }
 
     public void changeSelectedEvent(Observable v, Building oldBuilding, Building newBuilding)
