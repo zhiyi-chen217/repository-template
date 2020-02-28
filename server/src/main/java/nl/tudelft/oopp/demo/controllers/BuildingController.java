@@ -80,15 +80,13 @@ public class BuildingController {
 
     /**
      * This method tries to delete the provided building.
-     * @param names a list of names of the specified building
+     * @param name a list of names of the specified building
      * @return an HttpResponse indicating the status of the operation
      */
     @DeleteMapping("admin/buildings")
-    public ResponseEntity deleteBuilding(@RequestParam List<String> names) {
+    public ResponseEntity deleteBuilding(@RequestParam String name) {
         try {
-            for (String name : names) {
-                buildingRepository.deleteById(name);
-            }
+            buildingRepository.deleteById(name);
             return ResponseEntity.accepted().body("all deleted");
         } catch (EmptyResultDataAccessException e) {
             throw new EmptyResultDataAccessException("Cannot delete non-existing building",1);
