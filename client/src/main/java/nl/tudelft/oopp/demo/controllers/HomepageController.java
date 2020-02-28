@@ -1,21 +1,14 @@
 package nl.tudelft.oopp.demo.controllers;
 
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import java.io.IOException;
+import javafx.scene.control.Label;
 
-public class HomepageController extends GeneralHomepageController {
+public class HomepageController {
     @FXML
-    public void initialize() {
-        setWelcomeMessage();
-    }
+    private Label welcomeLabel;
 
-    public void changeSceneRooms(ActionEvent event) throws IOException {
-        changeScene(event, "/reserveARoomScene.fxml");
-    }
-
-    public void changeSceneBikes(ActionEvent event) throws IOException {
-        changeScene(event, "/reserveBikeScene.fxml");
+    public void setWelcomeMessage(String message) {
+        welcomeLabel.setText("Welcome " + message);
     }
 }
 

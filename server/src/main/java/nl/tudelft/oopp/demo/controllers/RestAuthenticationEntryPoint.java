@@ -16,10 +16,8 @@ public class RestAuthenticationEntryPoint implements AuthenticationEntryPoint {
     public void commence(HttpServletRequest request, HttpServletResponse response,
                        AuthenticationException authException) throws IOException, ServletException {
         if (authException instanceof UsernameNotFoundException) {
-            response.setStatus(403);
             response.getWriter().println("Invalid username");
         } else if (authException instanceof BadCredentialsException) {
-            response.setStatus(403);
             response.getWriter().println("Wrong password");
         }
     }

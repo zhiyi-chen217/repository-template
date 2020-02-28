@@ -1,13 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.Button?>
-<?import javafx.scene.control.ComboBox?>
-<?import javafx.scene.control.Label?>
-<?import javafx.scene.control.ListView?>
-<?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.text.Font?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
 
-<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="nl.tudelft.oopp.demo.controllers.ReserveBikeController">
+<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="nl.tudelft.oopp.demo.controllers.ReserveBikeController">
     <children>
         <Label layoutX="81.0" layoutY="22.0" text="Reserve a bike">
             <font>
@@ -22,7 +19,7 @@
             <font>
                 <Font size="15.0" />
             </font></Label>
-        <Button layoutX="263.0" layoutY="157.0" mnemonicParsing="false" onAction="#changeSceneHomepage" text="Back" AnchorPane.bottomAnchor="356.8" AnchorPane.leftAnchor="20.0" />
+        <Button layoutX="263.0" layoutY="157.0" mnemonicParsing="false" text="Back" AnchorPane.bottomAnchor="356.8" AnchorPane.leftAnchor="20.0" />
         <ComboBox layoutX="379.0" layoutY="90.0" prefWidth="150.0" promptText="Choose a building" />
         <Button layoutX="379.0" layoutY="294.0" mnemonicParsing="false" prefHeight="33.0" prefWidth="85.0" text="Reserve">
          <font>

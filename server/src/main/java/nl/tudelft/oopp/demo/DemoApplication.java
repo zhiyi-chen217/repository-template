@@ -9,6 +9,7 @@ import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 @EntityScan("nl.tudelft.oopp.demo.entities")
 @EnableJpaRepositories("nl.tudelft.oopp.demo.repositories")
 public class DemoApplication {
+
     public static void main(String[] args) {
         SpringApplication.run(DemoApplication.class, args);
     }
