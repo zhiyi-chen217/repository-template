@@ -1,5 +1,6 @@
 package nl.tudelft.oopp.demo.controllers;
 
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -16,6 +17,7 @@ public class AdminBuildingsRoomsController extends GeneralHomepageController {
     @FXML private Button editRoomButton;
     @FXML private Button deleteRoomButton;
     @FXML private ListView<String> roomListView;
+    //private ObservableList
 
     /**
      * Initialization method that is run when the scene is loading.
