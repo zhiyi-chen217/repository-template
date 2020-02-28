@@ -15,6 +15,7 @@ import javafx.stage.Stage;
 import nl.tudelft.oopp.demo.communication.ServerCommunication;
 
 import nl.tudelft.oopp.demo.entities.Building;
+import nl.tudelft.oopp.demo.entities.Room;
 import org.apache.http.client.methods.CloseableHttpResponse;
 import org.apache.http.util.EntityUtils;
 import org.json.JSONObject;
@@ -53,8 +54,8 @@ public class SignUpController {
                 "", 3);
 
          */
-        CloseableHttpResponse re = ServerCommunication.readBuilding("3mE");
-        System.out.println(new Building(new JSONObject(EntityUtils.toString(re.getEntity()))).toString());
+        CloseableHttpResponse re = ServerCommunication.readRoom("ewi01", null);
+        System.out.println(new Room(new JSONObject(EntityUtils.toString(re.getEntity()))).toString());
 //        CloseableHttpResponse re = ServerCommunication.updateRoom("ewi02", "01", 9,
 //                "b1", "", "ALL_CAN_USE", "", true, true);
 //        System.out.println(re.getStatusLine().getStatusCode());
