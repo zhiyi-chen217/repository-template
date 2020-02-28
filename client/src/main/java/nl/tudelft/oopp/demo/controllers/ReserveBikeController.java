@@ -1,4 +1,4 @@
 package nl.tudelft.oopp.demo.controllers;
 
-public class ReserveBikeController {
+public class ReserveBikeController extends GeneralHomepageController {
 }

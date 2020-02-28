@@ -1,21 +1,35 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
-<?import javafx.scene.text.*?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.CheckBox?>
+<?import javafx.scene.control.ChoiceBox?>
+<?import javafx.scene.control.DatePicker?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ListView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.shape.Line?>
+<?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="nl.tudelft.oopp.demo.controllers.ReserveARoomController">
+<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="nl.tudelft.oopp.demo.controllers.ReserveARoomController">
     <children>
-        <Label layoutX="27.0" layoutY="14.0" text="Reserve a room:" AnchorPane.bottomAnchor="270.8" AnchorPane.leftAnchor="27.0" AnchorPane.rightAnchor="122.0" AnchorPane.topAnchor="14.0">
+        <Label layoutX="36.0" text="Reserve a room:" AnchorPane.bottomAnchor="284.8" AnchorPane.leftAnchor="36.0" AnchorPane.rightAnchor="113.0" AnchorPane.topAnchor="0.0">
             <font>
                 <Font size="15.0" />
-            </font></Label>
-        <Button layoutX="263.0" layoutY="157.0" mnemonicParsing="false" text="Back" AnchorPane.bottomAnchor="356.8" AnchorPane.leftAnchor="20.0" />
-      <CheckBox layoutX="441.0" layoutY="63.0" mnemonicParsing="false" text="TV?" />
-      <ComboBox layoutX="225.0" layoutY="59.0" prefWidth="150.0" promptText="Choose a building" />
-      <CheckBox layoutX="441.0" layoutY="84.0" mnemonicParsing="false" text="Whiteboard?" />
-      <Label layoutX="441.0" layoutY="121.0" text="Capacity:" />
-      <Spinner editable="true" layoutX="441.0" layoutY="145.0" prefHeight="25.0" prefWidth="126.0" />
-      <Button layoutX="264.0" layoutY="327.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="71.0" text="Search" />
+            </font>
+        </Label>
+        <Button mnemonicParsing="false" onAction="#changeSceneHomepage" text="Back" AnchorPane.bottomAnchor="374.5" AnchorPane.leftAnchor="0.0" />
+        <CheckBox layoutX="36.0" layoutY="201.0" mnemonicParsing="false" text="TV?" />
+        <CheckBox layoutX="36.0" layoutY="229.0" mnemonicParsing="false" text="Whiteboard?" />
+        <Label layoutX="37.0" layoutY="148.0" text="Capacity:" />
+        <Button layoutX="36.0" layoutY="346.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="71.0" text="Search" />
+        <Button fx:id="continueButton" layoutX="487.0" layoutY="320.0" mnemonicParsing="false" text="Continue" />
+        <Line endX="-100.00001525878906" endY="-341.0" layoutX="300.0" layoutY="341.0" startX="-100.00001525878906" startY="59.000030517578125" stroke="#aaa6a6" />
+        <ListView fx:id="roomListView" layoutX="226.0" layoutY="68.0" prefHeight="278.0" prefWidth="239.0" />
+        <ChoiceBox layoutX="36.0" layoutY="103.0" prefWidth="150.0" />
+        <Label layoutX="36.0" layoutY="77.0" text="Choose a building:" />
+        <DatePicker layoutX="36.0" layoutY="265.0" prefHeight="18.0" prefWidth="150.0" />
+      <Label layoutX="36.0" layoutY="312.0" />
+      <TextField layoutX="37.0" layoutY="166.0" prefHeight="26.0" prefWidth="71.0" />
     </children>
 </AnchorPane>
