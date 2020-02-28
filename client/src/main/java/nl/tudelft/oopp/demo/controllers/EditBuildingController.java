@@ -132,7 +132,7 @@ public class EditBuildingController {
             erralert.showAndWait();
         }
 
-        if (statusCode == 202) {
+        if (statusCode == 201) {
             alert.setTitle("Success");
         } else {
             alert.setTitle("Unsuccessful");
@@ -141,7 +141,7 @@ public class EditBuildingController {
         alert.setHeaderText(null);
         alert.showAndWait();
 
-        if (statusCode == 202) {
+        if (statusCode == 201) {
             Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
             stage.close();
         }
