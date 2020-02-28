@@ -34,6 +34,9 @@ public class EditRoomController {
     @FXML
     private Button submit;
 
+    @FXML
+    private TextField roomID;
+
     public static Room room;
 
     public static void setRoom(Room room1){
@@ -44,6 +47,7 @@ public class EditRoomController {
         roomCapacity.setText(String.valueOf(room.getCapacity()));
         roomDescription.setText(room.getDescription());
         roomName.setText(room.getName());
+        roomID.setText(room.getRoomId());
         roomPicturePath.setText(room.getPicturesPath());
     }
 
@@ -58,4 +62,5 @@ public class EditRoomController {
         ServerCommunication.updateRoom(room.getRoomId(), roomName, roomCapacity, room.getBuildingName(),
                 roomDescription, roomType, roomPicturePath, roomWhiteboard, roomTV);
     }
+
 }

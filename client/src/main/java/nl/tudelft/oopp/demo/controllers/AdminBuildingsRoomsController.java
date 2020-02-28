@@ -85,27 +85,20 @@ public class AdminBuildingsRoomsController extends GeneralHomepageController {
     }
 
     public void stageEditRoom() throws IOException {
-        String temp = roomListView.getSelectionModel().getSelectedItem();
-        Room selected = rooms.stream().filter(s -> s.getName().equals(temp))
-                .collect(Collectors.toList()).get(0);
-        EditRoomController.setRoom(selected);
-        newStage("/editRoomScene.fxml", editRoomButton);
+        try {
+            String temp = roomListView.getSelectionModel().getSelectedItem().split("--")[0];
+            Room selected = rooms.stream().filter(s -> s.getRoomId().equals(temp))
+                    .collect(Collectors.toList()).get(0);
+            EditRoomController.setRoom(selected);
+            newStage("/editRoomScene.fxml", editRoomButton);
+        }catch (NullPointerException e){
+            e.printStackTrace();
+        }
     }
 
     public void stageEditBuilding() throws IOException {
         Building building = buildingChoiceBox.getValue();
         EditBuildingController.setBuilding(building);
-
-//        FXMLLoader loader = new FXMLLoader();
-//        loader.setLocation(getClass().getResource("/editBuildingScene.fxml"));
-//        Parent homePageParent = loader.load();
-//        Scene homePageScene = new Scene(homePageParent);
-//
-//        //Get current stage
-//        Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-//        stage.setScene(homePageScene);
-//        stage.getIcons().add(new Image("https://simchavos.com/tu.png"));
-//        stage.show();
         newStage("/editBuildingScene.fxml", editBuildingButton);
     }
 
@@ -153,10 +146,24 @@ public class AdminBuildingsRoomsController extends GeneralHomepageController {
         ObservableList<String> allRoom = FXCollections.observableArrayList();
         for (int i = 0; i < jsonArray.length(); i++) {
             JSONObject temp = jsonArray.getJSONObject(i);
-            allRoom.add(temp.getString("name"));
+            allRoom.add(temp.getString("roomId") + "--" + temp.getString("name"));
             rooms.add(new Room(temp));
         }
         roomListView.setItems(allRoom);
 
     }
+
+    public void deleteRoom() throws IOException, URISyntaxException {
+        String listString = roomListView.getSelectionModel().getSelectedItem();
+        String roomId = listString.split("--")[0];
+        Room selected = rooms.stream().filter(s -> s.getRoomId().equals(roomId))
+                .collect(Collectors.toList()).get(0);
+        ServerCommunication.deleteRoom(List.of(selected.getRoomId()));
+
+
+        ObservableList<String> temp = roomListView.getItems();
+        temp.remove(listString);
+        roomListView.setItems(temp);
+    }
+
 }
