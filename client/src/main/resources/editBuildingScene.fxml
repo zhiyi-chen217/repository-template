@@ -6,7 +6,7 @@
 
 <AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="nl.tudelft.oopp.demo.controllers.EditBuildingController">
     <children>
-        <Button layoutX="501.0" layoutY="277.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="61.0" text="Submit" />
+        <Button layoutX="501.0" layoutY="277.0" mnemonicParsing="false" onAction="#submitUpdate" prefHeight="25.0" prefWidth="61.0" text="Submit" />
         <Label layoutX="74.0" layoutY="-27.0" text="Edit building" AnchorPane.bottomAnchor="311.8" AnchorPane.leftAnchor="74.0" AnchorPane.rightAnchor="75.0" AnchorPane.topAnchor="-27.0">
          <font>
             <Font size="15.0" />
@@ -39,5 +39,6 @@
                 <TextField fx:id="buildingBikes" GridPane.columnIndex="1" GridPane.rowIndex="5" />
             </children>
         </GridPane>
+      <Label fx:id="failtext" alignment="CENTER_RIGHT" contentDisplay="LEFT" layoutX="63.0" layoutY="310.0" prefHeight="26.0" prefWidth="510.0" textAlignment="RIGHT" textFill="RED" />
     </children>
 </AnchorPane>
