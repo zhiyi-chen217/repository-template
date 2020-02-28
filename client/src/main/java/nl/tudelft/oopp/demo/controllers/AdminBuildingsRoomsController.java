@@ -25,6 +25,9 @@ import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.stream.Collector;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 public class AdminBuildingsRoomsController extends GeneralHomepageController {
 
@@ -81,6 +84,10 @@ public class AdminBuildingsRoomsController extends GeneralHomepageController {
     }
 
     public void stageEditRoom() throws IOException {
+        String temp = roomListView.getSelectionModel().getSelectedItem();
+        Room selected = rooms.stream().filter(s -> s.getName().equals(temp))
+                .collect(Collectors.toList()).get(0);
+        EditRoomController.setRoom(selected);
         newStage("/editRoomScene.fxml");
     }
 
