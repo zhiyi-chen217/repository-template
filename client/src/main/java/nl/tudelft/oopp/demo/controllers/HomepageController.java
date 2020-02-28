@@ -10,11 +10,11 @@ public class HomepageController extends GeneralHomepageController {
         setWelcomeMessage();
     }
 
-    public void changeSceneRooms(ActionEvent event) throws IOException {
+    public void changeSceneRooms(ActionEvent event) {
         changeScene(event, "/reserveARoomScene.fxml");
     }
 
-    public void changeSceneBikes(ActionEvent event) throws IOException {
+    public void changeSceneBikes(ActionEvent event) {
         changeScene(event, "/reserveBikeScene.fxml");
     }
 }

@@ -31,19 +31,19 @@ public class AdminBuildingsRoomsController extends GeneralHomepageController {
         roomListView.setVisible(false);
     }
 
-    public void stageAddBuilding() throws IOException {
+    public void stageAddBuilding() {
         newStage("/addABuilding.fxml");
     }
 
-    public void stageAddRoom() throws IOException {
+    public void stageAddRoom() {
         newStage("/addARoomScene.fxml");
     }
 
-    public void stageEditRoom() throws IOException {
+    public void stageEditRoom() {
         newStage("/editRoomScene.fxml");
     }
 
-    public void stageEditBuilding() throws IOException {
+    public void stageEditBuilding() {
         newStage("/editBuildingScene.fxml");
     }
 }
