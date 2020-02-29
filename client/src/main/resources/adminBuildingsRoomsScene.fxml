@@ -1,23 +1,54 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
-<?import javafx.scene.text.*?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ChoiceBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ListView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="nl.tudelft.oopp.demo.controllers.AdminBuildingsRoomsController">
+<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="nl.tudelft.oopp.demo.controllers.AdminBuildingsRoomsController">
     <children>
         <Label layoutX="74.0" layoutY="-27.0" text="Manage buildings and rooms" AnchorPane.bottomAnchor="311.8" AnchorPane.leftAnchor="74.0" AnchorPane.rightAnchor="75.0" AnchorPane.topAnchor="-27.0">
             <font>
                 <Font size="15.0" />
             </font></Label>
         <Button layoutX="263.0" layoutY="157.0" mnemonicParsing="false" onAction="#changeSceneAdminHomepage" text="Back" AnchorPane.bottomAnchor="356.8" AnchorPane.leftAnchor="20.0" />
-        <ChoiceBox fx:id="buildingChoiceBox" layoutX="20.0" layoutY="59.0" prefWidth="150.0" onAction="#selectBuilding" />
-      <ListView fx:id="roomListView" layoutX="284.0" layoutY="59.0" prefHeight="252.0" prefWidth="200.0" />
-      <Button fx:id="addBuildingButton" layoutX="20.0" layoutY="319.0" mnemonicParsing="false" onAction="#stageAddBuilding" text="Add building" />
-      <Button fx:id="deleteRoomButton" layoutX="495.0" layoutY="59.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="83.0" text="Delete room" onAction="#confirmationDeletion"/>
-      <Button fx:id="deleteBuildingButton" layoutX="284.0" layoutY="319.0" mnemonicParsing="false" text="Delete building" onAction="#confirmationDeletion"/>
-      <Button fx:id="addRoomButton" layoutX="116.0" layoutY="319.0" mnemonicParsing="false" onAction="#stageAddRoom" text="Add room" />
-      <Button fx:id="editRoomButton" layoutX="503.0" layoutY="94.0" mnemonicParsing="false" onAction="#stageEditRoom" text="Edit room" />
-      <Button fx:id="editBuildingButton" layoutX="186.0" layoutY="59.0" mnemonicParsing="false" onAction="#stageEditBuilding" text="Edit building" />
+      <VBox layoutX="20.0" layoutY="63.0" prefHeight="45.0" prefWidth="146.0">
+         <children>
+            <Label text="Pick a building">
+               <font>
+                  <Font size="13.0" />
+               </font>
+            </Label>
+              <ChoiceBox fx:id="buildingChoiceBox" onAction="#selectBuilding" prefWidth="150.0" />
+         </children>
+      </VBox>
+      <VBox alignment="TOP_RIGHT" layoutX="283.0" layoutY="80.0" spacing="5.0">
+         <children>
+            <ListView fx:id="roomListView" prefHeight="252.0" prefWidth="200.0" />
+            <Button fx:id="refreshButton" mnemonicParsing="false" onAction="#refresh" text="Refresh" />
+         </children>
+      </VBox>
+      <HBox layoutX="20.0" layoutY="337.0" spacing="5.0">
+         <children>
+            <Button fx:id="addBuildingButton" mnemonicParsing="false" onAction="#stageAddBuilding" text="Add building" />
+            <Button fx:id="addRoomButton" mnemonicParsing="false" onAction="#stageAddRoom" text="Add room" />
+         </children>
+      </HBox>
+      <VBox alignment="CENTER" layoutX="495.0" layoutY="80.0" spacing="5.0">
+         <children>
+            <Button fx:id="deleteRoomButton" mnemonicParsing="false" onAction="#confirmationDeletion" prefHeight="25.0" prefWidth="83.0" text="Delete room" />
+            <Button fx:id="editRoomButton" mnemonicParsing="false" onAction="#stageEditRoom" text="Edit room" />
+         </children>
+      </VBox>
+      <VBox alignment="CENTER" layoutX="177.0" layoutY="80.0" spacing="5.0">
+         <children>
+            <Button fx:id="editBuildingButton" mnemonicParsing="false" onAction="#stageEditBuilding" text="Edit building" />
+            <Button fx:id="deleteBuildingButton" mnemonicParsing="false" onAction="#confirmationDeletion" text="Delete building" />
+         </children>
+      </VBox>
     </children>
 </AnchorPane>

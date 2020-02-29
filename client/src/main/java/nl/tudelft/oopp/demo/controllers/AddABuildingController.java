@@ -8,6 +8,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 import nl.tudelft.oopp.demo.communication.ServerCommunication;
+import nl.tudelft.oopp.demo.entities.Building;
 import org.apache.http.client.methods.CloseableHttpResponse;
 import org.apache.http.util.EntityUtils;
 
@@ -116,7 +117,10 @@ public class AddABuildingController {
         }
 
         if (statusCode == 202) {
+            AdminBuildingsRoomsController.getBuildings()
+                    .add(new Building(bldName, bldloc, oh, ch, bldBikesint));
             alert.setTitle("Success");
+
         } else {
             alert.setTitle("Unsuccessful");
         }

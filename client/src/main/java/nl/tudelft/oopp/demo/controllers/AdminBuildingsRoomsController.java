@@ -2,6 +2,7 @@ package nl.tudelft.oopp.demo.controllers;
 
 import javafx.beans.Observable;
 import javafx.collections.FXCollections;
+import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -21,6 +22,7 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 
 import javax.swing.*;
+import javax.swing.event.ChangeListener;
 import java.io.IOException;
 import java.net.URISyntaxException;
 import java.util.ArrayList;
@@ -41,9 +43,15 @@ public class AdminBuildingsRoomsController extends GeneralHomepageController {
     @FXML private Button deleteRoomButton;
     @FXML private ListView<String> roomListView;
     @FXML private ChoiceBox<Building> buildingChoiceBox;
+    @FXML private Button refreshButton;
 
     private static ObservableList<Building> buildings;
-    private static ObservableList<Room> rooms;
+
+    public static ObservableList<Building> getBuildings() {
+        return buildings;
+    }
+
+    private static ObservableList<Room> rooms = FXCollections.observableArrayList();
 
     /**
      * Initialization method that is run when the scene is loading.
@@ -55,9 +63,18 @@ public class AdminBuildingsRoomsController extends GeneralHomepageController {
         editRoomButton.setVisible(false);
         deleteRoomButton.setVisible(false);
         roomListView.setVisible(false);
+        addRoomButton.setDisable(true);
+        refreshButton.setVisible(false);
+        roomListView.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
+
         buildings = GeneralHomepageController
                 .JsonArrayToBuilding(ServerCommunication.readBuilding(null));
-        buildingChoiceBox.getItems().setAll(buildings);
+        buildingChoiceBox.setItems(buildings);
+
+        buildings.addListener((ListChangeListener<Building>) c -> {
+            buildingChoiceBox.setItems(buildings);
+        });
+
         buildingChoiceBox.getSelectionModel().selectedItemProperty().addListener(
             (v, oldBuilding, newBuilding) -> {
                 try {
@@ -85,7 +102,7 @@ public class AdminBuildingsRoomsController extends GeneralHomepageController {
         newStage("/addARoomScene.fxml", addRoomButton);
     }
 
-    public void stageEditRoom() throws IOException {
+    public void stageEditRoom() {
         try {
             String temp = roomListView.getSelectionModel().getSelectedItem().split("--")[0];
             Room selected = rooms.stream().filter(s -> s.getRoomId().equals(temp))
@@ -108,11 +125,15 @@ public class AdminBuildingsRoomsController extends GeneralHomepageController {
      * @param event The event which calls this function
      */
     public void selectBuilding(ActionEvent event) {
-        editBuildingButton.setDisable(false);
-        deleteBuildingButton.setVisible(true);
-        editRoomButton.setVisible(true);
-        deleteRoomButton.setVisible(true);
-        roomListView.setVisible(true);
+        if (!deleteBuildingButton.isVisible()) {
+            editBuildingButton.setDisable(false);
+            deleteBuildingButton.setVisible(true);
+            editRoomButton.setVisible(true);
+            deleteRoomButton.setVisible(true);
+            roomListView.setVisible(true);
+            addRoomButton.setDisable(false);
+            refreshButton.setVisible(true);
+        }
     }
 
     public void deleteBuilding() {
@@ -124,13 +145,8 @@ public class AdminBuildingsRoomsController extends GeneralHomepageController {
             alert = new Alert(Alert.AlertType.CONFIRMATION);
             alert.setContentText(EntityUtils.toString(response.getEntity(), "UTF-8"));
             if (response.getStatusLine().getStatusCode() == 202) {
-                ObservableList<Building> tempB = buildingChoiceBox.getItems();
-                tempB.remove(building);
                 buildings.remove(building);
-                buildingChoiceBox.setItems(tempB);
-                ObservableList<String> tempR = roomListView.getItems();
-                tempR.removeAll();
-                roomListView.setItems(tempR);
+                roomListView.setItems(null);
             }
         } catch (Exception e) {
             alert = new Alert(Alert.AlertType.ERROR);
@@ -150,28 +166,28 @@ public class AdminBuildingsRoomsController extends GeneralHomepageController {
         rooms = GeneralHomepageController
                 .JsonArrayToRoom(ServerCommunication.readRoom(null, newBuilding.getName()));
         ObservableList<String> allRoom = FXCollections.observableArrayList();
-        for (int i = 0; i < rooms.size(); i++) {
-            Room temp = rooms.get(i);
+        for (Room temp : rooms) {
             allRoom.add(temp.getRoomId() + "--" + temp.getName());
         }
         roomListView.setItems(allRoom);
-
     }
 
     public void deleteRoom() {
-        String listString = roomListView.getSelectionModel().getSelectedItem();
-        String roomId = listString.split("--")[0];
-        Room selected = rooms.stream().filter(s -> s.getRoomId().equals(roomId))
-                .collect(Collectors.toList()).get(0);
+        ObservableList<String> selectedRoomNames = roomListView.getSelectionModel().getSelectedItems();
+        List<String> selectedRooms = new ArrayList<>();
+        for (String s: selectedRoomNames) {
+            String roomId = s.split("--")[0];
+            selectedRooms.add(roomId);
+        }
         Alert alert;
         try {
-            CloseableHttpResponse response = ServerCommunication.deleteRoom(List.of(selected.getRoomId()));
+            CloseableHttpResponse response = ServerCommunication.deleteRoom(selectedRooms);
             alert = new Alert(Alert.AlertType.CONFIRMATION,
                     EntityUtils.toString(response.getEntity()),
                     ButtonType.OK);
             if (response.getStatusLine().getStatusCode() == 202) {
                 ObservableList<String> temp = roomListView.getItems();
-                temp.remove(listString);
+                temp.removeAll(selectedRoomNames);
                 roomListView.setItems(temp);
             }
         } catch (IOException | URISyntaxException e) {
@@ -189,9 +205,16 @@ public class AdminBuildingsRoomsController extends GeneralHomepageController {
     }
 
     public void confirmationDeletion(ActionEvent event) {
+        String content = "Are you sure you want to delete this?";
+        if(event.getSource().equals(deleteRoomButton)) {
+            content = "Are you sure you want to delete this room?";
+        } else if (event.getSource().equals(deleteBuildingButton)) {
+            content = "All the rooms in this building will be deleted too. \n "
+                    + "Are you sure you want to delete this building? ";
+        }
         Alert alert =
                 new Alert(Alert.AlertType.WARNING,
-                        "Are you sure you want to delete this?",
+                        content,
                         ButtonType.OK,
                         ButtonType.CANCEL);
         alert.setTitle("Warning");
@@ -207,4 +230,7 @@ public class AdminBuildingsRoomsController extends GeneralHomepageController {
         }
     }
 
+    public void refresh(ActionEvent event) throws IOException, URISyntaxException {
+        changeSelectedEvent(null, null, buildingChoiceBox.getSelectionModel().getSelectedItem());
+    }
 }
