@@ -3,10 +3,7 @@ package nl.tudelft.oopp.demo.controllers;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
-import javafx.scene.control.Alert;
-import javafx.scene.control.CheckBox;
-import javafx.scene.control.Label;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.stage.Stage;
 import nl.tudelft.oopp.demo.communication.ServerCommunication;
 import nl.tudelft.oopp.demo.entities.Building;
@@ -23,7 +20,7 @@ public class AddARoomController {
     private TextField roomCapacity;
 
     @FXML
-    private TextField roomDescription;
+    private TextArea roomDescription;
 
     @FXML
     private TextField roomName;
@@ -72,7 +69,7 @@ public class AddARoomController {
         if (type) {
             typestr = "Employee";
         } else {
-            typestr = "AllCanUse";
+            typestr = "ALL_CAN_USE";
         }
 
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);

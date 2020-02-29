@@ -36,7 +36,7 @@
             <Label text="Building name" GridPane.rowIndex="5" />
             <TextField fx:id="roomID" GridPane.columnIndex="1" />
             <TextField fx:id="roomCapacity" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-            <TextField fx:id="roomDescription" prefHeight="61.0" prefWidth="170.0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+            <TextArea fx:id="roomDescription" wrapText="true" prefHeight="61.0" prefWidth="170.0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
             <TextField fx:id="roomName" GridPane.columnIndex="1" GridPane.rowIndex="3" />
             <TextField fx:id="roomPicturePath" GridPane.columnIndex="1" GridPane.rowIndex="4" />
             <CheckBox fx:id="roomTV" mnemonicParsing="false" prefHeight="46.0" prefWidth="142.0" text="TV" GridPane.columnIndex="1" GridPane.rowIndex="7" />

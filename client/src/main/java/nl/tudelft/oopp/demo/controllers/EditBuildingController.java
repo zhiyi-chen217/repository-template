@@ -18,7 +18,7 @@ import java.util.regex.Pattern;
 
 public class EditBuildingController {
     @FXML
-    private TextField buildingName;
+    private Label buildingName;
 
     @FXML
     private TextField buildingOpeningHour;

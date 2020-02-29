@@ -63,16 +63,19 @@ public class AdminBuildingsRoomsController extends GeneralHomepageController {
         }
         buildingChoiceBox.getItems().setAll(buildings);
         buildingChoiceBox.getSelectionModel().selectedItemProperty().addListener(
-                (v, oldBuilding, newBuilding) -> {
-                    try {
-                        changeSelectedEvent(v, oldBuilding, newBuilding);
-                        roomListView.setVisible(true);
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    } catch (URISyntaxException e) {
-                        e.printStackTrace();
-                    }
+            (v, oldBuilding, newBuilding) -> {
+                try {
+                    changeSelectedEvent(v, oldBuilding, newBuilding);
+                    roomListView.setVisible(true);
+                } catch (IOException | URISyntaxException e) {
+                    e.printStackTrace();
+                    Alert alert = new Alert(Alert.AlertType.ERROR);
+                    alert.setContentText("Something went wrong, please try again.");
+                    alert.setHeaderText(null);
+                    alert.setTitle("Error");
+                    alert.showAndWait();
                 }
+            }
         );
     }
 
@@ -86,7 +89,7 @@ public class AdminBuildingsRoomsController extends GeneralHomepageController {
         newStage("/addARoomScene.fxml", addRoomButton);
     }
 
-    public void stageEditRoom() throws IOException {
+    public void stageEditRoom() {
         String temp = roomListView.getSelectionModel().getSelectedItem();
         Room selected = rooms.stream().filter(s -> s.getName().equals(temp))
                 .collect(Collectors.toList()).get(0);
@@ -94,7 +97,7 @@ public class AdminBuildingsRoomsController extends GeneralHomepageController {
         newStage("/editRoomScene.fxml", editRoomButton);
     }
 
-    public void stageEditBuilding() throws IOException {
+    public void stageEditBuilding() {
         Building building = buildingChoiceBox.getValue();
         EditBuildingController.setBuilding(building);
 
