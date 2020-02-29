@@ -42,6 +42,9 @@ public class AddARoomController {
 
     private static Building building;
 
+    @FXML
+    private Label failtext;
+
     public void initialize() {
         buildingName.setText(building.getName());
     }
@@ -54,15 +57,42 @@ public class AddARoomController {
      * Creates a new room entity and then sends it to the server.
      */
     public void addRoom(ActionEvent event) {
+        failtext.setText("");
 
         String roomid = roomID.getText();
+        if (roomid.length() == 0) {
+            failtext.setText("Please input a valid room id.");
+            return;
+        }
+
+        String roomcapstr = roomCapacity.getText();
+        if (!roomcapstr.matches("\\d+")) {
+            failtext.setText("Please input a valid capacity");
+            return;
+        }
         int roomcap = Integer.parseInt(roomCapacity.getText());
+
         String roomdesc = roomDescription.getText();
+        if (roomdesc.length() == 0) {
+            failtext.setText("Please input a valid description");
+            return;
+        }
+
         String roomN = roomName.getText();
+        if (roomN.length() == 0) {
+           failtext.setText("Please input a valid name.");
+           return;
+        }
+
         String roomPP = roomPicturePath.getText();
-        Boolean hasTv = roomTV.isSelected();
-        Boolean type = roomEmployee.isSelected();
-        Boolean roomWhite = roomWhiteboard.isSelected();
+        if (roomPP.length() == 0) {
+            failtext.setText("Please input a valid picture path");
+            return;
+        }
+
+        boolean hasTv = roomTV.isSelected();
+        boolean type = roomEmployee.isSelected();
+        boolean roomWhite = roomWhiteboard.isSelected();
         String roomBuilding = building.getName();
 
         String typestr;
@@ -75,24 +105,33 @@ public class AddARoomController {
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
         alert.setHeaderText(null);
         CloseableHttpResponse response;
+        int statusCode = 0;
 
         try {
             response = ServerCommunication.createRoom(roomid, roomN, roomcap,
                     roomBuilding, roomdesc, typestr, roomPP, roomWhite, hasTv);
             alert.setContentText(EntityUtils.toString(response.getEntity()));
+            statusCode = response.getStatusLine().getStatusCode();
         } catch (Exception e) {
-            alert = new Alert(Alert.AlertType.ERROR);
+            alert.setAlertType(Alert.AlertType.ERROR);
             alert.setContentText("Something went wrong, please try again.");
             alert.setTitle("Error");
             alert.showAndWait();
+            return;
         }
 
-        alert.setTitle("Success");
+        if (statusCode == 201) {
+            alert.setTitle("Success");
+        } else {
+            alert.setTitle("Unsuccessful");
+        }
+
         alert.showAndWait();
 
-        Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-        stage.close();
-
+        if (statusCode == 201) {
+            Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+            stage.close();
+        }
     }
 
 }

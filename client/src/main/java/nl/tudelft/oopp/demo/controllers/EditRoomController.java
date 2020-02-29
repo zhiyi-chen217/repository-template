@@ -69,38 +69,76 @@ public class EditRoomController {
     public void submitRoom() throws IOException {
         if (this.roomCapacity.getText().equals("") || this.roomDescription.getText().equals("")
                 || this.roomName.getText().equals("") || this.roomPicturePath.getText().equals("")) {
-            failText.setText("Please fill all fields");
+            failText.setText("Please fill in all fields");
             return;
         }
-        try {
-            String roomType = "ALL_CAN_USE";
-            int roomCapacity = Integer.parseInt(this.roomCapacity.getText());
-            if( roomCapacity <= 0) {
-                throw new NumberFormatException("must be positive number");
-            }
-            String roomDescription = this.roomDescription.getText();
-            String roomName = this.roomName.getText();
-            String roomPicturePath = this.roomPicturePath.getText();
-            Boolean roomTV = this.roomTV.isSelected();
-            Boolean roomWhiteboard = this.roomWhiteboard.isSelected();
-            if (this.roomType.isSelected()) {
-                roomType = "Employee";
-            }
-            CloseableHttpResponse response = ServerCommunication.updateRoom(room.getRoomId(), roomName, roomCapacity, room.getBuildingName(),
-                    roomDescription, roomType, roomPicturePath, roomWhiteboard, roomTV);
-            Alert alert = new Alert(Alert.AlertType.INFORMATION);
-            alert.setHeaderText(null);
-            if (response.getStatusLine().getStatusCode() == 201) {
-                alert.setTitle("Success");
-                alert.setContentText("Changes saved");
-            } else {
-                alert.setTitle("Fail");
-                alert.setContentText("Changes cannot be saved");
-            }
-            alert.showAndWait();
-        } catch (NumberFormatException e) {
-            failText.setText("Please make sure the capacity is correct.");
+
+        String roomType = "ALL_CAN_USE";
+        String roomCap = this.roomCapacity.getText();
+        if (!roomCap.matches("\\d+") ) {
+            failText.setText("Please input a valid number");
+            return;
         }
+
+        int roomCapint = Integer.parseInt(roomCap);
+        if (roomCapint == 0) {
+            failText.setText("Please input a capacity more than 0");
+            return;
+        }
+
+        String roomDescription = this.roomDescription.getText();
+        String roomName = this.roomName.getText();
+        String roomPicturePath = this.roomPicturePath.getText();
+        boolean roomTV = this.roomTV.isSelected();
+        boolean roomWhiteboard = this.roomWhiteboard.isSelected();
+        if (this.roomType.isSelected()) {
+            roomType = "Employee";
+        }
+        CloseableHttpResponse response = ServerCommunication.updateRoom(room.getRoomId(), roomName, roomCapint, room.getBuildingName(),
+                roomDescription, roomType, roomPicturePath, roomWhiteboard, roomTV);
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setHeaderText(null);
+        if (response.getStatusLine().getStatusCode() == 201) {
+            alert.setTitle("Success");
+            alert.setContentText("Changes saved");
+        } else {
+            alert.setTitle("Fail");
+            alert.setContentText("Changes cannot be saved");
+        }
+        alert.showAndWait();
+
+
+
+
+//        try {
+//            String roomType = "ALL_CAN_USE";
+//            int roomCapacity = Integer.parseInt(this.roomCapacity.getText());
+//            if( roomCapacity <= 0) {
+//                throw new NumberFormatException("must be positive number");
+//            }
+//            String roomDescription = this.roomDescription.getText();
+//            String roomName = this.roomName.getText();
+//            String roomPicturePath = this.roomPicturePath.getText();
+//            Boolean roomTV = this.roomTV.isSelected();
+//            Boolean roomWhiteboard = this.roomWhiteboard.isSelected();
+//            if (this.roomType.isSelected()) {
+//                roomType = "Employee";
+//            }
+//            CloseableHttpResponse response = ServerCommunication.updateRoom(room.getRoomId(), roomName, roomCapacity, room.getBuildingName(),
+//                    roomDescription, roomType, roomPicturePath, roomWhiteboard, roomTV);
+//            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+//            alert.setHeaderText(null);
+//            if (response.getStatusLine().getStatusCode() == 201) {
+//                alert.setTitle("Success");
+//                alert.setContentText("Changes saved");
+//            } else {
+//                alert.setTitle("Fail");
+//                alert.setContentText("Changes cannot be saved");
+//            }
+//            alert.showAndWait();
+//        } catch (NumberFormatException e) {
+//            failText.setText("Please make sure the capacity is correct.");
+//        }
 
     }
 
