@@ -109,8 +109,12 @@ public class AdminBuildingsRoomsController extends GeneralHomepageController {
                     .collect(Collectors.toList()).get(0);
             EditRoomController.setRoom(selected);
             newStage("/editRoomScene.fxml", editRoomButton);
-        }catch (NullPointerException e){
+        } catch (NullPointerException e) {
             e.printStackTrace();
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setContentText("Please make a selection");
+            alert.setHeaderText(null);
+            alert.showAndWait();
         }
     }
 
@@ -144,7 +148,8 @@ public class AdminBuildingsRoomsController extends GeneralHomepageController {
             CloseableHttpResponse response = ServerCommunication.deleteBuilding(name);
             alert = new Alert(Alert.AlertType.CONFIRMATION);
             alert.setContentText(EntityUtils.toString(response.getEntity(), "UTF-8"));
-            if (response.getStatusLine().getStatusCode() == 202) {
+
+            if (response.getStatusLine().getStatusCode() == 200) {
                 buildings.remove(building);
                 roomListView.setItems(null);
             }
@@ -174,6 +179,13 @@ public class AdminBuildingsRoomsController extends GeneralHomepageController {
 
     public void deleteRoom() {
         ObservableList<String> selectedRoomNames = roomListView.getSelectionModel().getSelectedItems();
+        if (selectedRoomNames.isEmpty()) {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setContentText("Please make a selection");
+            alert.setHeaderText(null);
+            alert.showAndWait();
+            return;
+        }
         List<String> selectedRooms = new ArrayList<>();
         for (String s: selectedRoomNames) {
             String roomId = s.split("--")[0];
@@ -185,7 +197,7 @@ public class AdminBuildingsRoomsController extends GeneralHomepageController {
             alert = new Alert(Alert.AlertType.CONFIRMATION,
                     EntityUtils.toString(response.getEntity()),
                     ButtonType.OK);
-            if (response.getStatusLine().getStatusCode() == 202) {
+            if (response.getStatusLine().getStatusCode() == 201) {
                 ObservableList<String> temp = roomListView.getItems();
                 temp.removeAll(selectedRoomNames);
                 roomListView.setItems(temp);

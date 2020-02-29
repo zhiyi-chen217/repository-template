@@ -139,7 +139,7 @@ public class EditBuildingController {
         if (statusCode == 201) {
             alert.setTitle("Success");
         } else {
-            alert.setTitle("Unsuccessful");
+            alert.setTitle("Fail");
         }
 
         alert.setHeaderText(null);

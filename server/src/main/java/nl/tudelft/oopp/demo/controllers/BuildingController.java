@@ -34,7 +34,7 @@ public class BuildingController {
         if (buildingOptional.isPresent()) {
             throw new RedundantentityException("The building already exists");
         }
-        httpResponse.setStatus(202);
+        httpResponse.setStatus(201);
         buildingRepository.save(building);
         return "Saved successfully";
     }
@@ -73,7 +73,7 @@ public class BuildingController {
 
         Optional<Building> building = buildingRepository.findByName(name.get());
         if (building.isPresent()) {
-            return ResponseEntity.accepted().body(building);
+            return ResponseEntity.status(200).body(building);
         }
         return ResponseEntity.badRequest().body("The entity does not exist");
     }
@@ -87,7 +87,7 @@ public class BuildingController {
     public ResponseEntity deleteBuilding(@RequestParam String name) {
         try {
             buildingRepository.deleteById(name);
-            return ResponseEntity.accepted().body("all deleted");
+            return ResponseEntity.status(200).body("all deleted");
         } catch (EmptyResultDataAccessException e) {
             throw new EmptyResultDataAccessException("Cannot delete non-existing building",1);
         }

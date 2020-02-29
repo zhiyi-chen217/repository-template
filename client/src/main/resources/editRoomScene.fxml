@@ -33,6 +33,7 @@
                 <RowConstraints maxHeight="34.59998779296876" minHeight="10.0" prefHeight="20.400048828124994" vgrow="SOMETIMES" />
                 <RowConstraints maxHeight="37.59998779296876" minHeight="9.800012207031244" prefHeight="20.39995117187499" vgrow="SOMETIMES" />
             <RowConstraints maxHeight="56.600012207031256" minHeight="20.000012207031233" prefHeight="20.000012207031233" />
+            <RowConstraints />
             </rowConstraints>
             <children>
                 <Label text="Capacity" />
@@ -52,5 +53,6 @@
             <Label text="Room ID" GridPane.rowIndex="5" />
             </children>
         </GridPane>
+      <Label fx:id="failText" layoutX="291.0" layoutY="7.0" prefHeight="41.0" prefWidth="266.0" />
     </children>
 </AnchorPane>
