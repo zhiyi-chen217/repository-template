@@ -47,24 +47,14 @@ public class AdminBuildingsRoomsController extends GeneralHomepageController {
 
     private static ObservableList<Building> buildings;
 
-    public static ObservableList<Building> getBuildings() {
-        return buildings;
-    }
-
-    private static ObservableList<Room> rooms = FXCollections.observableArrayList();
+    private static ObservableList<Room> rooms;
 
     /**
      * Initialization method that is run when the scene is loading.
      */
     @FXML
     public void initialize() throws IOException, URISyntaxException {
-        editBuildingButton.setDisable(true);
-        deleteBuildingButton.setVisible(false);
-        editRoomButton.setVisible(false);
-        deleteRoomButton.setVisible(false);
-        roomListView.setVisible(false);
-        addRoomButton.setDisable(true);
-        refreshButton.setVisible(false);
+        disableNodes();
         roomListView.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
 
         buildings = GeneralHomepageController
@@ -129,15 +119,13 @@ public class AdminBuildingsRoomsController extends GeneralHomepageController {
      * @param event The event which calls this function
      */
     public void selectBuilding(ActionEvent event) {
-        if (!deleteBuildingButton.isVisible()) {
-            editBuildingButton.setDisable(false);
-            deleteBuildingButton.setVisible(true);
-            editRoomButton.setVisible(true);
-            deleteRoomButton.setVisible(true);
-            roomListView.setVisible(true);
-            addRoomButton.setDisable(false);
-            refreshButton.setVisible(true);
-        }
+        editBuildingButton.setDisable(false);
+        deleteBuildingButton.setVisible(true);
+        editRoomButton.setVisible(true);
+        deleteRoomButton.setVisible(true);
+        roomListView.setVisible(true);
+        addRoomButton.setDisable(false);
+        refreshButton.setVisible(true);
     }
 
     public void deleteBuilding() {
@@ -152,8 +140,9 @@ public class AdminBuildingsRoomsController extends GeneralHomepageController {
             if (response.getStatusLine().getStatusCode() == 200) {
                 buildings.remove(building);
                 roomListView.setItems(null);
+                disableNodes();
             }
-        } catch (Exception e) {
+        } catch (IOException | URISyntaxException e) {
             alert = new Alert(Alert.AlertType.ERROR);
             alert.setContentText("Something went wrong, please try again.");
             alert.setHeaderText(null);
@@ -168,6 +157,9 @@ public class AdminBuildingsRoomsController extends GeneralHomepageController {
 
     public void changeSelectedEvent(Observable v, Building oldBuilding, Building newBuilding)
             throws IOException, URISyntaxException {
+        if (newBuilding == null) {
+            return;
+        }
         rooms = GeneralHomepageController
                 .JsonArrayToRoom(ServerCommunication.readRoom(null, newBuilding.getName()));
         ObservableList<String> allRoom = FXCollections.observableArrayList();
@@ -197,7 +189,7 @@ public class AdminBuildingsRoomsController extends GeneralHomepageController {
             alert = new Alert(Alert.AlertType.CONFIRMATION,
                     EntityUtils.toString(response.getEntity()),
                     ButtonType.OK);
-            if (response.getStatusLine().getStatusCode() == 201) {
+            if (response.getStatusLine().getStatusCode() == 200) {
                 ObservableList<String> temp = roomListView.getItems();
                 temp.removeAll(selectedRoomNames);
                 roomListView.setItems(temp);
@@ -216,6 +208,10 @@ public class AdminBuildingsRoomsController extends GeneralHomepageController {
         alert.showAndWait();
     }
 
+    /** This method asks for confirmation when a request
+     * has been sent for deletion of a room or building.
+     * @param event the event which triggers the execution of this method
+     */
     public void confirmationDeletion(ActionEvent event) {
         String content = "Are you sure you want to delete this?";
         if(event.getSource().equals(deleteRoomButton)) {
@@ -242,7 +238,24 @@ public class AdminBuildingsRoomsController extends GeneralHomepageController {
         }
     }
 
+    /** Disables the nodes that should only be accessed after
+     * a building has been selected.
+     */
+    public void disableNodes() {
+        editBuildingButton.setDisable(true);
+        deleteBuildingButton.setVisible(false);
+        editRoomButton.setVisible(false);
+        deleteRoomButton.setVisible(false);
+        roomListView.setVisible(false);
+        addRoomButton.setDisable(true);
+        refreshButton.setVisible(false);
+    }
+
     public void refresh(ActionEvent event) throws IOException, URISyntaxException {
         changeSelectedEvent(null, null, buildingChoiceBox.getSelectionModel().getSelectedItem());
+    }
+
+    public static ObservableList<Building> getBuildings() {
+        return buildings;
     }
 }

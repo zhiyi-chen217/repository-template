@@ -93,14 +93,12 @@ public class EditRoomController {
             if (response.getStatusLine().getStatusCode() == 201) {
                 alert.setTitle("Success");
                 alert.setContentText("Changes saved");
-            }
-            else {
+            } else {
                 alert.setTitle("Fail");
                 alert.setContentText("Changes cannot be saved");
             }
             alert.showAndWait();
-        }
-        catch (NumberFormatException e){
+        } catch (NumberFormatException e) {
             failText.setText("Please make sure the capacity is correct.");
         }
 

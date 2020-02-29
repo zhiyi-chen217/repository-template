@@ -116,7 +116,7 @@ public class AddABuildingController {
             erralert.showAndWait();
         }
 
-        if (statusCode == 202) {
+        if (statusCode == 201) {
             AdminBuildingsRoomsController.getBuildings()
                     .add(new Building(bldName, bldloc, oh, ch, bldBikesint));
             alert.setTitle("Success");
@@ -128,7 +128,7 @@ public class AddABuildingController {
         alert.setHeaderText(null);
         alert.showAndWait();
 
-        if (statusCode == 202) {
+        if (statusCode == 201) {
             Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
             stage.close();
         }
