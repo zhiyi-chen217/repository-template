@@ -55,13 +55,8 @@ public class AdminBuildingsRoomsController extends GeneralHomepageController {
         editRoomButton.setVisible(false);
         deleteRoomButton.setVisible(false);
         roomListView.setVisible(false);
-        buildings = FXCollections.observableArrayList();
-        JSONArray jsonArray = new JSONArray(EntityUtils.toString(ServerCommunication.readBuilding(null)
-                                        .getEntity()));
-        for (int i = 0; i < jsonArray.length(); i++) {
-            JSONObject temp = jsonArray.getJSONObject(i);
-            buildings.add(new Building(temp));
-        }
+        buildings = GeneralHomepageController
+                .JsonArrayToBuilding(ServerCommunication.readBuilding(null));
         buildingChoiceBox.getItems().setAll(buildings);
         buildingChoiceBox.getSelectionModel().selectedItemProperty().addListener(
                 (v, oldBuilding, newBuilding) -> {
@@ -126,6 +121,7 @@ public class AdminBuildingsRoomsController extends GeneralHomepageController {
             if (response.getStatusLine().getStatusCode() == 202) {
                 ObservableList<Building> tempB = buildingChoiceBox.getItems();
                 tempB.remove(building);
+                buildings.remove(building);
                 buildingChoiceBox.setItems(tempB);
                 ObservableList<String> tempR = roomListView.getItems();
                 tempR.removeAll();
@@ -146,14 +142,12 @@ public class AdminBuildingsRoomsController extends GeneralHomepageController {
 
     public void changeSelectedEvent(Observable v, Building oldBuilding, Building newBuilding)
             throws IOException, URISyntaxException {
-        rooms = FXCollections.observableArrayList();
-        JSONArray jsonArray = new JSONArray(EntityUtils.toString(ServerCommunication
-                .readRoom(null, newBuilding.getName()).getEntity()));
+        rooms = GeneralHomepageController
+                .JsonArrayToRoom(ServerCommunication.readRoom(null, newBuilding.getName()));
         ObservableList<String> allRoom = FXCollections.observableArrayList();
-        for (int i = 0; i < jsonArray.length(); i++) {
-            JSONObject temp = jsonArray.getJSONObject(i);
-            allRoom.add(temp.getString("roomId") + "--" + temp.getString("name"));
-            rooms.add(new Room(temp));
+        for (int i = 0; i < rooms.size(); i++) {
+            Room temp = rooms.get(i);
+            allRoom.add(temp.getRoomId() + "--" + temp.getName());
         }
         roomListView.setItems(allRoom);
 

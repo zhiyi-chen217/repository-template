@@ -12,6 +12,8 @@ import nl.tudelft.oopp.demo.entities.Building;
 import org.apache.http.client.methods.CloseableHttpResponse;
 import org.apache.http.util.EntityUtils;
 
+import java.io.IOException;
+import java.net.URISyntaxException;
 import java.time.LocalTime;
 import java.util.regex.Pattern;
 
@@ -45,7 +47,9 @@ public class EditBuildingController {
     }
 
     @FXML
-    public void initialize() {
+    public void initialize() throws IOException, URISyntaxException {
+        building = (Building) GeneralHomepageController.JsonToEntity(
+                ServerCommunication.readBuilding(building.getName()), "Building");
         buildingName.setText(building.getName());
         buildingOpeningHour.setText(building.getOpeningHour().toString());
         buildingClosingHour.setText(building.getClosingHour().toString());

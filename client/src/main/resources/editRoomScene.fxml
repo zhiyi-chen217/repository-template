@@ -46,9 +46,9 @@
                 <TextField fx:id="roomName" GridPane.columnIndex="1" GridPane.rowIndex="3" />
                 <TextField fx:id="roomPicturePath" GridPane.columnIndex="1" GridPane.rowIndex="4" />
                 <TextField fx:id="roomBuildingName" GridPane.columnIndex="1" GridPane.rowIndex="5" />
-                <CheckBox mnemonicParsing="false" prefHeight="46.0" prefWidth="142.0" text="TV" GridPane.columnIndex="1" GridPane.rowIndex="7" />
-                <CheckBox mnemonicParsing="false" prefHeight="68.0" prefWidth="142.0" text="Employee only" GridPane.columnIndex="1" GridPane.rowIndex="6" />
-                <CheckBox mnemonicParsing="false" prefHeight="70.0" prefWidth="142.0" text="Whiteboard" GridPane.columnIndex="1" GridPane.rowIndex="8" />
+                <CheckBox fx:id="roomTV" mnemonicParsing="false" prefHeight="46.0" prefWidth="142.0" text="TV" GridPane.columnIndex="1" GridPane.rowIndex="7" />
+                <CheckBox fx:id="roomType" mnemonicParsing="false" prefHeight="68.0" prefWidth="142.0" text="Employee only" GridPane.columnIndex="1" GridPane.rowIndex="6" />
+                <CheckBox fx:id="roomWhiteboard" mnemonicParsing="false" prefHeight="70.0" prefWidth="142.0" text="Whiteboard" GridPane.columnIndex="1" GridPane.rowIndex="8" />
             </children>
         </GridPane>
     </children>

@@ -1,5 +1,7 @@
 package nl.tudelft.oopp.demo.controllers;
 
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -10,6 +12,12 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.Label;
 import javafx.stage.Stage;
 import nl.tudelft.oopp.demo.communication.ServerCommunication;
+import nl.tudelft.oopp.demo.entities.Building;
+import nl.tudelft.oopp.demo.entities.Room;
+import org.apache.http.client.methods.CloseableHttpResponse;
+import org.apache.http.util.EntityUtils;
+import org.json.JSONObject;
+import org.json.JSONArray;
 
 import java.io.IOException;
 
@@ -101,4 +109,39 @@ public class GeneralHomepageController {
     public static String getUsername() {
         return username;
     }
+
+    public static Object JsonToEntity (CloseableHttpResponse response, String type) throws IOException {
+        String JsonString  = EntityUtils.toString(response.getEntity());
+        JSONObject objectJson = new JSONObject(JsonString);
+        if (type.equals("Room")) {
+            return new Room(objectJson);
+        }
+        if (type.equals("Building")) {
+            return new Building(objectJson);
+        }
+        return null;
+    }
+
+    public static ObservableList<Room> JsonArrayToRoom (CloseableHttpResponse response)
+            throws IOException {
+        String JsonArray = EntityUtils.toString(response.getEntity());
+        JSONArray roomJsonArray = new JSONArray(JsonArray);
+        ObservableList<Room> rooms = FXCollections.observableArrayList();
+        for (int i = 0; i < roomJsonArray.length(); i++) {
+            rooms.add(new Room(roomJsonArray.getJSONObject(i)));
+        }
+        return rooms;
+    }
+
+    public static ObservableList<Building> JsonArrayToBuilding (CloseableHttpResponse response)
+            throws IOException {
+        String JsonArray = EntityUtils.toString(response.getEntity());
+        JSONArray buildingJsonArray = new JSONArray(JsonArray);
+        ObservableList<Building> buildings = FXCollections.observableArrayList();
+        for (int i = 0; i < buildingJsonArray.length(); i++) {
+            buildings.add(new Building(buildingJsonArray.getJSONObject(i)));
+        }
+        return buildings;
+    }
+
 }

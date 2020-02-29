@@ -8,6 +8,7 @@ import nl.tudelft.oopp.demo.communication.ServerCommunication;
 import nl.tudelft.oopp.demo.entities.Room;
 
 import java.io.IOException;
+import java.net.URISyntaxException;
 
 
 public class EditRoomController {
@@ -44,12 +45,18 @@ public class EditRoomController {
         room = room1;
     }
 
-    public void initialize(){
+    public void initialize() throws IOException, URISyntaxException {
+        room = (Room) GeneralHomepageController
+                .JsonToEntity(ServerCommunication
+                        .readRoom(room.getRoomId(), null), "Room");
         roomCapacity.setText(String.valueOf(room.getCapacity()));
         roomDescription.setText(room.getDescription());
         roomName.setText(room.getName());
         roomID.setText(room.getRoomId());
         roomPicturePath.setText(room.getPicturesPath());
+        roomTV.setSelected(room.isTv());
+        roomWhiteboard.setSelected(room.isWhiteboard());
+        roomType.setSelected(room.getType().equals("Employee"));
     }
 
     public void submitRoom() throws IOException {
