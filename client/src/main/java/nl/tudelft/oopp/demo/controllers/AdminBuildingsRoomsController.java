@@ -26,6 +26,7 @@ import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collector;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -54,13 +55,8 @@ public class AdminBuildingsRoomsController extends GeneralHomepageController {
         editRoomButton.setVisible(false);
         deleteRoomButton.setVisible(false);
         roomListView.setVisible(false);
-        buildings = FXCollections.observableArrayList();
-        JSONArray jsonArray = new JSONArray(EntityUtils.toString(ServerCommunication.readBuilding(null)
-                                        .getEntity()));
-        for (int i = 0; i < jsonArray.length(); i++) {
-            JSONObject temp = jsonArray.getJSONObject(i);
-            buildings.add(new Building(temp));
-        }
+        buildings = GeneralHomepageController
+                .JsonArrayToBuilding(ServerCommunication.readBuilding(null));
         buildingChoiceBox.getItems().setAll(buildings);
         buildingChoiceBox.getSelectionModel().selectedItemProperty().addListener(
             (v, oldBuilding, newBuilding) -> {
@@ -89,28 +85,21 @@ public class AdminBuildingsRoomsController extends GeneralHomepageController {
         newStage("/addARoomScene.fxml", addRoomButton);
     }
 
-    public void stageEditRoom() {
-        String temp = roomListView.getSelectionModel().getSelectedItem();
-        Room selected = rooms.stream().filter(s -> s.getName().equals(temp))
-                .collect(Collectors.toList()).get(0);
-        EditRoomController.setRoom(selected);
-        newStage("/editRoomScene.fxml", editRoomButton);
+    public void stageEditRoom() throws IOException {
+        try {
+            String temp = roomListView.getSelectionModel().getSelectedItem().split("--")[0];
+            Room selected = rooms.stream().filter(s -> s.getRoomId().equals(temp))
+                    .collect(Collectors.toList()).get(0);
+            EditRoomController.setRoom(selected);
+            newStage("/editRoomScene.fxml", editRoomButton);
+        }catch (NullPointerException e){
+            e.printStackTrace();
+        }
     }
 
     public void stageEditBuilding() {
         Building building = buildingChoiceBox.getValue();
         EditBuildingController.setBuilding(building);
-
-//        FXMLLoader loader = new FXMLLoader();
-//        loader.setLocation(getClass().getResource("/editBuildingScene.fxml"));
-//        Parent homePageParent = loader.load();
-//        Scene homePageScene = new Scene(homePageParent);
-//
-//        //Get current stage
-//        Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-//        stage.setScene(homePageScene);
-//        stage.getIcons().add(new Image("https://simchavos.com/tu.png"));
-//        stage.show();
         newStage("/editBuildingScene.fxml", editBuildingButton);
     }
 
@@ -129,14 +118,20 @@ public class AdminBuildingsRoomsController extends GeneralHomepageController {
     public void deleteBuilding() {
         Building building = buildingChoiceBox.getValue();
         String name = building.getName();
-        List<String> list = new ArrayList<>();
-        list.add(name);
-
         Alert alert;
         try {
-            CloseableHttpResponse response = ServerCommunication.deleteBuilding(list);
+            CloseableHttpResponse response = ServerCommunication.deleteBuilding(name);
             alert = new Alert(Alert.AlertType.CONFIRMATION);
             alert.setContentText(EntityUtils.toString(response.getEntity(), "UTF-8"));
+            if (response.getStatusLine().getStatusCode() == 202) {
+                ObservableList<Building> tempB = buildingChoiceBox.getItems();
+                tempB.remove(building);
+                buildings.remove(building);
+                buildingChoiceBox.setItems(tempB);
+                ObservableList<String> tempR = roomListView.getItems();
+                tempR.removeAll();
+                roomListView.setItems(tempR);
+            }
         } catch (Exception e) {
             alert = new Alert(Alert.AlertType.ERROR);
             alert.setContentText("Something went wrong, please try again.");
@@ -152,16 +147,64 @@ public class AdminBuildingsRoomsController extends GeneralHomepageController {
 
     public void changeSelectedEvent(Observable v, Building oldBuilding, Building newBuilding)
             throws IOException, URISyntaxException {
-        rooms = FXCollections.observableArrayList();
-        JSONArray jsonArray = new JSONArray(EntityUtils.toString(ServerCommunication
-                .readRoom(null, newBuilding.getName()).getEntity()));
+        rooms = GeneralHomepageController
+                .JsonArrayToRoom(ServerCommunication.readRoom(null, newBuilding.getName()));
         ObservableList<String> allRoom = FXCollections.observableArrayList();
-        for (int i = 0; i < jsonArray.length(); i++) {
-            JSONObject temp = jsonArray.getJSONObject(i);
-            allRoom.add(temp.getString("name"));
-            rooms.add(new Room(temp));
+        for (int i = 0; i < rooms.size(); i++) {
+            Room temp = rooms.get(i);
+            allRoom.add(temp.getRoomId() + "--" + temp.getName());
         }
         roomListView.setItems(allRoom);
 
     }
+
+    public void deleteRoom() {
+        String listString = roomListView.getSelectionModel().getSelectedItem();
+        String roomId = listString.split("--")[0];
+        Room selected = rooms.stream().filter(s -> s.getRoomId().equals(roomId))
+                .collect(Collectors.toList()).get(0);
+        Alert alert;
+        try {
+            CloseableHttpResponse response = ServerCommunication.deleteRoom(List.of(selected.getRoomId()));
+            alert = new Alert(Alert.AlertType.CONFIRMATION,
+                    EntityUtils.toString(response.getEntity()),
+                    ButtonType.OK);
+            if (response.getStatusLine().getStatusCode() == 202) {
+                ObservableList<String> temp = roomListView.getItems();
+                temp.remove(listString);
+                roomListView.setItems(temp);
+            }
+        } catch (IOException | URISyntaxException e) {
+            e.printStackTrace();
+            alert = new Alert(Alert.AlertType.ERROR);
+            alert.setContentText("Something went wrong, please try again.");
+            alert.setHeaderText(null);
+            alert.setTitle("Error");
+            alert.showAndWait();
+            return;
+        }
+        alert.setTitle("Success!");
+        alert.setHeaderText(null);
+        alert.showAndWait();
+    }
+
+    public void confirmationDeletion(ActionEvent event) {
+        Alert alert =
+                new Alert(Alert.AlertType.WARNING,
+                        "Are you sure you want to delete this?",
+                        ButtonType.OK,
+                        ButtonType.CANCEL);
+        alert.setTitle("Warning");
+        alert.setHeaderText(null);
+        Optional<ButtonType> result = alert.showAndWait();
+
+        if (result.isPresent() && result.get() == ButtonType.OK) {
+            if (event.getSource().equals(deleteRoomButton)) {
+                deleteRoom();
+            } else if (event.getSource().equals(deleteBuildingButton)) {
+                deleteBuilding();
+            }
+        }
+    }
+
 }

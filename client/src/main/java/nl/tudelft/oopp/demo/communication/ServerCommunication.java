@@ -169,14 +169,12 @@ public class ServerCommunication {
      * @throws URISyntaxException if there is any syntax error in the uri
      */
 
-    public static CloseableHttpResponse deleteBuilding(List<String> name)
+    public static CloseableHttpResponse deleteBuilding(String name)
             throws IOException, URISyntaxException {
         URIBuilder builder = new URIBuilder("http://localhost:8080/admin/buildings");
         HttpDelete httpDelete = new HttpDelete();
         httpDelete.setHeader("Authorization", pubAuth);
-        for (String s: name) {
-            builder.addParameter("names", s);
-        }
+        builder.addParameter("name", name);
         httpDelete.setURI(builder.build());
         return httpClient.execute(httpDelete);
     }
