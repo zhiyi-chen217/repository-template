@@ -26,6 +26,7 @@ import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collector;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -158,17 +159,53 @@ public class AdminBuildingsRoomsController extends GeneralHomepageController {
 
     }
 
-    public void deleteRoom() throws IOException, URISyntaxException {
+    public void deleteRoom() {
         String listString = roomListView.getSelectionModel().getSelectedItem();
         String roomId = listString.split("--")[0];
         Room selected = rooms.stream().filter(s -> s.getRoomId().equals(roomId))
                 .collect(Collectors.toList()).get(0);
-        ServerCommunication.deleteRoom(List.of(selected.getRoomId()));
+        Alert alert;
+        try {
+            CloseableHttpResponse response = ServerCommunication.deleteRoom(List.of(selected.getRoomId()));
+            alert = new Alert(Alert.AlertType.CONFIRMATION,
+                    EntityUtils.toString(response.getEntity()),
+                    ButtonType.OK);
+            if (response.getStatusLine().getStatusCode() == 202) {
+                ObservableList<String> temp = roomListView.getItems();
+                temp.remove(listString);
+                roomListView.setItems(temp);
+            }
+        } catch (IOException | URISyntaxException e) {
+            e.printStackTrace();
+            alert = new Alert(Alert.AlertType.ERROR);
+            alert.setContentText("Something went wrong, please try again.");
+            alert.setHeaderText(null);
+            alert.setTitle("Error");
+            alert.showAndWait();
+            return;
+        }
+        alert.setTitle("Success!");
+        alert.setHeaderText(null);
+        alert.showAndWait();
+    }
 
+    public void confirmationDeletion(ActionEvent event) {
+        Alert alert =
+                new Alert(Alert.AlertType.WARNING,
+                        "Are you sure you want to delete this?",
+                        ButtonType.OK,
+                        ButtonType.CANCEL);
+        alert.setTitle("Warning");
+        alert.setHeaderText(null);
+        Optional<ButtonType> result = alert.showAndWait();
 
-        ObservableList<String> temp = roomListView.getItems();
-        temp.remove(listString);
-        roomListView.setItems(temp);
+        if (result.isPresent() && result.get() == ButtonType.OK) {
+            if (event.getSource().equals(deleteRoomButton)) {
+                deleteRoom();
+            } else if (event.getSource().equals(deleteBuildingButton)) {
+                deleteBuilding();
+            }
+        }
     }
 
 }
