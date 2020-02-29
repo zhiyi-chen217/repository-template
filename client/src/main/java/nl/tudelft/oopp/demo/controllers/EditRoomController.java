@@ -2,6 +2,7 @@ package nl.tudelft.oopp.demo.controllers;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
+import javafx.scene.control.CheckBox;
 import javafx.scene.control.TextField;
 import nl.tudelft.oopp.demo.communication.ServerCommunication;
 import nl.tudelft.oopp.demo.entities.Room;
@@ -23,13 +24,13 @@ public class EditRoomController {
     private TextField roomPicturePath;
 
     @FXML
-    private TextField roomTV;
+    private CheckBox roomTV;
 
     @FXML
-    private TextField roomType;
+    private CheckBox roomType;
 
     @FXML
-    private TextField roomWhiteboard;
+    private CheckBox roomWhiteboard;
 
     @FXML
     private Button submit;
@@ -52,13 +53,14 @@ public class EditRoomController {
     }
 
     public void submitRoom() throws IOException {
+        String roomType = "ALL_CAN_USE";
         int roomCapacity = Integer.parseInt(this.roomCapacity.getText());
         String roomDescription = this.roomDescription.getText();
         String roomName = this.roomName.getText();
         String roomPicturePath = this.roomPicturePath.getText();
-        Boolean roomTV = false;
-        Boolean roomWhiteboard = false;
-        String roomType = "ALL_CAN_USE";
+        Boolean roomTV = this.roomTV.isSelected();
+        Boolean roomWhiteboard = this.roomWhiteboard.isSelected();
+        if (this.roomType.isSelected()) { roomType = "Employee"; }
         ServerCommunication.updateRoom(room.getRoomId(), roomName, roomCapacity, room.getBuildingName(),
                 roomDescription, roomType, roomPicturePath, roomWhiteboard, roomTV);
     }
