@@ -123,7 +123,7 @@ public class AdminBuildingsRoomsController extends GeneralHomepageController {
             CloseableHttpResponse response = ServerCommunication.deleteBuilding(name);
             alert = new Alert(Alert.AlertType.CONFIRMATION);
             alert.setContentText(EntityUtils.toString(response.getEntity(), "UTF-8"));
-            if (response.getStatusLine().getStatusCode() == 202) {
+            if (response.getStatusLine().getStatusCode() == 200) {
                 ObservableList<Building> tempB = buildingChoiceBox.getItems();
                 tempB.remove(building);
                 buildings.remove(building);
@@ -169,7 +169,7 @@ public class AdminBuildingsRoomsController extends GeneralHomepageController {
             alert = new Alert(Alert.AlertType.CONFIRMATION,
                     EntityUtils.toString(response.getEntity()),
                     ButtonType.OK);
-            if (response.getStatusLine().getStatusCode() == 202) {
+            if (response.getStatusLine().getStatusCode() == 200) {
                 ObservableList<String> temp = roomListView.getItems();
                 temp.remove(listString);
                 roomListView.setItems(temp);

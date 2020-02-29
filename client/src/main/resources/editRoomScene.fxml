@@ -25,6 +25,7 @@
                 <RowConstraints maxHeight="53.0" minHeight="10.0" prefHeight="20.19999999999999" vgrow="SOMETIMES" />
                 <RowConstraints maxHeight="30.80000000000001" minHeight="10.0" prefHeight="20.19999999999999" vgrow="SOMETIMES" />
                 <RowConstraints maxHeight="28.399999999999977" minHeight="10.0" prefHeight="20.399999999999977" vgrow="SOMETIMES" />
+            <RowConstraints />
             </rowConstraints>
             <children>
                 <Label text="Capacity" />
@@ -42,5 +43,6 @@
                 <CheckBox fx:id="roomWhiteboard" mnemonicParsing="false" prefHeight="70.0" prefWidth="142.0" text="Whiteboard" GridPane.columnIndex="1" GridPane.rowIndex="8" />
             </children>
         </GridPane>
+      <Label fx:id="failText" layoutX="291.0" layoutY="7.0" prefHeight="41.0" prefWidth="266.0" />
     </children>
 </AnchorPane>
