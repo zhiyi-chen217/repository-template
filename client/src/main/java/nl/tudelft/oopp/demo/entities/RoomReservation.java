@@ -17,6 +17,8 @@ public class RoomReservation {
 
     private Room room;
 
+    private Building building;
+
     public RoomReservation() {
     }
 
@@ -26,12 +28,15 @@ public class RoomReservation {
      * @param endTime is the amount of consecutive slots of a certain fixed length
      * @param room is the room which is reserved
      */
-    public RoomReservation(String user, LocalDateTime beginTime, LocalDateTime endTime , Room room) {
+    public RoomReservation(String user, LocalDateTime beginTime, LocalDateTime endTime, Room room) {
         this.user = user;
         this.beginTime = beginTime;
         this.endTime = endTime;
         this.room = room;
+        this.building = room.getBuilding();
     }
+
+
 
     public RoomReservation(JSONObject jsonObject) {
         this.id = jsonObject.getLong("id");
@@ -41,6 +46,7 @@ public class RoomReservation {
         this.endTime = GeneralHomepageController
                 .StringToLocalDateTime(jsonObject.getString("endTime"));
         this.room = new Room(jsonObject.getJSONObject("room"));
+        this.building = new Building(jsonObject.getJSONObject("room").getJSONObject("building"));
     }
 
     public Long getId() {
@@ -77,11 +83,21 @@ public class RoomReservation {
         this.room = room;
     }
 
-    public String getRoomString() {
-        return room.getRoomId() + "--" + room.getName();
+    public String getBeginTimeString() {
+        return this.getBeginTime().toString().split("T")[0] + "\n"
+                + this.getBeginTime().toString().split("T")[1];
     }
-    public String getTimeSlot() {
-        return "From: " + this.beginTime.toString() + "\n" + "To: " + this.endTime.toString();
+    public String getEndTimeString() {
+        return this.getEndTime().toString().split("T")[0] + "\n"
+                + this.getEndTime().toString().split("T")[1];
+    }
+
+    public Building getBuilding() {
+        return building;
+    }
+
+    public void setBuilding(Building building) {
+        this.building = building;
     }
 
     @Override

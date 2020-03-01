@@ -43,8 +43,7 @@
     -fx-label-padding: 15px;
 }
 
-.table-view .table-column{
-    -fx-background-color: #27ACE8;
-    /*-fx-border-width: 5px;*/
-    -fx-border-color: red;
+.table-view .cell {
+    -fx-background-color: rgba(57, 92, 171, 0.2);
+    -fx-cell-size: 50;
 }
