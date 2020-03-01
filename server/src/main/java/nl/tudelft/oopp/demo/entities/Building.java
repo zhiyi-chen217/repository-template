@@ -1,6 +1,7 @@
 package nl.tudelft.oopp.demo.entities;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 import java.time.LocalTime;
 import java.util.List;
 import nl.tudelft.oopp.demo.entities.Room;
@@ -10,6 +11,7 @@ import nl.tudelft.oopp.demo.entities.Room;
 public class Building {
     @Id
     @Column(name = "name")
+    @NotNull
     private String name;
 
     @Column(name = "location")
