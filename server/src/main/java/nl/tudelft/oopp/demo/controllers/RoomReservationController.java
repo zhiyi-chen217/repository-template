@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDateTime;
 import java.util.Optional;
 
 @RestController
@@ -20,7 +21,13 @@ public class RoomReservationController {
 
     @GetMapping("roomReservations")
     public ResponseEntity getRoomReservation(@RequestParam Optional<String> user,
-                                             @RequestParam Optional<String> room) {
+                                             @RequestParam Optional<String> room,
+                                             @RequestParam Optional<String> date) {
+        if (date.isPresent() && room.isPresent()) {
+            ResponseEntity.status(200).body(roomReservationRepository.findByDate(date.get(),
+                    room.get()));
+        }
+
         if (user.isPresent()) {
             User pretendUser = new User();
             pretendUser.setUserId(user.get());

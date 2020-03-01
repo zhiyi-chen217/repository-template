@@ -3,6 +3,7 @@ package nl.tudelft.oopp.demo.controllers;
 import javafx.beans.Observable;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
@@ -59,6 +60,12 @@ public class ReserveARoomController extends ReserveBikeController {
         rooms = GeneralHomepageController
                 .JsonArrayToRoomS(ServerCommunication.readRoom(null, newBuilding.getName()));
         roomListView.setItems(rooms);
+    }
+
+    public void stageRoomInfo(ActionEvent event) {
+        RoomInfoController
+                .setRoom(roomListView.getSelectionModel().getSelectedItem());
+        changeScene(event, "/roomInfoScene.fxml");
     }
 
 
