@@ -36,15 +36,15 @@ public class RoomReservationController {
         return ResponseEntity.status(200).body(roomReservationRepository.findAll());
     }
 
-    @PostMapping("roomReservations")
+    @PostMapping("roomReservation")
     public ResponseEntity postRoomReservation(@RequestBody RoomReservation roomReservation) {
         roomReservationRepository.save(roomReservation);
         return ResponseEntity.status(200).body("reservation saved");
     }
 
     @DeleteMapping("roomReservations")
-    public ResponseEntity deleteRoomReservation(@RequestBody RoomReservation roomReservation) {
-        roomReservationRepository.delete(roomReservation);
+    public ResponseEntity deleteRoomReservation(@RequestParam Long roomReservation) {
+        roomReservationRepository.deleteById(roomReservation);
         return ResponseEntity.status(200).body("deleted");
     }
 }
