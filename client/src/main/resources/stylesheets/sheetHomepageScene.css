@@ -37,14 +37,14 @@
     -fx-background-color: #395cab;
 }
 
-.table-view .column-header .label {
+.column-header .label {
     -fx-font-weight: bold;
     -fx-alignment: CENTER_LEFT;
-    -fx-label-padding: 4px;
+    -fx-label-padding: 15px;
 }
 
-.table-view .cell {
+.table-view .table-column{
     -fx-background-color: #27ACE8;
-    -fx-border-width: 5px;
+    /*-fx-border-width: 5px;*/
     -fx-border-color: red;
 }

@@ -46,7 +46,7 @@ public class RoomReservationController {
     @PostMapping("roomReservation")
     public ResponseEntity postRoomReservation(@RequestBody RoomReservation roomReservation) {
         roomReservationRepository.save(roomReservation);
-        return ResponseEntity.status(200).body("reservation saved");
+        return ResponseEntity.status(201).body("reservation saved");
     }
 
     @DeleteMapping("roomReservations")

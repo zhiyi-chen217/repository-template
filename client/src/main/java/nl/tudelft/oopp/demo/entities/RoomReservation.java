@@ -34,7 +34,8 @@ public class RoomReservation {
     }
 
     public RoomReservation(JSONObject jsonObject) {
-        this.user = jsonObject.getJSONObject("user").getString("userId");
+        this.id = jsonObject.getLong("id");
+        this.user = jsonObject.getJSONObject("user").getString("user_id");
         this.beginTime = GeneralHomepageController
                 .StringToLocalDateTime(jsonObject.getString("beginTime"));
         this.endTime = GeneralHomepageController
@@ -70,12 +71,17 @@ public class RoomReservation {
 
     public void setEndTime(LocalDateTime endTime) { this.endTime = endTime; }
 
-    public Room getRoom() {
-        return room;
-    }
+    public Room getRoom() {return this.room;}
 
     public void setRoom(Room room) {
         this.room = room;
+    }
+
+    public String getRoomString() {
+        return room.getRoomId() + "--" + room.getName();
+    }
+    public String getTimeSlot() {
+        return "From: " + this.beginTime.toString() + "\n" + "To: " + this.endTime.toString();
     }
 
     @Override

@@ -25,7 +25,8 @@ public class ServerCommunication {
 
     private static HttpClient client = HttpClient.newBuilder().build();
     private static CloseableHttpClient httpClient = HttpClients.createDefault();
-    private static String pubAuth = "Basic YWRtaW46MTIzNDU=";
+    public static String pubAuth;
+    public static String userId;
 
     /**
      * Send the username and password under the authentication header to the server.
@@ -40,6 +41,7 @@ public class ServerCommunication {
         String encodedAuth = "Basic " + Base64.getEncoder().encodeToString(auth.getBytes());
 
         pubAuth = encodedAuth;
+        userId = username;
         URI urihttp = URI.create(baseurl);
         HttpRequest request = HttpRequest.newBuilder().GET().uri(urihttp)
                 .header("Authorization", encodedAuth).build();
@@ -256,7 +258,7 @@ public class ServerCommunication {
         return httpClient.execute(httpDelete);
     }
 
-    public static CloseableHttpResponse readRoomReservation(String user, String room)
+    public static CloseableHttpResponse readRoomReservation(String user, String room, String date)
             throws URISyntaxException, IOException {
         URIBuilder uri = new URIBuilder("http://localhost:8080/roomReservations");
         if (user != null) {
@@ -265,7 +267,11 @@ public class ServerCommunication {
         if(room != null) {
             uri.addParameter("room", room);
         }
+        if(date != null) {
+            uri.addParameter("date", date);
+        }
         HttpGet httpGet = new HttpGet();
+        httpGet.setURI(uri.build());
         httpGet.setHeader("Authorization", pubAuth);
         return httpClient.execute(httpGet);
     }
@@ -276,7 +282,7 @@ public class ServerCommunication {
         JSONObject jsonObject = new JSONObject();
         JSONObject temp = new JSONObject();
         temp.put("userId", user);
-        jsonObject.put("user", user);
+        jsonObject.put("user", temp);
         jsonObject.put("beginTime", beginTime);
         jsonObject.put("endTime", endTime);
         temp = new JSONObject();
@@ -284,6 +290,8 @@ public class ServerCommunication {
         jsonObject.put("room", temp);
         HttpPost httpPost = new HttpPost("http://localhost:8080/roomReservation");
         httpPost.setHeader("Authorization", pubAuth);
+        httpPost.setEntity(new StringEntity(jsonObject.toString()));
+        httpPost.setHeader("Content-type", "application/json");
         return httpClient.execute(httpPost);
     }
 

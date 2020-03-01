@@ -15,14 +15,14 @@
                </font>
             </Label>
             <ListView fx:id="timeSlotList" prefHeight="269.0" prefWidth="200.0" VBox.vgrow="ALWAYS" />
-            <Button alignment="CENTER_RIGHT" contentDisplay="CENTER" mnemonicParsing="false" text="Confirm" VBox.vgrow="ALWAYS" />
+            <Button alignment="CENTER_RIGHT" contentDisplay="CENTER" mnemonicParsing="false" text="Confirm" VBox.vgrow="ALWAYS" onAction="#confirmReservation"/>
          </children>
       </VBox>
       <Label layoutX="34.0" layoutY="40.0" text="Room Name">
          <font>
             <Font size="18.0" />
          </font></Label>
-      <Button mnemonicParsing="false" text="Back" />
+      <Button mnemonicParsing="false" text="Back" onAction="#changeSceneReserveARoom"/>
       <VBox layoutX="34.0" layoutY="77.0" prefHeight="266.0" prefWidth="252.0">
          <children>
             <ImageView fitHeight="157.0" fitWidth="286.0" pickOnBounds="true" preserveRatio="true" />
