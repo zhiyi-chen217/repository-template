@@ -14,12 +14,14 @@ import javafx.stage.Stage;
 import nl.tudelft.oopp.demo.communication.ServerCommunication;
 import nl.tudelft.oopp.demo.entities.Building;
 import nl.tudelft.oopp.demo.entities.Room;
+import nl.tudelft.oopp.demo.entities.RoomReservation;
 import org.apache.http.client.methods.CloseableHttpResponse;
 import org.apache.http.util.EntityUtils;
 import org.json.JSONObject;
 import org.json.JSONArray;
 
 import java.io.IOException;
+import java.net.URISyntaxException;
 import java.time.LocalDateTime;
 import java.time.Month;
 import java.util.Arrays;
@@ -161,11 +163,23 @@ public class GeneralHomepageController {
         return buildings;
     }
 
+    public ObservableList<RoomReservation> jsonArrayToReservation(CloseableHttpResponse response)
+            throws IOException, URISyntaxException {
+        String jsonArray = EntityUtils.toString(response.getEntity());
+        JSONArray roomReservationArray = new JSONArray(jsonArray);
+        ObservableList<RoomReservation> roomReservations = FXCollections.observableArrayList();
+        for (int i = 0; i < roomReservationArray.length(); i++) {
+            RoomReservation r = new RoomReservation(roomReservationArray.getJSONObject(i));
+            roomReservations.add(r);
+        }
+        return roomReservations;
+    }
+
     public static LocalDateTime StringToLocalDateTime (String dateTime) {
         List<Integer> date = Arrays.stream(dateTime.split("T")[0].split("-"))
                 .map((i) -> Integer.parseInt(i))
                 .collect(Collectors.toList());
-        List<Integer> time = Arrays.stream(dateTime.split("T")[0].split(":"))
+        List<Integer> time = Arrays.stream(dateTime.split("T")[1].split(":"))
                 .map((i) -> Integer.parseInt(i))
                 .collect(Collectors.toList());
         return LocalDateTime.of(date.get(0), Month.of(date.get(1)), date.get(2),

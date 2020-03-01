@@ -44,7 +44,5 @@
 }
 
 .table-view .cell {
-    -fx-background-color: #27ACE8;
-    -fx-border-width: 5px;
-    -fx-border-color: red;
+    -fx-background-color: rgba(57, 92, 171, 0.2);
 }

@@ -267,6 +267,7 @@ public class ServerCommunication {
         }
         HttpGet httpGet = new HttpGet();
         httpGet.setHeader("Authorization", pubAuth);
+        httpGet.setURI(uri.build());
         return httpClient.execute(httpGet);
     }
 

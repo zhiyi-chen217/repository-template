@@ -17,6 +17,8 @@ public class RoomReservation {
 
     private Room room;
 
+    private Building building;
+
     public RoomReservation() {
     }
 
@@ -26,20 +28,24 @@ public class RoomReservation {
      * @param endTime is the amount of consecutive slots of a certain fixed length
      * @param room is the room which is reserved
      */
-    public RoomReservation(String user, LocalDateTime beginTime, LocalDateTime endTime , Room room) {
+    public RoomReservation(String user, LocalDateTime beginTime, LocalDateTime endTime, Room room) {
         this.user = user;
         this.beginTime = beginTime;
         this.endTime = endTime;
         this.room = room;
+        this.building = room.getBuilding();
     }
 
+
+
     public RoomReservation(JSONObject jsonObject) {
-        this.user = jsonObject.getJSONObject("user").getString("userId");
+        this.user = jsonObject.getJSONObject("user").getString("user_id");
         this.beginTime = GeneralHomepageController
                 .StringToLocalDateTime(jsonObject.getString("beginTime"));
         this.endTime = GeneralHomepageController
                 .StringToLocalDateTime(jsonObject.getString("endTime"));
         this.room = new Room(jsonObject.getJSONObject("room"));
+        this.building = new Building(jsonObject.getJSONObject("room").getJSONObject("building"));
     }
 
     public Long getId() {
@@ -76,6 +82,14 @@ public class RoomReservation {
 
     public void setRoom(Room room) {
         this.room = room;
+    }
+
+    public Building getBuilding() {
+        return building;
+    }
+
+    public void setBuilding(Building building) {
+        this.building = building;
     }
 
     @Override
