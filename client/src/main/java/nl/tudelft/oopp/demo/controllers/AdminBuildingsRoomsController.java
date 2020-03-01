@@ -55,24 +55,24 @@ public class AdminBuildingsRoomsController extends GeneralHomepageController {
         deleteRoomButton.setVisible(false);
         roomListView.setVisible(false);
         buildings = FXCollections.observableArrayList();
-        JSONArray jsonArray = new JSONArray(EntityUtils.toString(ServerCommunication.readBuilding(null)
-                                        .getEntity()));
+        JSONArray jsonArray = new JSONArray(EntityUtils
+                .toString(ServerCommunication.readBuilding(null).getEntity()));
         for (int i = 0; i < jsonArray.length(); i++) {
             JSONObject temp = jsonArray.getJSONObject(i);
             buildings.add(new Building(temp));
         }
         buildingChoiceBox.getItems().setAll(buildings);
         buildingChoiceBox.getSelectionModel().selectedItemProperty().addListener(
-                (v, oldBuilding, newBuilding) -> {
-                    try {
-                        changeSelectedEvent(v, oldBuilding, newBuilding);
-                        roomListView.setVisible(true);
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    } catch (URISyntaxException e) {
-                        e.printStackTrace();
-                    }
+            (v, oldBuilding, newBuilding) -> {
+                try {
+                    changeSelectedEvent(v, oldBuilding, newBuilding);
+                    roomListView.setVisible(true);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                } catch (URISyntaxException e) {
+                    e.printStackTrace();
                 }
+            }
         );
     }
 
@@ -80,12 +80,18 @@ public class AdminBuildingsRoomsController extends GeneralHomepageController {
         newStage("/addABuilding.fxml", addBuildingButton);
     }
 
+    /**Constructs the AddRoom stage.
+     *
+     */
     public void stageAddRoom() {
         Building building = buildingChoiceBox.getValue();
         AddARoomController.setBuilding(building);
         newStage("/addARoomScene.fxml", addRoomButton);
     }
 
+    /**Constructs the EditRoom stage.
+     * @throws IOException when it can not find the room
+     */
     public void stageEditRoom() throws IOException {
         String temp = roomListView.getSelectionModel().getSelectedItem();
         Room selected = rooms.stream().filter(s -> s.getName().equals(temp))
@@ -94,20 +100,23 @@ public class AdminBuildingsRoomsController extends GeneralHomepageController {
         newStage("/editRoomScene.fxml", editRoomButton);
     }
 
+    /**Constructs the EditBuilding stage.
+     * @throws IOException when it can not find the building
+     */
     public void stageEditBuilding() throws IOException {
         Building building = buildingChoiceBox.getValue();
         EditBuildingController.setBuilding(building);
 
-//        FXMLLoader loader = new FXMLLoader();
-//        loader.setLocation(getClass().getResource("/editBuildingScene.fxml"));
-//        Parent homePageParent = loader.load();
-//        Scene homePageScene = new Scene(homePageParent);
-//
-//        //Get current stage
-//        Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-//        stage.setScene(homePageScene);
-//        stage.getIcons().add(new Image("https://simchavos.com/tu.png"));
-//        stage.show();
+        //        FXMLLoader loader = new FXMLLoader();
+        //        loader.setLocation(getClass().getResource("/editBuildingScene.fxml"));
+        //        Parent homePageParent = loader.load();
+        //        Scene homePageScene = new Scene(homePageParent);
+        //
+        //        //Get current stage
+        //        Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        //        stage.setScene(homePageScene);
+        //        stage.getIcons().add(new Image("https://simchavos.com/tu.png"));
+        //        stage.show();
         newStage("/editBuildingScene.fxml", editBuildingButton);
     }
 
@@ -123,6 +132,8 @@ public class AdminBuildingsRoomsController extends GeneralHomepageController {
         roomListView.setVisible(true);
     }
 
+    /**Deletes the building the user has selected.
+     */
     public void deleteBuilding() {
         Building building = buildingChoiceBox.getValue();
         String name = building.getName();
@@ -147,6 +158,13 @@ public class AdminBuildingsRoomsController extends GeneralHomepageController {
         alert.showAndWait();
     }
 
+    /**Not sure how to do this javadoc.
+     * @param v is observable
+     * @param oldBuilding is the old building
+     * @param newBuilding is the new building
+     * @throws IOException if it can not find the building
+     * @throws URISyntaxException if the URI is not correct
+     */
     public void changeSelectedEvent(Observable v, Building oldBuilding, Building newBuilding)
             throws IOException, URISyntaxException {
         rooms = FXCollections.observableArrayList();

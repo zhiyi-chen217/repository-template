@@ -36,17 +36,23 @@ public class EditRoomController {
 
     public static Room room;
 
-    public static void setRoom(Room room1){
+    public static void setRoom(Room room1) {
         room = room1;
     }
 
-    public void initialize(){
+    /**Method that displays all information regarding the room.
+     *
+     */
+    public void initialize() {
         roomCapacity.setText(String.valueOf(room.getCapacity()));
         roomDescription.setText(room.getDescription());
         roomName.setText(room.getName());
         roomPicturePath.setText(room.getPicturesPath());
     }
 
+    /**Method that updates a room that the admin has inputted.
+     * @throws IOException if the input is not appropriate
+     */
     public void submitRoom() throws IOException {
         int roomCapacity = Integer.parseInt(this.roomCapacity.getText());
         String roomDescription = this.roomDescription.getText();
@@ -55,7 +61,8 @@ public class EditRoomController {
         Boolean roomTV = false;
         Boolean roomWhiteboard = false;
         String roomType = "ALL_CAN_USE";
-        ServerCommunication.updateRoom(room.getRoomId(), roomName, roomCapacity, room.getBuildingName(),
-                roomDescription, roomType, roomPicturePath, roomWhiteboard, roomTV);
+        ServerCommunication.updateRoom(room.getRoomId(), roomName, roomCapacity,
+                room.getBuildingName(),roomDescription, roomType, roomPicturePath,
+                roomWhiteboard, roomTV);
     }
 }

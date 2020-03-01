@@ -55,10 +55,11 @@ public class SignUpController {
 
          */
         CloseableHttpResponse re = ServerCommunication.readRoom("ewi01", null);
-        System.out.println(new Room(new JSONObject(EntityUtils.toString(re.getEntity()))).toString());
-//        CloseableHttpResponse re = ServerCommunication.updateRoom("ewi02", "01", 9,
-//                "b1", "", "ALL_CAN_USE", "", true, true);
-//        System.out.println(re.getStatusLine().getStatusCode());
+        System.out.println(new Room(new JSONObject(EntityUtils.toString(re.getEntity())))
+                .toString());
+        //      CloseableHttpResponse re = ServerCommunication.updateRoom("ewi02", "01", 9,
+        //      "b1", "", "ALL_CAN_USE", "", true, true);
+        //      System.out.println(re.getStatusLine().getStatusCode());
         //CloseableHttpResponse re = ServerCommunication.deleteRoom(List.of("ewi01"));
         //System.out.println(EntityUtils.toString(re.getEntity()));
         failtext.setText("");

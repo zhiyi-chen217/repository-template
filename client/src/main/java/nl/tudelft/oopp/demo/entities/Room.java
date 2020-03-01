@@ -45,7 +45,11 @@ public class  Room {
         this.tv = tv;
         this.building = building;
     }
-    public Room(JSONObject room){
+
+    /**Constructor of the room class.
+     * @param room is the inputted room information
+     */
+    public Room(JSONObject room) {
         this.roomId = room.getString("roomId");
         this.name = room.getString("name");
         this.capacity = room.getInt("capacity");
@@ -137,7 +141,9 @@ public class  Room {
         this.building = building;
     }
 
-    public String getBuildingName() { return this.building.getName(); }
+    public String getBuildingName() {
+        return this.building.getName();
+    }
 
     @Override
     public String toString() {
