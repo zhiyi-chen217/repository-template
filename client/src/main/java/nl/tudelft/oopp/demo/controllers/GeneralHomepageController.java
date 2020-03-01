@@ -139,6 +139,17 @@ public class GeneralHomepageController {
         return rooms;
     }
 
+    public static ObservableList<String> JsonArrayToRoomS (CloseableHttpResponse response)
+            throws IOException {
+        String JsonArray = EntityUtils.toString(response.getEntity());
+        JSONArray roomJsonArray = new JSONArray(JsonArray);
+        ObservableList<String> rooms = FXCollections.observableArrayList();
+        for (int i = 0; i < roomJsonArray.length(); i++) {
+            rooms.add(new Room(roomJsonArray.getJSONObject(i)).toString());
+        }
+        return rooms;
+    }
+
     public static ObservableList<Building> JsonArrayToBuilding (CloseableHttpResponse response)
             throws IOException {
         String JsonArray = EntityUtils.toString(response.getEntity());
