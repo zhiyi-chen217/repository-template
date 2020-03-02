@@ -258,4 +258,5 @@ public class AdminBuildingsRoomsController extends GeneralHomepageController {
     public static ObservableList<Building> getBuildings() {
         return buildings;
     }
+
 }

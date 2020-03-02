@@ -1,29 +1,23 @@
 package nl.tudelft.oopp.demo.entities;
 
-import javax.persistence.*;
+import nl.tudelft.oopp.demo.controllers.GeneralHomepageController;
+import org.json.JSONObject;
+
 import java.time.LocalDateTime;
 
-@Entity
-@Table(name = "RoomReservation")
 public class RoomReservation {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id")
+
     private Long id;
 
-    @ManyToOne
-    @JoinColumn(name = "user")
-    private User user;
+    private String user;
 
-    @Column(name = "beginTime")
     private LocalDateTime beginTime;
 
-    @Column(name = "endTime")
     private LocalDateTime endTime;
 
-    @ManyToOne
-    @JoinColumn(name = "room")
     private Room room;
+
+    private Building building;
 
     public RoomReservation() {
     }
@@ -34,11 +28,25 @@ public class RoomReservation {
      * @param endTime is the amount of consecutive slots of a certain fixed length
      * @param room is the room which is reserved
      */
-    public RoomReservation(User user, LocalDateTime beginTime, LocalDateTime endTime , Room room) {
+    public RoomReservation(String user, LocalDateTime beginTime, LocalDateTime endTime, Room room) {
         this.user = user;
         this.beginTime = beginTime;
         this.endTime = endTime;
         this.room = room;
+        this.building = room.getBuilding();
+    }
+
+
+
+    public RoomReservation(JSONObject jsonObject) {
+        this.id = jsonObject.getLong("id");
+        this.user = jsonObject.getJSONObject("user").getString("user_id");
+        this.beginTime = GeneralHomepageController
+                .StringToLocalDateTime(jsonObject.getString("beginTime"));
+        this.endTime = GeneralHomepageController
+                .StringToLocalDateTime(jsonObject.getString("endTime"));
+        this.room = new Room(jsonObject.getJSONObject("room"));
+        this.building = new Building(jsonObject.getJSONObject("room").getJSONObject("building"));
     }
 
     public Long getId() {
@@ -49,11 +57,11 @@ public class RoomReservation {
         this.id = id;
     }
 
-    public User getUser() {
+    public String getUser() {
         return user;
     }
 
-    public void setUser(User user) {
+    public void setUser(String user) {
         this.user = user;
     }
 
@@ -69,12 +77,27 @@ public class RoomReservation {
 
     public void setEndTime(LocalDateTime endTime) { this.endTime = endTime; }
 
-    public Room getRoom() {
-        return room;
-    }
+    public Room getRoom() {return this.room;}
 
     public void setRoom(Room room) {
         this.room = room;
+    }
+
+    public String getBeginTimeString() {
+        return this.getBeginTime().toString().split("T")[0] + "\n"
+                + this.getBeginTime().toString().split("T")[1];
+    }
+    public String getEndTimeString() {
+        return this.getEndTime().toString().split("T")[0] + "\n"
+                + this.getEndTime().toString().split("T")[1];
+    }
+
+    public Building getBuilding() {
+        return building;
+    }
+
+    public void setBuilding(Building building) {
+        this.building = building;
     }
 
     @Override

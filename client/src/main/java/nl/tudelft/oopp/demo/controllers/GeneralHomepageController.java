@@ -14,12 +14,20 @@ import javafx.stage.Stage;
 import nl.tudelft.oopp.demo.communication.ServerCommunication;
 import nl.tudelft.oopp.demo.entities.Building;
 import nl.tudelft.oopp.demo.entities.Room;
+import nl.tudelft.oopp.demo.entities.RoomReservation;
 import org.apache.http.client.methods.CloseableHttpResponse;
 import org.apache.http.util.EntityUtils;
 import org.json.JSONObject;
 import org.json.JSONArray;
 
 import java.io.IOException;
+import java.net.URISyntaxException;
+import java.time.LocalDateTime;
+import java.time.Month;
+import java.util.Arrays;
+import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 public class GeneralHomepageController {
 
@@ -133,6 +141,17 @@ public class GeneralHomepageController {
         return rooms;
     }
 
+    public static ObservableList<String> JsonArrayToRoomS (CloseableHttpResponse response)
+            throws IOException {
+        String JsonArray = EntityUtils.toString(response.getEntity());
+        JSONArray roomJsonArray = new JSONArray(JsonArray);
+        ObservableList<String> rooms = FXCollections.observableArrayList();
+        for (int i = 0; i < roomJsonArray.length(); i++) {
+            rooms.add(new Room(roomJsonArray.getJSONObject(i)).toString());
+        }
+        return rooms;
+    }
+
     public static ObservableList<Building> JsonArrayToBuilding (CloseableHttpResponse response)
             throws IOException {
         String JsonArray = EntityUtils.toString(response.getEntity());
@@ -142,6 +161,28 @@ public class GeneralHomepageController {
             buildings.add(new Building(buildingJsonArray.getJSONObject(i)));
         }
         return buildings;
+    }
+
+    public static ObservableList<RoomReservation> JsonArrayToRoomReservation (CloseableHttpResponse response)
+            throws IOException {
+        String JsonArray = EntityUtils.toString(response.getEntity());
+        JSONArray roomReservationJsonArray = new JSONArray(JsonArray);
+        ObservableList<RoomReservation> roomReservations = FXCollections.observableArrayList();
+        for (int i = 0; i < roomReservationJsonArray.length(); i++) {
+            roomReservations.add(new RoomReservation(roomReservationJsonArray.getJSONObject(i)));
+        }
+        return roomReservations;
+    }
+
+    public static LocalDateTime StringToLocalDateTime (String dateTime) {
+        List<Integer> date = Arrays.stream(dateTime.split("T")[0].split("-"))
+                .map((i) -> Integer.parseInt(i))
+                .collect(Collectors.toList());
+        List<Integer> time = Arrays.stream(dateTime.split("T")[1].split(":"))
+                .map((i) -> Integer.parseInt(i))
+                .collect(Collectors.toList());
+        return LocalDateTime.of(date.get(0), Month.of(date.get(1)), date.get(2),
+                time.get(0), time.get(1), time.get(2));
     }
 
 }
