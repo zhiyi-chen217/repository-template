@@ -1,6 +1,5 @@
 package nl.tudelft.oopp.demo.entities;
 
-import java.util.Objects;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
@@ -8,9 +7,9 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name = "users")
-public class Users {
+public class User {
     @Id
-    @Column(name = "userId")
+    @Column(name = "user_id")
     private String userId;
 
     @Column(name = "email")
@@ -22,17 +21,19 @@ public class Users {
     @Column(name = "password")
     private String password;
 
-    /**Constructor of the Users class.
-     *
+    /**Constructor of the User class.
+     * @param userId is the id of the user
+     * @param email is the email address of the user
+     * @param password is the password of the user
      */
-    public Users(String userId, String email, String password) {
+    public User(String userId, String email, String password) {
         this.userId = userId;
         this.email = email;
         this.type = "Student";
         this.password = password;
     }
 
-    public Users() {
+    public User() {
     }
 
     public String getUser_id() {
@@ -56,7 +57,7 @@ public class Users {
     }
 
     public void setEmail(String email) {
-        email = email;
+        this.email = email;
     }
 
     public String getPassword() {
@@ -71,8 +72,8 @@ public class Users {
         if (o == null || getClass() != o.getClass()) {
             return false;
         }
-        Users users = (Users) o;
-        return userId.equals(users.userId);
+        User user = (User) o;
+        return userId.equals(user.userId);
     }
 
 }

@@ -1,19 +1,29 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import java.net.URL?>
 <?import javafx.geometry.*?>
+<?import javafx.scene.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane prefHeight="144.0" prefWidth="192.0" xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml" fx:controller="nl.tudelft.oopp.demo.controllers.MainSceneController">
-<VBox spacing="3" layoutX="22.0" layoutY="28.0" AnchorPane.bottomAnchor="21.599999999999994" AnchorPane.leftAnchor="22.0" AnchorPane.rightAnchor="19.599999999999994" AnchorPane.topAnchor="28.0">
-    <Label text="This is a simple demo&#xD;application.">
+<AnchorPane prefHeight="525.2" prefWidth="788.4" style="-fx-background-color: #27ACE8;" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="nl.tudelft.oopp.demo.controllers.MainSceneController">
+<VBox alignment="CENTER" layoutX="22.0" layoutY="28.0" spacing="3" AnchorPane.bottomAnchor="21.599999999999994" AnchorPane.leftAnchor="22.0" AnchorPane.rightAnchor="19.599999999999994" AnchorPane.topAnchor="28.0">
+    <Label text="Welcome to the TU Delft Campus Reservation System!&#13;" textAlignment="CENTER" textFill="WHITE">
         <VBox.margin>
             <Insets />
         </VBox.margin></Label>
-    <Label text="Proceed to the login screen.">
+    <Label text="Proceed to the login screen" textFill="WHITE">
         <VBox.margin>
             <Insets />
         </VBox.margin></Label>
-    <Button fx:id="button" text="Login please" onAction="#buttonClicked"/>
+    <Button fx:id="login" onAction="#btnClicked" text="Login please" />
+      <Label text="&#13;No account yet?" textFill="WHITE" />
+      <Button fx:id="signUp" mnemonicParsing="false" onAction="#btnClicked" text="Sign up" />
 </VBox>
+   <cursor>
+      <Cursor fx:constant="DEFAULT" />
+   </cursor>
+    <stylesheets>
+        <URL value="@stylesheets/sheetMainScene.css" />
+    </stylesheets>
 </AnchorPane>
