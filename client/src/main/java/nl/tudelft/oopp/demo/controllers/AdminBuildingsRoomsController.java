@@ -86,6 +86,9 @@ public class AdminBuildingsRoomsController extends GeneralHomepageController {
         newStage("/addABuilding.fxml", addBuildingButton);
     }
 
+    /**Constructs the AddRoom stage.
+     *
+     */
     public void stageAddRoom() {
         Building building = buildingChoiceBox.getValue();
         AddARoomController.setBuilding(building);
@@ -128,6 +131,8 @@ public class AdminBuildingsRoomsController extends GeneralHomepageController {
         refreshButton.setVisible(true);
     }
 
+    /**Deletes the building the user has selected.
+     */
     public void deleteBuilding() {
         Building building = buildingChoiceBox.getValue();
         String name = building.getName();
@@ -155,6 +160,13 @@ public class AdminBuildingsRoomsController extends GeneralHomepageController {
         alert.showAndWait();
     }
 
+    /**Not sure how to do this javadoc.
+     * @param v is observable
+     * @param oldBuilding is the old building
+     * @param newBuilding is the new building
+     * @throws IOException if it can not find the building
+     * @throws URISyntaxException if the URI is not correct
+     */
     public void changeSelectedEvent(Observable v, Building oldBuilding, Building newBuilding)
             throws IOException, URISyntaxException {
         if (newBuilding == null) {

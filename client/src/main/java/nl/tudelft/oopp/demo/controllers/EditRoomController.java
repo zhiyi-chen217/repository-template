@@ -65,7 +65,9 @@ public class EditRoomController {
         roomType.setSelected(room.getType().equals("Employee"));
     }
 
-
+    /**Method that updates a room that the admin has inputted.
+     * @throws IOException if the input is not appropriate
+     */
     public void submitRoom() throws IOException {
         if (this.roomCapacity.getText().equals("") || this.roomDescription.getText().equals("")
                 || this.roomName.getText().equals("") || this.roomPicturePath.getText().equals("")) {

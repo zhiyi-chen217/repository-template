@@ -4,21 +4,25 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.validation.constraints.NotNull;
 
 @Entity
 @Table(name = "users")
 public class User {
     @Id
     @Column(name = "user_id")
+    @NotNull
     private String userId;
 
     @Column(name = "email")
     private String email;
 
     @Column(name = "type")
+    @NotNull
     private String type;
 
     @Column(name = "password")
+    @NotNull
     private String password;
 
     /**Constructor of the User class.

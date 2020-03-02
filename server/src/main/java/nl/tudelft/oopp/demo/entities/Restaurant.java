@@ -2,6 +2,7 @@ package nl.tudelft.oopp.demo.entities;
 
 import java.util.Objects;
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 
 
 @Entity
@@ -10,6 +11,7 @@ public class Restaurant {
 
     @Id
     @Column(name = "name")
+    @NotNull
     private String name;
 
     @ManyToOne

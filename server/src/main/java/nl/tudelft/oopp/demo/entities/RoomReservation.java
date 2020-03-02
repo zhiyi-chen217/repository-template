@@ -9,10 +9,12 @@ public class RoomReservation {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
+    @NotNull
     private Long id;
 
     @ManyToOne
     @JoinColumn(name = "user")
+    @NotNull
     private User user;
 
     @Column(name = "beginTime")
@@ -23,6 +25,7 @@ public class RoomReservation {
 
     @ManyToOne
     @JoinColumn(name = "room")
+    @NotNull
     private Room room;
 
     public RoomReservation() {

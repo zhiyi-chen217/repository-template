@@ -2,6 +2,7 @@ package nl.tudelft.oopp.demo.entities;
 
 import java.util.Set;
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 
 
 @Entity
@@ -10,6 +11,7 @@ public class Food {
 
     @Id
     @Column(name = "food")
+    @NotNull
     private String name;
 
 

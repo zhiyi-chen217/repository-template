@@ -46,6 +46,9 @@ public class EditBuildingController {
         building = building1;
     }
 
+    /**Method that displays all information regarding a building.
+     *
+     */
     @FXML
     public void initialize() throws IOException, URISyntaxException {
         building = (Building) GeneralHomepageController.JsonToEntity(
@@ -58,9 +61,8 @@ public class EditBuildingController {
         buildingBikes.setText(String.valueOf(building.getBikes()));
     }
 
-    /**
-     *
-     * @param event
+    /**Update method for buildings.
+     * @param event by which this method is triggered
      */
     public void submitUpdate(ActionEvent event) {
         failtext.setText("");

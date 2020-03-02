@@ -1,4 +1,5 @@
 package nl.tudelft.oopp.demo.entities;
+
 import org.json.JSONObject;
 
 import java.time.LocalTime;
@@ -16,8 +17,9 @@ public class Building {
 
     private int bikes;
 
-
-
+    /**Constructor of the Building class.
+     * @param building is the inputted building information
+     */
     public Building(JSONObject building) {
         this.name = (String) building.get("name");
         this.location = (String) building.get("location");

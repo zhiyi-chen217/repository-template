@@ -2,6 +2,7 @@ package nl.tudelft.oopp.demo.entities;
 
 import java.sql.Timestamp;
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 
 
 @Entity
@@ -10,18 +11,22 @@ public class BikeReservation {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "Id")
+    @NotNull
     private Long id;
 
     @ManyToOne
     @JoinColumn(name = "user")
+    @NotNull
     private User user;
 
     @ManyToOne
     @JoinColumn(name = "rentBuilding")
+    @NotNull
     private Building rentBuilding;
 
     @ManyToOne
     @JoinColumn(name = "returnBuilding")
+    @NotNull
     private Building returnBuilding;
 
     @Column(name = "beginTime")
