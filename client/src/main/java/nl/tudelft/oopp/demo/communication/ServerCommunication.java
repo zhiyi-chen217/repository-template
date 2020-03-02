@@ -300,6 +300,16 @@ public class ServerCommunication {
         return httpClient.execute(httpDelete);
     }
 
+    /**
+     * This method sends an HttpGet request to the server asking for all the room reservations
+     * fulfilling the given constraints.
+     * @param user - the userId
+     * @param room - the roomId
+     * @param date - the date
+     * @return - An HttpResponse containing all the qualified room reservations
+     * @throws URISyntaxException
+     * @throws IOException
+     */
     public static CloseableHttpResponse readRoomReservation(String user, String room, String date)
             throws URISyntaxException, IOException {
         URIBuilder uri = new URIBuilder("http://localhost:8080/roomReservations");
@@ -318,6 +328,16 @@ public class ServerCommunication {
         return httpClient.execute(httpGet);
     }
 
+    /**
+     * This method sends a HttpPost request to the server,
+     * in order to post a new room reservation for the user.
+     * @param user - the userId
+     * @param beginTime - the begin time of the reservation
+     * @param endTime - the end time of the reservation
+     * @param room - the roomId
+     * @return - An HttpResponse specifying the state of the request
+     * @throws IOException
+     */
     public static CloseableHttpResponse createRoomReservation(String user, LocalDateTime beginTime,
                                                               LocalDateTime endTime, String room)
             throws IOException {
@@ -337,6 +357,13 @@ public class ServerCommunication {
         return httpClient.execute(httpPost);
     }
 
+    /**
+     * This method sends a HttpDelete request to the server,
+     * in order to delete the given room reservation
+     * @param roomReservationId - the id of the room reservation
+     * @return - An HttpResponse specifying the state of the request
+     * @throws IOException
+     */
     public static CloseableHttpResponse deleteRoomReservation(Long roomReservationId)
             throws IOException {
         HttpDelete httpDelete = new HttpDelete("http://localhost:8080/roomReservation");
