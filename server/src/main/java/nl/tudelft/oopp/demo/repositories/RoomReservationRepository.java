@@ -17,5 +17,5 @@ public interface RoomReservationRepository extends JpaRepository<RoomReservation
     @Query(value = "SELECT * FROM room_reservation AS roomR " +
                     "WHERE CAST(roomR.begin_time AS DATE) = :date AND roomR.room = :roomId",
             nativeQuery = true)
-    public List<RoomReservation> findByDate(@Param("date") String date, @Param("roomId") String roomId);
+    public List<RoomReservation> findByRoomDate(@Param("date") String date, @Param("roomId") String roomId);
 }

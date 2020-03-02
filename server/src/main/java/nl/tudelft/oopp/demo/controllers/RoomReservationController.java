@@ -24,20 +24,20 @@ public class RoomReservationController {
                                              @RequestParam Optional<String> room,
                                              @RequestParam Optional<String> date) {
         if (date.isPresent() && room.isPresent()) {
-            ResponseEntity.status(200).body(roomReservationRepository.findByDate(date.get(),
+            return  ResponseEntity.status(200).body(roomReservationRepository.findByRoomDate(date.get(),
                     room.get()));
         }
 
         if (user.isPresent()) {
             User pretendUser = new User();
             pretendUser.setUserId(user.get());
-            ResponseEntity.status(200).body(roomReservationRepository.findByUser(pretendUser));
+            return ResponseEntity.status(200).body(roomReservationRepository.findByUser(pretendUser));
         }
 
         if (room.isPresent()) {
             Room pretendRoom = new Room();
             pretendRoom.setRoomId(room.get());
-            ResponseEntity.status(200).body(roomReservationRepository.findByRoom(pretendRoom));
+            return ResponseEntity.status(200).body(roomReservationRepository.findByRoom(pretendRoom));
         }
 
         return ResponseEntity.status(200).body(roomReservationRepository.findAll());
