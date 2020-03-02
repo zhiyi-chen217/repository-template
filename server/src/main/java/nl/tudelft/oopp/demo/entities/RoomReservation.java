@@ -10,7 +10,6 @@ public class RoomReservation {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
-    @NotNull
     private Long id;
 
     @ManyToOne

@@ -122,13 +122,15 @@ public class AdminBuildingsRoomsController extends GeneralHomepageController {
      * @param event The event which calls this function
      */
     public void selectBuilding(ActionEvent event) {
-        editBuildingButton.setDisable(false);
-        deleteBuildingButton.setVisible(true);
-        editRoomButton.setVisible(true);
-        deleteRoomButton.setVisible(true);
-        roomListView.setVisible(true);
-        addRoomButton.setDisable(false);
-        refreshButton.setVisible(true);
+        if(editBuildingButton.isDisable()) {
+            editBuildingButton.setDisable(false);
+            deleteBuildingButton.setVisible(true);
+            editRoomButton.setVisible(true);
+            deleteRoomButton.setVisible(true);
+            roomListView.setVisible(true);
+            addRoomButton.setDisable(false);
+            refreshButton.setVisible(true);
+        }
     }
 
     /**Deletes the building the user has selected.
