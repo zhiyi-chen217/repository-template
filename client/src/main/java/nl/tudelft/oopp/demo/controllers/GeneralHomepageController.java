@@ -118,6 +118,15 @@ public class GeneralHomepageController {
         return username;
     }
 
+
+    /**
+     * This methods retrieves the entity from the HTTP response, convert it into JsonObject
+     * and then create an Object with the specified type according to that JsonObject.
+     * @param response - the Http response returned
+     * @param type - the type of the object
+     * @return - the object created
+     * @throws IOException
+     */
     public static Object jsonToEntity(CloseableHttpResponse response, String type) throws IOException {
         String jsonString  = EntityUtils.toString(response.getEntity());
         JSONObject objectJson = new JSONObject(jsonString);
@@ -130,8 +139,14 @@ public class GeneralHomepageController {
         return null;
     }
 
-    public static ObservableList<Room> jsonArrayToRoom(CloseableHttpResponse response)
-            throws IOException {
+    /**
+     * This method retrieves the array of Rooms from the HTTP response, convert it into JsonArray
+     * and then create an ObservableList of Rooms.
+     * @param response - the Http response returned
+     * @return - the ObservableList of rooms
+     * @throws IOException
+     */
+    public static ObservableList<Room> jsonArrayToRoom(CloseableHttpResponse response) throws IOException {
         String jsonArray = EntityUtils.toString(response.getEntity());
         JSONArray roomJsonArray = new JSONArray(jsonArray);
         ObservableList<Room> rooms = FXCollections.observableArrayList();
@@ -141,8 +156,14 @@ public class GeneralHomepageController {
         return rooms;
     }
 
-    public static ObservableList<String> jsonArrayToRoomS(CloseableHttpResponse response)
-            throws IOException {
+    /**
+    * This method retrieves the array of Rooms from the HTTP response, convert it into JsonArray
+    * and then create an ObservableList of Rooms.
+    * @param response - the Http response returned
+    * @return - the ObservableList of Room String
+    * @throws IOException
+    */
+    public static ObservableList<String> jsonArrayToRoomS(CloseableHttpResponse response) throws IOException {
         String jsonArray = EntityUtils.toString(response.getEntity());
         JSONArray roomJsonArray = new JSONArray(jsonArray);
         ObservableList<String> rooms = FXCollections.observableArrayList();
@@ -152,8 +173,14 @@ public class GeneralHomepageController {
         return rooms;
     }
 
-    public static ObservableList<Building> jsonArrayToBuilding(CloseableHttpResponse response)
-            throws IOException {
+    /**
+     * This method retrieves the array of Buildings from the HTTP response, convert it into JsonArray
+     * and then create an ObservableList of Building.
+     * @param response - the Http response returned
+     * @return - the ObservableList of Building
+     * @throws IOException
+     */
+    public static ObservableList<Building> jsonArrayToBuilding(CloseableHttpResponse response) throws IOException {
         String jsonArray = EntityUtils.toString(response.getEntity());
         JSONArray buildingJsonArray = new JSONArray(jsonArray);
         ObservableList<Building> buildings = FXCollections.observableArrayList();
@@ -163,6 +190,13 @@ public class GeneralHomepageController {
         return buildings;
     }
 
+    /**
+     * This method retrieves the array of RoomReservations from the HTTP response, convert it into JsonArray
+     * and then create an ObservableList of RoomReservation.
+     * @param response - the Http response returned
+     * @return - the ObservableList of RoomReservation
+     * @throws IOException
+     */
     public static ObservableList<RoomReservation> jsonArrayToRoomReservation(CloseableHttpResponse response)
             throws IOException {
         String jsonArray = EntityUtils.toString(response.getEntity());
@@ -174,6 +208,11 @@ public class GeneralHomepageController {
         return roomReservations;
     }
 
+    /**
+     * This method parses a String into LocalDateTime.
+     * @param dateTime - the String to be parsed
+     * @return - A LocalDateTime object created according to the String
+     */
     public static LocalDateTime stringToLocalDateTime(String dateTime) {
         List<Integer> date = Arrays.stream(dateTime.split("T")[0].split("-"))
                 .map((i) -> Integer.parseInt(i))
