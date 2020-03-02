@@ -95,6 +95,9 @@ public class AdminBuildingsRoomsController extends GeneralHomepageController {
         newStage("/addARoomScene.fxml", addRoomButton);
     }
 
+    /**
+     * This method sets up the EditRoom page and change to that page.
+     */
     public void stageEditRoom() {
         try {
             String temp = roomListView.getSelectionModel().getSelectedItem().split("--")[0];
@@ -111,6 +114,9 @@ public class AdminBuildingsRoomsController extends GeneralHomepageController {
         }
     }
 
+    /**
+     * This method sets up the EditBuilding page and change to that page.
+     */
     public void stageEditBuilding() {
         Building building = buildingChoiceBox.getValue();
         EditBuildingController.setBuilding(building);
@@ -183,6 +189,11 @@ public class AdminBuildingsRoomsController extends GeneralHomepageController {
         roomListView.setItems(allRoom);
     }
 
+    /**
+     * This method first pops an alert if not all requirements for deleting a room are fulfilled.
+     * Then it tries to delete all the selected rooms, an alert is popped afterwards,
+     * indicating whether the deletion is successful.
+     */
     public void deleteRoom() {
         ObservableList<String> selectedRoomNames = roomListView.getSelectionModel().getSelectedItems();
         if (selectedRoomNames.isEmpty()) {
