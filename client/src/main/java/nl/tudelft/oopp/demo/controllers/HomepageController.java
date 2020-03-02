@@ -1,5 +1,6 @@
 package nl.tudelft.oopp.demo.controllers;
 
+import javafx.beans.property.ReadOnlyObjectWrapper;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -39,8 +40,8 @@ public class HomepageController extends GeneralHomepageController {
                 new PropertyValueFactory<RoomReservation, LocalDateTime>("endTimeString"));
         beginTimeColumn.setCellValueFactory(
                 new PropertyValueFactory<RoomReservation, LocalDateTime>("beginTimeString"));
-        buildingColumn.setCellValueFactory(
-                new PropertyValueFactory<RoomReservation, Building>("building"));
+        buildingColumn.setCellValueFactory(cellData ->
+                new ReadOnlyObjectWrapper<Building>(cellData.getValue().getRoom().getBuilding()));
         roomColumn.setCellValueFactory(
                 new PropertyValueFactory<RoomReservation, Room>("room"));
         roomReservationTable.setItems(getReservations());
