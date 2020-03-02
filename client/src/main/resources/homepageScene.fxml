@@ -12,39 +12,39 @@
 <?import javafx.scene.text.Font?>
 
 <AnchorPane prefHeight="525.2" prefWidth="788.4" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="nl.tudelft.oopp.demo.controllers.HomepageController">
-   <children>
-      <Label id="welcome" fx:id="welcomeLabel" alignment="TOP_RIGHT" contentDisplay="CENTER" layoutX="353.0" layoutY="82.0" prefHeight="105.0" prefWidth="247.0" style="-fx-font-style: italic;" text="Welcome *user*" textAlignment="CENTER" wrapText="true" AnchorPane.bottomAnchor="339.0" AnchorPane.leftAnchor="524.0" AnchorPane.rightAnchor="17.0" AnchorPane.topAnchor="82.0">
-          <font>
-              <Font size="16.0" />
-          </font></Label>
-      <Label alignment="CENTER_RIGHT" layoutX="353.0" layoutY="-31.0" prefHeight="166.0" prefWidth="420.0" text="TU Reservation" AnchorPane.bottomAnchor="391.0" AnchorPane.leftAnchor="353.0" AnchorPane.rightAnchor="15.0" AnchorPane.topAnchor="-31.0">
-         <font>
-            <Font size="41.0" />
-         </font></Label>
-      <VBox id="menu" alignment="BOTTOM_LEFT" layoutY="105.0" prefHeight="419.0" prefWidth="247.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0">
-         <children>
-            <Button mnemonicParsing="false" onAction="#changeSceneRooms" prefHeight="104.8" prefWidth="268.0" text="Reserve a room" />
-            <Button mnemonicParsing="false" onAction="#changeSceneBikes" prefHeight="104.8" prefWidth="254.0" text="Reserve a bike" />
-            <Button mnemonicParsing="false" prefHeight="104.8" prefWidth="273.0" text="Order food" />
-            <Button fx:id="logoutBtn" mnemonicParsing="false" onAction="#logout" prefHeight="104.8" prefWidth="247.0" text="Logout" />
-         </children>
-      </VBox>
-      <Button layoutX="648.0" layoutY="196.0" mnemonicParsing="false" text="Calendar view" />
-      <Line endX="-184.80001831054688" endY="367.20001220703125" layoutX="432.0" layoutY="157.0" startX="-184.99996948242188" startY="-157.0" stroke="#27ace8" strokeWidth="2.0" />
-      <TableView fx:id="roomReservationTable" layoutX="275.0" layoutY="263.0" prefHeight="247.0" prefWidth="497.0">
-        <columns>
-            <TableColumn fx:id="buildingColumn" prefWidth="133.59991455078125" text="Building" />
-          <TableColumn fx:id="roomColumn" prefWidth="144.80007934570312" text="Room" />
-            <TableColumn fx:id="beginTimeColumn" minWidth="0.0" prefWidth="107.199951171875" text="From" />
-          <TableColumn fx:id="endTimeColumn" prefWidth="108.0001220703125" text="Until" />
-        </columns>
-      </TableView>
-      <Label layoutX="275.0" layoutY="232.0" text="Your reservations">
-         <font>
-            <Font size="18.0" />
-         </font>
-      </Label>
-   </children>
+    <children>
+        <Label id="welcome" fx:id="welcomeLabel" alignment="TOP_RIGHT" contentDisplay="CENTER" layoutX="353.0" layoutY="82.0" prefHeight="105.0" prefWidth="247.0" style="-fx-font-style: italic;" text="Welcome, *user*." textAlignment="CENTER" wrapText="true" AnchorPane.bottomAnchor="339.0" AnchorPane.leftAnchor="524.0" AnchorPane.rightAnchor="17.0" AnchorPane.topAnchor="82.0">
+            <font>
+                <Font size="16.0" />
+            </font></Label>
+        <Label alignment="CENTER_RIGHT" layoutX="353.0" layoutY="-31.0" prefHeight="166.0" prefWidth="420.0" text="TU Reservation" AnchorPane.bottomAnchor="391.0" AnchorPane.leftAnchor="353.0" AnchorPane.rightAnchor="15.0" AnchorPane.topAnchor="-31.0">
+            <font>
+                <Font size="41.0" />
+            </font></Label>
+        <VBox id="menu" alignment="BOTTOM_LEFT" layoutY="105.0" prefHeight="419.0" prefWidth="247.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0">
+            <children>
+                <Button mnemonicParsing="false" onAction="#changeSceneRooms" prefHeight="104.8" prefWidth="268.0" text="Reserve a room" />
+                <Button mnemonicParsing="false" onAction="#changeSceneBikes" prefHeight="104.8" prefWidth="254.0" text="Reserve a bike" />
+                <Button mnemonicParsing="false" prefHeight="104.8" prefWidth="273.0" text="Order food" />
+                <Button fx:id="logoutBtn" mnemonicParsing="false" onAction="#logout" prefHeight="104.8" prefWidth="247.0" text="Logout" />
+            </children>
+        </VBox>
+        <Button layoutX="648.0" layoutY="196.0" mnemonicParsing="false" text="Calendar view" />
+        <Line endX="-184.80001831054688" endY="367.20001220703125" layoutX="432.0" layoutY="157.0" startX="-184.99996948242188" startY="-157.0" stroke="#27ace8" strokeWidth="2.0" />
+        <TableView fx:id="roomReservationTable" layoutX="275.0" layoutY="263.0" prefHeight="247.0" prefWidth="497.0">
+            <columns>
+                <TableColumn fx:id="buildingColumn" prefWidth="133.59991455078125" text="Building" />
+                <TableColumn fx:id="roomColumn" prefWidth="144.80007934570312" text="Room" />
+                <TableColumn fx:id="beginTimeColumn" minWidth="0.0" prefWidth="107.199951171875" text="From" />
+                <TableColumn fx:id="endTimeColumn" prefWidth="108.0001220703125" text="Until" />
+            </columns>
+        </TableView>
+        <Label layoutX="275.0" layoutY="232.0" text="Your reservations">
+            <font>
+                <Font size="18.0" />
+            </font>
+        </Label>
+    </children>
     <stylesheets>
         <URL value="@stylesheets/sheetHomepageScene.css" />
     </stylesheets>
