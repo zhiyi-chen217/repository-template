@@ -1,0 +1,50 @@
+.root{
+    -fx-background-color: #27ACE8;
+    -fx-background-image: url("../images/OOPP_background_ewi.jpg");
+    -fx-background-size:100% auto;
+    -fx-background-size:auto 100%;
+}
+
+#welcome {
+    -fx-font-weight: bold;
+}
+
+
+
+.button{
+    -fx-background-color:
+            #27ACE8,
+            linear-gradient(#219EDA, #395cab);
+    -fx-background-insets: 0,1;
+    -fx-background-radius: 0,2;
+    -fx-text-fill: black;
+
+}
+
+.button:hover {
+    -fx-background-color: linear-gradient(#27ACE8, #395cab);
+}
+
+#menu .button {
+    -fx-font-size: 15px;
+}
+
+.table-view{
+    -fx-background-color: rgba(57, 92, 171, 0.2);
+}
+
+.table-view .column-header, .table-view .column-header-background .filler {
+    -fx-background-color: #395cab;
+}
+
+.table-view .column-header .label {
+    -fx-font-weight: bold;
+    -fx-alignment: CENTER_LEFT;
+    -fx-label-padding: 4px;
+}
+
+.table-view .cell {
+    -fx-background-color: #27ACE8;
+    -fx-border-width: 5px;
+    -fx-border-color: red;
+}

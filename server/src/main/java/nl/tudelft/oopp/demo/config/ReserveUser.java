@@ -1,24 +1,23 @@
 package nl.tudelft.oopp.demo.config;
 
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.List;
-import java.util.Optional;
-
-import nl.tudelft.oopp.demo.entities.Users;
+import nl.tudelft.oopp.demo.entities.User;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
+import java.util.Arrays;
+import java.util.Collection;
+import java.util.List;
 
 public class ReserveUser implements UserDetails {
     private String pass;
     private String userName;
     private List<GrantedAuthority> authorities;
 
+
     /**reserveUser constructor.
      *
      */
-    public ReserveUser(Users user) {
+    public ReserveUser(User user) {
         this.userName = user.getUser_id();
         this.pass = user.getPassword();
         this.authorities = Arrays.asList(new SimpleGrantedAuthority(user.getType()));

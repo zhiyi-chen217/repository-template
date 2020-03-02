@@ -1,6 +1,8 @@
 package nl.tudelft.oopp.demo.controllers;
 
 import java.io.IOException;
+import java.net.http.HttpResponse;
+
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -9,6 +11,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.TextField;
+import javafx.scene.image.Image;
 import javafx.stage.Stage;
 import nl.tudelft.oopp.demo.communication.ServerCommunication;
 
@@ -18,6 +21,8 @@ public class LoginSceneController {
     @FXML
     private TextField password;
 
+    private Stage mainStage;
+
     /**
      * Submit the login credentials when clicked on submit.
      * @param event the event that triggers this method
@@ -26,16 +31,31 @@ public class LoginSceneController {
     public void submitClicked(ActionEvent event) throws IOException {
         String usertxt = username.getText();
         String pwtxt = password.getText();
-        String authentication = ServerCommunication.sendLoginUser(usertxt, pwtxt);
+        HttpResponse<String> authentication = ServerCommunication.sendLoginUser(usertxt, pwtxt);
 
         //WIP: probably need to add a better form of authorization here.
-        if (authentication.contains(usertxt)) {
-            changeScene(event, usertxt);
+        if (usertxt.length() == 0 || pwtxt.length() == 0) {
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setTitle("Error");
+            alert.setHeaderText(null);
+            alert.setContentText("Please fill out all the fields");
+            alert.show();
+        } else if (authentication != null && authentication.statusCode() == 200) {
+            GeneralHomepageController.setUsername(usertxt);
+            if (usertxt.equals("admin")) {
+                changeScene(event, usertxt, "/adminHomepageScene.fxml");
+            } else {
+                changeScene(event, usertxt, "/homepageScene.fxml");
+            }
         } else {
             Alert alert = new Alert(Alert.AlertType.INFORMATION);
-            alert.setTitle("Submit clicked");
+            alert.setTitle("Login alert");
             alert.setHeaderText(null);
-            alert.setContentText(authentication);
+            if (authentication == null) {
+                alert.setContentText("Connection with server failed");
+            } else {
+                alert.setContentText(authentication.body());
+            }
             alert.show();
         }
     }
@@ -45,19 +65,21 @@ public class LoginSceneController {
      * @param event the event that triggers this method
      *
      */
-    public void changeScene(ActionEvent event, String usertxt) throws IOException {
+    public void changeScene(ActionEvent event, String usertxt, String path) throws IOException {
         FXMLLoader loader = new FXMLLoader();
-        loader.setLocation(getClass().getResource("/homepageScene.fxml"));
+        loader.setLocation(getClass().getResource(path));
         Parent homePageParent = loader.load();
         Scene homePageScene = new Scene(homePageParent);
 
-        HomepageController controller = loader.getController();
-        controller.setWelcomeMessage(usertxt);
-
         //Get current stage
         Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-        stage.setScene(homePageScene);
-        stage.show();
+        stage.close();
+        mainStage.setScene(homePageScene);
+        stage.getIcons().add(new Image("https://simchavos.com/tu.png"));
+    }
+
+    public void setMainStage(Stage stage) {
+        this.mainStage = stage;
     }
 
     /**
@@ -70,7 +92,7 @@ public class LoginSceneController {
         alert.setHeaderText(null);
         String usertxt = username.getText();
         String pwtxt = password.getText();
-        alert.setContentText(ServerCommunication.sendLoginAdmin(usertxt, pwtxt));
+        alert.setContentText(ServerCommunication.sendLoginAdmin(usertxt, pwtxt).body());
         alert.showAndWait();
     }
 }
