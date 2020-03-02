@@ -118,9 +118,9 @@ public class GeneralHomepageController {
         return username;
     }
 
-    public static Object JsonToEntity (CloseableHttpResponse response, String type) throws IOException {
-        String JsonString  = EntityUtils.toString(response.getEntity());
-        JSONObject objectJson = new JSONObject(JsonString);
+    public static Object jsonToEntity(CloseableHttpResponse response, String type) throws IOException {
+        String jsonString  = EntityUtils.toString(response.getEntity());
+        JSONObject objectJson = new JSONObject(jsonString);
         if (type.equals("Room")) {
             return new Room(objectJson);
         }
@@ -130,10 +130,10 @@ public class GeneralHomepageController {
         return null;
     }
 
-    public static ObservableList<Room> JsonArrayToRoom (CloseableHttpResponse response)
+    public static ObservableList<Room> jsonArrayToRoom(CloseableHttpResponse response)
             throws IOException {
-        String JsonArray = EntityUtils.toString(response.getEntity());
-        JSONArray roomJsonArray = new JSONArray(JsonArray);
+        String jsonArray = EntityUtils.toString(response.getEntity());
+        JSONArray roomJsonArray = new JSONArray(jsonArray);
         ObservableList<Room> rooms = FXCollections.observableArrayList();
         for (int i = 0; i < roomJsonArray.length(); i++) {
             rooms.add(new Room(roomJsonArray.getJSONObject(i)));
@@ -141,10 +141,10 @@ public class GeneralHomepageController {
         return rooms;
     }
 
-    public static ObservableList<String> JsonArrayToRoomS (CloseableHttpResponse response)
+    public static ObservableList<String> jsonArrayToRoomS(CloseableHttpResponse response)
             throws IOException {
-        String JsonArray = EntityUtils.toString(response.getEntity());
-        JSONArray roomJsonArray = new JSONArray(JsonArray);
+        String jsonArray = EntityUtils.toString(response.getEntity());
+        JSONArray roomJsonArray = new JSONArray(jsonArray);
         ObservableList<String> rooms = FXCollections.observableArrayList();
         for (int i = 0; i < roomJsonArray.length(); i++) {
             rooms.add(new Room(roomJsonArray.getJSONObject(i)).toString());
@@ -152,10 +152,10 @@ public class GeneralHomepageController {
         return rooms;
     }
 
-    public static ObservableList<Building> JsonArrayToBuilding (CloseableHttpResponse response)
+    public static ObservableList<Building> jsonArrayToBuilding(CloseableHttpResponse response)
             throws IOException {
-        String JsonArray = EntityUtils.toString(response.getEntity());
-        JSONArray buildingJsonArray = new JSONArray(JsonArray);
+        String jsonArray = EntityUtils.toString(response.getEntity());
+        JSONArray buildingJsonArray = new JSONArray(jsonArray);
         ObservableList<Building> buildings = FXCollections.observableArrayList();
         for (int i = 0; i < buildingJsonArray.length(); i++) {
             buildings.add(new Building(buildingJsonArray.getJSONObject(i)));
@@ -163,10 +163,10 @@ public class GeneralHomepageController {
         return buildings;
     }
 
-    public static ObservableList<RoomReservation> JsonArrayToRoomReservation (CloseableHttpResponse response)
+    public static ObservableList<RoomReservation> jsonArrayToRoomReservation(CloseableHttpResponse response)
             throws IOException {
-        String JsonArray = EntityUtils.toString(response.getEntity());
-        JSONArray roomReservationJsonArray = new JSONArray(JsonArray);
+        String jsonArray = EntityUtils.toString(response.getEntity());
+        JSONArray roomReservationJsonArray = new JSONArray(jsonArray);
         ObservableList<RoomReservation> roomReservations = FXCollections.observableArrayList();
         for (int i = 0; i < roomReservationJsonArray.length(); i++) {
             roomReservations.add(new RoomReservation(roomReservationJsonArray.getJSONObject(i)));
@@ -174,7 +174,7 @@ public class GeneralHomepageController {
         return roomReservations;
     }
 
-    public static LocalDateTime StringToLocalDateTime (String dateTime) {
+    public static LocalDateTime stringToLocalDateTime(String dateTime) {
         List<Integer> date = Arrays.stream(dateTime.split("T")[0].split("-"))
                 .map((i) -> Integer.parseInt(i))
                 .collect(Collectors.toList());

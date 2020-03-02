@@ -14,7 +14,7 @@ public class TimeSlotCell extends ListCell<String> {
     protected void updateItem(String item, boolean empty) {
         super.updateItem(item, empty);
         if (item == null) {
-          return;
+            return;
         }
         LocalTime startTime = LocalTime.parse(item.split("--")[0]);
         setDisable(false);
