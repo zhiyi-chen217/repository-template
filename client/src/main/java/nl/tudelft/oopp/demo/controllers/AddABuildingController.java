@@ -8,6 +8,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 import nl.tudelft.oopp.demo.communication.ServerCommunication;
+import nl.tudelft.oopp.demo.entities.Building;
 import org.apache.http.client.methods.CloseableHttpResponse;
 import org.apache.http.util.EntityUtils;
 
@@ -115,8 +116,11 @@ public class AddABuildingController {
             erralert.showAndWait();
         }
 
-        if (statusCode == 202) {
+        if (statusCode == 201) {
+            AdminBuildingsRoomsController.getBuildings()
+                    .add(new Building(bldName, bldloc, oh, ch, bldBikesint));
             alert.setTitle("Success");
+
         } else {
             alert.setTitle("Unsuccessful");
         }
@@ -124,7 +128,7 @@ public class AddABuildingController {
         alert.setHeaderText(null);
         alert.showAndWait();
 
-        if (statusCode == 202) {
+        if (statusCode == 201) {
             Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
             stage.close();
         }

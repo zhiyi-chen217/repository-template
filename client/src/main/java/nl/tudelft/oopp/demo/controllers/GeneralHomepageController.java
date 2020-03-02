@@ -1,5 +1,7 @@
 package nl.tudelft.oopp.demo.controllers;
 
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -10,8 +12,22 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.Label;
 import javafx.stage.Stage;
 import nl.tudelft.oopp.demo.communication.ServerCommunication;
+import nl.tudelft.oopp.demo.entities.Building;
+import nl.tudelft.oopp.demo.entities.Room;
+import nl.tudelft.oopp.demo.entities.RoomReservation;
+import org.apache.http.client.methods.CloseableHttpResponse;
+import org.apache.http.util.EntityUtils;
+import org.json.JSONObject;
+import org.json.JSONArray;
 
 import java.io.IOException;
+import java.net.URISyntaxException;
+import java.time.LocalDateTime;
+import java.time.Month;
+import java.util.Arrays;
+import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 public class GeneralHomepageController {
 
@@ -101,4 +117,72 @@ public class GeneralHomepageController {
     public static String getUsername() {
         return username;
     }
+
+    public static Object JsonToEntity (CloseableHttpResponse response, String type) throws IOException {
+        String JsonString  = EntityUtils.toString(response.getEntity());
+        JSONObject objectJson = new JSONObject(JsonString);
+        if (type.equals("Room")) {
+            return new Room(objectJson);
+        }
+        if (type.equals("Building")) {
+            return new Building(objectJson);
+        }
+        return null;
+    }
+
+    public static ObservableList<Room> JsonArrayToRoom (CloseableHttpResponse response)
+            throws IOException {
+        String JsonArray = EntityUtils.toString(response.getEntity());
+        JSONArray roomJsonArray = new JSONArray(JsonArray);
+        ObservableList<Room> rooms = FXCollections.observableArrayList();
+        for (int i = 0; i < roomJsonArray.length(); i++) {
+            rooms.add(new Room(roomJsonArray.getJSONObject(i)));
+        }
+        return rooms;
+    }
+
+    public static ObservableList<String> JsonArrayToRoomS (CloseableHttpResponse response)
+            throws IOException {
+        String JsonArray = EntityUtils.toString(response.getEntity());
+        JSONArray roomJsonArray = new JSONArray(JsonArray);
+        ObservableList<String> rooms = FXCollections.observableArrayList();
+        for (int i = 0; i < roomJsonArray.length(); i++) {
+            rooms.add(new Room(roomJsonArray.getJSONObject(i)).toString());
+        }
+        return rooms;
+    }
+
+    public static ObservableList<Building> JsonArrayToBuilding (CloseableHttpResponse response)
+            throws IOException {
+        String JsonArray = EntityUtils.toString(response.getEntity());
+        JSONArray buildingJsonArray = new JSONArray(JsonArray);
+        ObservableList<Building> buildings = FXCollections.observableArrayList();
+        for (int i = 0; i < buildingJsonArray.length(); i++) {
+            buildings.add(new Building(buildingJsonArray.getJSONObject(i)));
+        }
+        return buildings;
+    }
+
+    public static ObservableList<RoomReservation> JsonArrayToRoomReservation (CloseableHttpResponse response)
+            throws IOException {
+        String JsonArray = EntityUtils.toString(response.getEntity());
+        JSONArray roomReservationJsonArray = new JSONArray(JsonArray);
+        ObservableList<RoomReservation> roomReservations = FXCollections.observableArrayList();
+        for (int i = 0; i < roomReservationJsonArray.length(); i++) {
+            roomReservations.add(new RoomReservation(roomReservationJsonArray.getJSONObject(i)));
+        }
+        return roomReservations;
+    }
+
+    public static LocalDateTime StringToLocalDateTime (String dateTime) {
+        List<Integer> date = Arrays.stream(dateTime.split("T")[0].split("-"))
+                .map((i) -> Integer.parseInt(i))
+                .collect(Collectors.toList());
+        List<Integer> time = Arrays.stream(dateTime.split("T")[1].split(":"))
+                .map((i) -> Integer.parseInt(i))
+                .collect(Collectors.toList());
+        return LocalDateTime.of(date.get(0), Month.of(date.get(1)), date.get(2),
+                time.get(0), time.get(1), time.get(2));
+    }
+
 }

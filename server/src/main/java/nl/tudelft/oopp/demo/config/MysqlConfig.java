@@ -25,9 +25,9 @@ public class MysqlConfig {
         config.setJdbcUrl("jdbc:mysql://projects-db.ewi.tudelft.nl/projects_oopp5353");
         config.setUsername("pu_oopp5353");
         config.setPassword("WZijSwzXlaBG");
-        // config.setJdbcUrl("jdbc:mysql://localhost:3306/reserve");
-        // config.setUsername("user");
-        // config.setPassword("password");
+//         config.setJdbcUrl("jdbc:mysql://localhost:3306/reserve");
+//         config.setUsername("user");
+//         config.setPassword("password");
         HikariDataSource ds = new HikariDataSource(config);
         return ds;
     }

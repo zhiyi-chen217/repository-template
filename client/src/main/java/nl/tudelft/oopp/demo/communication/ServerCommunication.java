@@ -15,6 +15,7 @@ import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 import java.sql.Time;
+import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.Base64;
 import java.util.List;
@@ -24,7 +25,8 @@ public class ServerCommunication {
 
     private static HttpClient client = HttpClient.newBuilder().build();
     private static CloseableHttpClient httpClient = HttpClients.createDefault();
-    private static String pubAuth = "Basic YWRtaW46MTIzNDU=";
+    public static String pubAuth;
+    public static String userId;
 
     /**
      * Send the username and password under the authentication header to the server.
@@ -39,6 +41,7 @@ public class ServerCommunication {
         String encodedAuth = "Basic " + Base64.getEncoder().encodeToString(auth.getBytes());
 
         pubAuth = encodedAuth;
+        userId = username;
         URI urihttp = URI.create(baseurl);
         HttpRequest request = HttpRequest.newBuilder().GET().uri(urihttp)
                 .header("Authorization", encodedAuth).build();
@@ -169,14 +172,12 @@ public class ServerCommunication {
      * @throws URISyntaxException if there is any syntax error in the uri
      */
 
-    public static CloseableHttpResponse deleteBuilding(List<String> name)
+    public static CloseableHttpResponse deleteBuilding(String name)
             throws IOException, URISyntaxException {
         URIBuilder builder = new URIBuilder("http://localhost:8080/admin/buildings");
         HttpDelete httpDelete = new HttpDelete();
         httpDelete.setHeader("Authorization", pubAuth);
-        for (String s: name) {
-            builder.addParameter("names", s);
-        }
+        builder.addParameter("name", name);
         httpDelete.setURI(builder.build());
         return httpClient.execute(httpDelete);
     }
@@ -296,6 +297,50 @@ public class ServerCommunication {
         HttpDelete httpDelete = new HttpDelete();
         httpDelete.setHeader("Authorization", pubAuth);
         httpDelete.setURI(uri.build());
+        return httpClient.execute(httpDelete);
+    }
+
+    public static CloseableHttpResponse readRoomReservation(String user, String room, String date)
+            throws URISyntaxException, IOException {
+        URIBuilder uri = new URIBuilder("http://localhost:8080/roomReservations");
+        if (user != null) {
+            uri.addParameter("user", user);
+        }
+        if(room != null) {
+            uri.addParameter("room", room);
+        }
+        if(date != null) {
+            uri.addParameter("date", date);
+        }
+        HttpGet httpGet = new HttpGet();
+        httpGet.setURI(uri.build());
+        httpGet.setHeader("Authorization", pubAuth);
+        return httpClient.execute(httpGet);
+    }
+
+    public static CloseableHttpResponse createRoomReservation(String user, LocalDateTime beginTime,
+                                                              LocalDateTime endTime, String room)
+            throws IOException {
+        JSONObject jsonObject = new JSONObject();
+        JSONObject temp = new JSONObject();
+        temp.put("userId", user);
+        jsonObject.put("user", temp);
+        jsonObject.put("beginTime", beginTime);
+        jsonObject.put("endTime", endTime);
+        temp = new JSONObject();
+        temp.put("roomId", room);
+        jsonObject.put("room", temp);
+        HttpPost httpPost = new HttpPost("http://localhost:8080/roomReservation");
+        httpPost.setHeader("Authorization", pubAuth);
+        httpPost.setEntity(new StringEntity(jsonObject.toString()));
+        httpPost.setHeader("Content-type", "application/json");
+        return httpClient.execute(httpPost);
+    }
+
+    public static CloseableHttpResponse deleteRoomReservation(Long roomReservationId)
+            throws IOException {
+        HttpDelete httpDelete= new HttpDelete("http://localhost:8080/roomReservation");
+        httpDelete.setHeader("Authorization", pubAuth);
         return httpClient.execute(httpDelete);
     }
 

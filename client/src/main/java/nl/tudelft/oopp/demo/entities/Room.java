@@ -147,7 +147,8 @@ public class  Room {
 
     @Override
     public String toString() {
-        return this.name;
+
+        return this.roomId + "--" + this.name;
     }
 
     @Override
