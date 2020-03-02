@@ -52,6 +52,11 @@ public class RoomInfoController extends GeneralHomepageController {
         RoomInfoController.roomS = roomString;
     }
 
+    /**
+     * This initialize method contains the set up procedures for the RoomInfo page.
+     * @throws IOException thrown when something goes wrong with IO
+     * @throws URISyntaxException thrown when the URI is falsely constructed
+     */
     public void initialize() throws IOException, URISyntaxException {
         String roomId = roomS.split("--")[0];
         Room room = (Room) GeneralHomepageController
@@ -88,6 +93,12 @@ public class RoomInfoController extends GeneralHomepageController {
         timeSlotList.setCellFactory(new TimeSlotCellFactory());
     }
 
+    /**
+     * This methods send an Http request for creating new reservations.
+     * It pops alerts indicating whether the reservations are successful.
+     * @param event - the generated event
+     * @throws IOException - thrown when something goes wrong with IO
+     */
     public void confirmReservation(ActionEvent event) throws IOException {
         ObservableList<String> reservations = timeSlotList.getSelectionModel().getSelectedItems();
         LocalTime beginTime;
@@ -113,6 +124,10 @@ public class RoomInfoController extends GeneralHomepageController {
         alert.showAndWait();
     }
 
+    /**
+     * This method changes to page reserveARoom.
+     * @param event - the generated event
+     */
     public void changeSceneReserveARoom(ActionEvent event) {
         changeScene(event, "/reserveARoomScene.fxml");
     }

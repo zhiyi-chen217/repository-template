@@ -37,7 +37,10 @@ public class RoomReservation {
     }
 
 
-
+    /**
+     * This constructor constructs a room reservation object according to the provided JsonObject.
+     * @param jsonObject - the json object providing all the information
+     */
     public RoomReservation(JSONObject jsonObject) {
         this.id = jsonObject.getLong("id");
         this.user = jsonObject.getJSONObject("user").getString("user_id");

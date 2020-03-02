@@ -29,6 +29,11 @@ public class ReserveARoomController extends ReserveBikeController {
 
     public static ObservableList<String> rooms;
 
+    /**
+     * This initialize method contains the set up procedures for the ReserveARoom page.
+     * @throws IOException thrown when something goes wrong with IO
+     * @throws URISyntaxException thrown when the URI is falsely constructed
+     */
     public void initialize() throws IOException, URISyntaxException {
         buildings = GeneralHomepageController
                 .jsonArrayToBuilding(ServerCommunication.readBuilding(null));
@@ -54,6 +59,14 @@ public class ReserveARoomController extends ReserveBikeController {
         continueButton.setVisible(false);
     }
 
+    /**
+     * This methods specifies what should be done when the selection of the List views are changed.
+     * @param v - the observable item
+     * @param oldBuilding - the previous selected building
+     * @param newBuilding - the latest selected building
+     * @throws IOException thrown when something goes wrong with IO
+     * @throws URISyntaxException thrown when the URI is falsely constructed
+     */
     public void changeSelectedEvent(Observable v, Building oldBuilding, Building newBuilding)
             throws IOException, URISyntaxException {
         if (newBuilding == null) {
@@ -64,6 +77,10 @@ public class ReserveARoomController extends ReserveBikeController {
         roomListView.setItems(rooms);
     }
 
+    /**
+     * This method sets up the RoomInfo page, and then change to that page.
+     * @param event - the event generated
+     */
     public void stageRoomInfo(ActionEvent event) {
         RoomInfoController
                 .setRoom(roomListView.getSelectionModel().getSelectedItem());

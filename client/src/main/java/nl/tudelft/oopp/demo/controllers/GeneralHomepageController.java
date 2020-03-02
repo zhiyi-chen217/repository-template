@@ -125,7 +125,7 @@ public class GeneralHomepageController {
      * @param response - the Http response returned
      * @param type - the type of the object
      * @return - the object created
-     * @throws IOException
+     * @throws IOException thrown when something goes wrong with IO
      */
     public static Object jsonToEntity(CloseableHttpResponse response, String type) throws IOException {
         String jsonString  = EntityUtils.toString(response.getEntity());
@@ -144,7 +144,7 @@ public class GeneralHomepageController {
      * and then create an ObservableList of Rooms.
      * @param response - the Http response returned
      * @return - the ObservableList of rooms
-     * @throws IOException
+     * @throws IOException thrown when something goes wrong with IO
      */
     public static ObservableList<Room> jsonArrayToRoom(CloseableHttpResponse response) throws IOException {
         String jsonArray = EntityUtils.toString(response.getEntity());
@@ -161,7 +161,7 @@ public class GeneralHomepageController {
     * and then create an ObservableList of Rooms.
     * @param response - the Http response returned
     * @return - the ObservableList of Room String
-    * @throws IOException
+    * @throws IOException thrown when something goes wrong with IO
     */
     public static ObservableList<String> jsonArrayToRoomS(CloseableHttpResponse response) throws IOException {
         String jsonArray = EntityUtils.toString(response.getEntity());
@@ -178,7 +178,7 @@ public class GeneralHomepageController {
      * and then create an ObservableList of Building.
      * @param response - the Http response returned
      * @return - the ObservableList of Building
-     * @throws IOException
+     * @throws IOException thrown when something goes wrong with IO
      */
     public static ObservableList<Building> jsonArrayToBuilding(CloseableHttpResponse response) throws IOException {
         String jsonArray = EntityUtils.toString(response.getEntity());
@@ -195,7 +195,7 @@ public class GeneralHomepageController {
      * and then create an ObservableList of RoomReservation.
      * @param response - the Http response returned
      * @return - the ObservableList of RoomReservation
-     * @throws IOException
+     * @throws IOException thrown when something goes wrong with IO
      */
     public static ObservableList<RoomReservation> jsonArrayToRoomReservation(CloseableHttpResponse response)
             throws IOException {

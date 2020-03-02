@@ -307,8 +307,8 @@ public class ServerCommunication {
      * @param room - the roomId
      * @param date - the date
      * @return - An HttpResponse containing all the qualified room reservations
-     * @throws URISyntaxException
-     * @throws IOException
+     * @throws URISyntaxException thrown if the URI is wrongly constructed
+     * @throws IOException thrown if something going wrong with IO
      */
     public static CloseableHttpResponse readRoomReservation(String user, String room, String date)
             throws URISyntaxException, IOException {
@@ -336,7 +336,7 @@ public class ServerCommunication {
      * @param endTime - the end time of the reservation
      * @param room - the roomId
      * @return - An HttpResponse specifying the state of the request
-     * @throws IOException
+     * @throws IOException thrown if something going wrong with IO
      */
     public static CloseableHttpResponse createRoomReservation(String user, LocalDateTime beginTime,
                                                               LocalDateTime endTime, String room)
@@ -359,10 +359,10 @@ public class ServerCommunication {
 
     /**
      * This method sends a HttpDelete request to the server,
-     * in order to delete the given room reservation
+     * in order to delete the given room reservation.
      * @param roomReservationId - the id of the room reservation
      * @return - An HttpResponse specifying the state of the request
-     * @throws IOException
+     * @throws IOException thrown if something going wrong with IO
      */
     public static CloseableHttpResponse deleteRoomReservation(Long roomReservationId)
             throws IOException {

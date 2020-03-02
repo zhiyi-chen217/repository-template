@@ -27,6 +27,11 @@ public class HomepageController extends GeneralHomepageController {
     @FXML private TableColumn<RoomReservation, Building> buildingColumn;
     @FXML private TableColumn<RoomReservation, Room> roomColumn;
 
+    /**
+     * This initialize method contains the set up procedures for the homePage.
+     * @throws IOException thrown when something goes wrong with IO
+     * @throws URISyntaxException thrown when the URI is falsely constructed
+     */
     @FXML
     public void initialize() throws IOException, URISyntaxException {
         setWelcomeMessage();

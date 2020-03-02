@@ -50,6 +50,11 @@ public class EditRoomController {
         room = room1;
     }
 
+    /**
+     * This initialize method contains the set up procedures for the editRoom page.
+     * @throws IOException thrown when something goes wrong with IO
+     * @throws URISyntaxException thrown when the URI is falsely constructed
+     */
     public void initialize() throws IOException, URISyntaxException {
         room = (Room) GeneralHomepageController
                 .jsonToEntity(ServerCommunication

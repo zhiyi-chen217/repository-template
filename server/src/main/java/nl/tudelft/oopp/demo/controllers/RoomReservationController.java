@@ -18,6 +18,9 @@ public class RoomReservationController {
     @Autowired
     private RoomReservationRepository roomReservationRepository;
 
+    /**
+     * This method retrieves all the room reservations fulfilling the specified requirements.
+     */
     @GetMapping("roomReservations")
     public ResponseEntity getRoomReservation(@RequestParam Optional<String> user,
                                              @RequestParam Optional<String> room,
