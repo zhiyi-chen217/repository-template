@@ -1,6 +1,7 @@
 package nl.tudelft.oopp.demo.entities;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 
 @Entity
 @Table(name = "FoodOrder")
@@ -8,14 +9,17 @@ public class FoodOrder {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "Id")
+    @NotNull
     private Long id;
 
     @ManyToOne
     @JoinColumn(name = "restaurant")
+    @NotNull
     private Restaurant restaurant;
 
     @ManyToOne
     @JoinColumn(name = "user")
+    @NotNull
     private User user;
 
     @Column(name = "totalPrice")

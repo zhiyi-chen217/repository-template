@@ -1,14 +1,37 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.*?>
-<?import java.util.*?>
-<?import javafx.scene.*?>
 <?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
 <?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
 
-<AnchorPane xmlns="http://javafx.com/javafx"
-            xmlns:fx="http://javafx.com/fxml"
-            fx:controller="$CONTROLLER_NAME$"
-            prefHeight="400.0" prefWidth="600.0">
-
+<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="nl.tudelft.oopp.demo.controllers.RoomInfoController">
+   <children>
+      <VBox layoutX="342.0" layoutY="53.0">
+         <children>
+            <Label text="Available timeslots">
+               <font>
+                  <Font size="14.0" />
+               </font>
+            </Label>
+            <ListView fx:id="timeSlotList" prefHeight="269.0" prefWidth="200.0" VBox.vgrow="ALWAYS" />
+            <Button alignment="CENTER_RIGHT" contentDisplay="CENTER" mnemonicParsing="false" text="Confirm" VBox.vgrow="ALWAYS" onAction="#confirmReservation"/>
+         </children>
+      </VBox>
+      <Label layoutX="34.0" layoutY="40.0" text="Room Name">
+         <font>
+            <Font size="18.0" />
+         </font></Label>
+      <Button mnemonicParsing="false" text="Back" onAction="#changeSceneReserveARoom"/>
+      <VBox layoutX="34.0" layoutY="77.0" prefHeight="266.0" prefWidth="252.0">
+         <children>
+            <ImageView fitHeight="157.0" fitWidth="286.0" pickOnBounds="true" preserveRatio="true" />
+            <Label fx:id="roomDescription" alignment="TOP_LEFT" prefHeight="40.0" prefWidth="285.0" text="Description" VBox.vgrow="ALWAYS" />
+            <Label fx:id="roomCapacity" prefHeight="18.0" prefWidth="285.0" text="Capacity" VBox.vgrow="ALWAYS" />
+            <Label fx:id="roomTV" text="TV:" VBox.vgrow="ALWAYS" />
+            <Label fx:id="roomWhiteboard" text="Whiteboard:" VBox.vgrow="ALWAYS" />
+            <Label fx:id="roomType" text="(Employee only)" VBox.vgrow="ALWAYS" />
+         </children>
+      </VBox>
+   </children>
 </AnchorPane>

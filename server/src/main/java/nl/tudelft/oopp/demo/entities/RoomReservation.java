@@ -1,8 +1,8 @@
 package nl.tudelft.oopp.demo.entities;
 
 import javax.persistence.*;
-import java.sql.Timestamp;
-import java.util.Objects;
+import javax.validation.constraints.NotNull;
+import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "RoomReservation")
@@ -14,16 +14,18 @@ public class RoomReservation {
 
     @ManyToOne
     @JoinColumn(name = "user")
+    @NotNull
     private User user;
 
     @Column(name = "beginTime")
-    private Timestamp beginTime;
+    private LocalDateTime beginTime;
 
-    @Column(name = "numberOfSlots")
-    private int numberOfSlots;
+    @Column(name = "endTime")
+    private LocalDateTime endTime;
 
     @ManyToOne
     @JoinColumn(name = "room")
+    @NotNull
     private Room room;
 
     public RoomReservation() {
@@ -32,13 +34,13 @@ public class RoomReservation {
     /**Constructor of a room reservation.
      * @param user is the user who has placed a reservation
      * @param beginTime is the time the reservation starts
-     * @param numberOfSlots is the amount of consecutive slots of a certain fixed length
+     * @param endTime is the amount of consecutive slots of a certain fixed length
      * @param room is the room which is reserved
      */
-    public RoomReservation(User user, Timestamp beginTime, int numberOfSlots, Room room) {
+    public RoomReservation(User user, LocalDateTime beginTime, LocalDateTime endTime, Room room) {
         this.user = user;
         this.beginTime = beginTime;
-        this.numberOfSlots = numberOfSlots;
+        this.endTime = endTime;
         this.room = room;
     }
 
@@ -58,20 +60,20 @@ public class RoomReservation {
         this.user = user;
     }
 
-    public Timestamp getBeginTime() {
+    public LocalDateTime getBeginTime() {
         return beginTime;
     }
 
-    public void setBeginTime(Timestamp beginTime) {
+    public void setBeginTime(LocalDateTime beginTime) {
         this.beginTime = beginTime;
     }
 
-    public int getNumberOfSlots() {
-        return numberOfSlots;
+    public LocalDateTime getEndTime() {
+        return endTime;
     }
 
-    public void setNumberOfSlots(int numberOfSlots) {
-        this.numberOfSlots = numberOfSlots;
+    public void setEndTime(LocalDateTime endTime) {
+        this.endTime = endTime;
     }
 
     public Room getRoom() {

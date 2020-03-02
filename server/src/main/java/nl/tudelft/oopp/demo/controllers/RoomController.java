@@ -45,7 +45,7 @@ public class RoomController {
                 throw new RedundantentityException("The room already exists");
             }
             roomRepository.save(room);
-            return ResponseEntity.accepted().body("saved successfully");
+            return ResponseEntity.status(201).body("saved successfully");
         } catch (JpaObjectRetrievalFailureException e) {
             throw new InvalidforeginkeyException("The referenced building does not exist.");
         }
@@ -67,7 +67,7 @@ public class RoomController {
             throw new EntityNotFoundException("The room does not exist!");
         }
         roomRepository.save(room);
-        return ResponseEntity.accepted().body("updated successfully!");
+        return ResponseEntity.status(201).body("updated successfully!");
     }
 
     /**
@@ -77,18 +77,19 @@ public class RoomController {
      * @return a ResponseEntity to be sent back wit info about the room
      */
     @GetMapping("rooms")
-    public ResponseEntity readRoom(@RequestParam Optional<String> roomId, @RequestParam Optional<String> building){
-        if(building.isPresent()){
+    public ResponseEntity readRoom(@RequestParam Optional<String> roomId,
+                                   @RequestParam Optional<String> building) {
+        if (building.isPresent()) {
             Building temp = new Building();
             temp.setName(building.get());
             return ResponseEntity.accepted().body(roomRepository.findByBuilding(temp));
         }
-        if(roomId.isEmpty()){
+        if (roomId.isEmpty()) {
             return ResponseEntity.accepted().body(roomRepository.findAll());
         }
         Optional<Room> tempRoom = roomRepository.findByRoomId(roomId.get());
-        if(tempRoom.isPresent()){
-            return ResponseEntity.accepted().body(tempRoom.get());
+        if (tempRoom.isPresent()) {
+            return ResponseEntity.status(200).body(tempRoom.get());
         }
         return ResponseEntity.badRequest().body("The room does not exist!");
     }
@@ -107,7 +108,7 @@ public class RoomController {
             for (String roomId : roomIds) {
                 roomRepository.deleteById(roomId);
             }
-            return ResponseEntity.accepted().body("All deleted!");
+            return ResponseEntity.status(200).body("All deleted!");
         } catch (EmptyResultDataAccessException e) {
             throw new EmptyResultDataAccessException("Cannot delete non-existing room",1);
         }

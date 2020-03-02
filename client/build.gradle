@@ -2,10 +2,6 @@ plugins {
     id 'org.openjfx.javafxplugin' version '0.0.8'
 }
 
-repositories {
-    jcenter()
-}
-
 mainClassName = "nl.tudelft.oopp.demo.MainApp"
 
 dependencies {

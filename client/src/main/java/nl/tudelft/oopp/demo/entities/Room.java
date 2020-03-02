@@ -45,7 +45,11 @@ public class  Room {
         this.tv = tv;
         this.building = building;
     }
-    public Room(JSONObject room){
+
+    /**Constructor of the room class.
+     * @param room is the inputted room information
+     */
+    public Room(JSONObject room) {
         this.roomId = room.getString("roomId");
         this.name = room.getString("name");
         this.capacity = room.getInt("capacity");
@@ -93,8 +97,16 @@ public class  Room {
         return type;
     }
 
-    public void setType(String type) {
-        this.type = type;
+    /**
+     * Sets the type of room according to a boolean value.
+     * @param type true if type should be employee only, false otherwise
+     */
+    public void setType(Boolean type) {
+        if (type) {
+            this.type = "Employee";
+        } else {
+            this.type = "AllCanUse";
+        }
     }
 
     public String getPicturesPath() {
@@ -129,11 +141,14 @@ public class  Room {
         this.building = building;
     }
 
-    public String getBuildingName() { return this.building.getName(); }
+    public String getBuildingName() {
+        return this.building.getName();
+    }
 
     @Override
     public String toString() {
-        return this.name;
+
+        return this.roomId + "--" + this.name;
     }
 
     @Override

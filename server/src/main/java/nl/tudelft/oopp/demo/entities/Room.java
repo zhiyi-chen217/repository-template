@@ -1,6 +1,7 @@
 package nl.tudelft.oopp.demo.entities;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 
 
 @Entity
@@ -9,21 +10,25 @@ public class  Room {
 
     @Id
     @Column(name = "roomId")
+    @NotNull
     private String roomId;
 
     @Column(name = "name")
+    @NotNull
     private String name;
 
     @Column(name = "capacity")
     private int capacity;
 
     @ManyToOne
+    @NotNull
     private Building building;
 
     @Column(name = "description")
     private String description;
 
     @Column(name = "type")
+    @NotNull
     private String type;
 
     @Column(name = "picturesPath")

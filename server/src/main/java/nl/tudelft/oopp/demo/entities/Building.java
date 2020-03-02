@@ -1,13 +1,17 @@
 package nl.tudelft.oopp.demo.entities;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 import java.time.LocalTime;
+import java.util.List;
+import nl.tudelft.oopp.demo.entities.Room;
 
 @Entity
 @Table(name = "building")
 public class Building {
     @Id
     @Column(name = "name")
+    @NotNull
     private String name;
 
     @Column(name = "location")
@@ -25,6 +29,9 @@ public class Building {
     @Column(name = "bikes")
     private int bikes;
 
+    @Column(name = "rooms")
+    @OneToMany(mappedBy = "building", cascade = CascadeType.ALL)
+    private List<Room> rooms;
 
 
     public Building() {

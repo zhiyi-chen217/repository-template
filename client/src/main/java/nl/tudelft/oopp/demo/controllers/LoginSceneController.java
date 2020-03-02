@@ -36,16 +36,16 @@ public class LoginSceneController {
         //WIP: probably need to add a better form of authorization here.
         if (usertxt.length() == 0 || pwtxt.length() == 0) {
             Alert alert = new Alert(Alert.AlertType.INFORMATION);
-            alert.setTitle("Error");
+            alert.setTitle("");
             alert.setHeaderText(null);
             alert.setContentText("Please fill out all the fields");
             alert.show();
         } else if (authentication != null && authentication.statusCode() == 200) {
             GeneralHomepageController.setUsername(usertxt);
             if (usertxt.equals("admin")) {
-                changeScene(event, usertxt, "/adminHomepageScene.fxml");
+                changeScene(event, "/adminHomepageScene.fxml");
             } else {
-                changeScene(event, usertxt, "/homepageScene.fxml");
+                changeScene(event, "/homepageScene.fxml");
             }
         } else {
             Alert alert = new Alert(Alert.AlertType.INFORMATION);
@@ -65,7 +65,7 @@ public class LoginSceneController {
      * @param event the event that triggers this method
      *
      */
-    public void changeScene(ActionEvent event, String usertxt, String path) throws IOException {
+    public void changeScene(ActionEvent event, String path) throws IOException {
         FXMLLoader loader = new FXMLLoader();
         loader.setLocation(getClass().getResource(path));
         Parent homePageParent = loader.load();
@@ -80,19 +80,5 @@ public class LoginSceneController {
 
     public void setMainStage(Stage stage) {
         this.mainStage = stage;
-    }
-
-    /**
-     * Submit the login credentials of an admin when clicked on submit.
-     * Note: this functionality will be removed soon (switching to single admin account).
-     */
-    public void adminClicked() {
-        Alert alert = new Alert(Alert.AlertType.INFORMATION);
-        alert.setTitle("Submit clicked");
-        alert.setHeaderText(null);
-        String usertxt = username.getText();
-        String pwtxt = password.getText();
-        alert.setContentText(ServerCommunication.sendLoginAdmin(usertxt, pwtxt).body());
-        alert.showAndWait();
     }
 }

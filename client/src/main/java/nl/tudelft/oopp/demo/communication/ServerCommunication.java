@@ -15,6 +15,7 @@ import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 import java.sql.Time;
+import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.Base64;
 import java.util.List;
@@ -24,7 +25,8 @@ public class ServerCommunication {
 
     private static HttpClient client = HttpClient.newBuilder().build();
     private static CloseableHttpClient httpClient = HttpClients.createDefault();
-    private static String pubAuth = "Basic YWRtaW46MTIzNDU=";
+    public static String pubAuth;
+    public static String userId;
 
     /**
      * Send the username and password under the authentication header to the server.
@@ -39,6 +41,7 @@ public class ServerCommunication {
         String encodedAuth = "Basic " + Base64.getEncoder().encodeToString(auth.getBytes());
 
         pubAuth = encodedAuth;
+        userId = username;
         URI urihttp = URI.create(baseurl);
         HttpRequest request = HttpRequest.newBuilder().GET().uri(urihttp)
                 .header("Authorization", encodedAuth).build();
@@ -169,21 +172,33 @@ public class ServerCommunication {
      * @throws URISyntaxException if there is any syntax error in the uri
      */
 
-    public static CloseableHttpResponse deleteBuilding(List<String> name)
+    public static CloseableHttpResponse deleteBuilding(String name)
             throws IOException, URISyntaxException {
         URIBuilder builder = new URIBuilder("http://localhost:8080/admin/buildings");
         HttpDelete httpDelete = new HttpDelete();
         httpDelete.setHeader("Authorization", pubAuth);
-        for (String s: name) {
-            builder.addParameter("names", s);
-        }
+        builder.addParameter("name", name);
         httpDelete.setURI(builder.build());
         return httpClient.execute(httpDelete);
     }
 
+    /**Method that creates a room through the server.
+     * @param roomId is the id of the room
+     * @param name is the name of the room
+     * @param capacity is the capacity of the room
+     * @param building is the building the room is in
+     * @param description is the description of the room
+     * @param type is the type of romo
+     * @param picturesPath is the path where the pictures of the room are at
+     * @param whiteboard is whether the room contains a whiteboard
+     * @param tv is whether the room contains a tv
+     * @return httpPost which will be posted to the server
+     * @throws IOException if IO goes wrong
+     */
     public static CloseableHttpResponse createRoom(String roomId, String name, int capacity,
                                                    String building, String description, String type,
-                                                   String picturesPath, boolean whiteboard, boolean tv)
+                                                   String picturesPath, boolean whiteboard,
+                                                   boolean tv)
             throws IOException {
         JSONObject json = new JSONObject();
         JSONObject innerJson = new JSONObject();
@@ -204,9 +219,23 @@ public class ServerCommunication {
         return httpClient.execute(httpPost);
     }
 
+    /**Method that updates a room through the server.
+     * @param roomId is the id of the room
+     * @param name is the name of the room
+     * @param capacity is the capacity of the room
+     * @param building is the building the room is in
+     * @param description is the description of the room
+     * @param type is the type of romo
+     * @param picturesPath is the path where the pictures of the room are at
+     * @param whiteboard is whether the room contains a whiteboard
+     * @param tv is whether the room contains a tv
+     * @return httpPost which will be posted to the server
+     * @throws IOException if IO goes wrong
+     */
     public static CloseableHttpResponse updateRoom(String roomId, String name, int capacity,
                                                    String building, String description, String type,
-                                                   String picturesPath, boolean whiteboard, boolean tv)
+                                                   String picturesPath, boolean whiteboard,
+                                                   boolean tv)
             throws IOException {
         JSONObject json = new JSONObject();
         JSONObject innerJson = new JSONObject();
@@ -227,16 +256,24 @@ public class ServerCommunication {
         return httpClient.execute(httpPut);
     }
 
-    public static CloseableHttpResponse readRoom(String roomId, String building) throws IOException, URISyntaxException {
+    /**Method that reads a room through the server.
+     * @param roomId is the id of the room
+     * @param building is the building the room is located in
+     * @return httpGet which gets the information
+     * @throws IOException if method does not understand IO
+     * @throws URISyntaxException if the URI does not exist
+     */
+    public static CloseableHttpResponse readRoom(String roomId, String building)
+            throws IOException, URISyntaxException {
         URIBuilder uri = new URIBuilder("http://localhost:8080/rooms");
         HttpGet httpGet = new HttpGet();
         httpGet.setHeader("Authorization", pubAuth);
-        if(building != null){
+        if (building != null) {
             uri.addParameter("building", building);
             httpGet.setURI(uri.build());
             return httpClient.execute(httpGet);
         }
-        if(roomId != null){
+        if (roomId != null) {
             uri.addParameter("roomId", roomId);
             httpGet.setURI(uri.build());
             return httpClient.execute(httpGet);
@@ -245,7 +282,14 @@ public class ServerCommunication {
         return httpClient.execute(httpGet);
     }
 
-    public static CloseableHttpResponse deleteRoom(List<String> roomIds) throws IOException, URISyntaxException {
+    /**Method that deletes a room in the server.
+     * @param roomIds is the list of rooms which are to be deleted
+     * @return httpDelete which deletes information on the server
+     * @throws IOException if the method does not understand the IO
+     * @throws URISyntaxException if the URI can not be found
+     */
+    public static CloseableHttpResponse deleteRoom(List<String> roomIds)
+            throws IOException, URISyntaxException {
         URIBuilder uri = new URIBuilder("http://localhost:8080/admin/room");
         for (String s: roomIds) {
             uri.addParameter("roomIds", s);
@@ -253,6 +297,77 @@ public class ServerCommunication {
         HttpDelete httpDelete = new HttpDelete();
         httpDelete.setHeader("Authorization", pubAuth);
         httpDelete.setURI(uri.build());
+        return httpClient.execute(httpDelete);
+    }
+
+    /**
+     * This method sends an HttpGet request to the server asking for all the room reservations
+     * fulfilling the given constraints.
+     * @param user - the userId
+     * @param room - the roomId
+     * @param date - the date
+     * @return - An HttpResponse containing all the qualified room reservations
+     * @throws URISyntaxException thrown if the URI is wrongly constructed
+     * @throws IOException thrown if something going wrong with IO
+     */
+    public static CloseableHttpResponse readRoomReservation(String user, String room, String date)
+            throws URISyntaxException, IOException {
+        URIBuilder uri = new URIBuilder("http://localhost:8080/roomReservations");
+        if (user != null) {
+            uri.addParameter("user", user);
+        }
+        if (room != null) {
+            uri.addParameter("room", room);
+        }
+        if (date != null) {
+            uri.addParameter("date", date);
+        }
+        HttpGet httpGet = new HttpGet();
+        httpGet.setURI(uri.build());
+        httpGet.setHeader("Authorization", pubAuth);
+        return httpClient.execute(httpGet);
+    }
+
+    /**
+     * This method sends a HttpPost request to the server,
+     * in order to post a new room reservation for the user.
+     * @param user - the userId
+     * @param beginTime - the begin time of the reservation
+     * @param endTime - the end time of the reservation
+     * @param room - the roomId
+     * @return - An HttpResponse specifying the state of the request
+     * @throws IOException thrown if something going wrong with IO
+     */
+    public static CloseableHttpResponse createRoomReservation(String user, LocalDateTime beginTime,
+                                                              LocalDateTime endTime, String room)
+            throws IOException {
+        JSONObject jsonObject = new JSONObject();
+        JSONObject temp = new JSONObject();
+        temp.put("userId", user);
+        jsonObject.put("user", temp);
+        jsonObject.put("beginTime", beginTime);
+        jsonObject.put("endTime", endTime);
+        temp = new JSONObject();
+        temp.put("roomId", room);
+        jsonObject.put("room", temp);
+        HttpPost httpPost = new HttpPost("http://localhost:8080/roomReservation");
+        httpPost.setHeader("Authorization", pubAuth);
+        httpPost.setEntity(new StringEntity(jsonObject.toString()));
+        httpPost.setHeader("Content-type", "application/json");
+        return httpClient.execute(httpPost);
+    }
+
+    /**
+     * This method sends a HttpDelete request to the server,
+     * in order to delete the given room reservation.
+     * @param roomReservationId - the id of the room reservation
+     * @return - An HttpResponse specifying the state of the request
+     * @throws IOException thrown if something going wrong with IO
+     */
+    public static CloseableHttpResponse deleteRoomReservation(Long roomReservationId)
+            throws IOException {
+        HttpDelete httpDelete = new HttpDelete("http://localhost:8080/roomReservation");
+        httpDelete.setHeader("Authorization", pubAuth);
         return httpClient.execute(httpDelete);
     }
 

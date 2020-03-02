@@ -23,10 +23,10 @@
         <CheckBox layoutX="36.0" layoutY="229.0" mnemonicParsing="false" text="Whiteboard?" />
         <Label layoutX="37.0" layoutY="148.0" text="Capacity:" />
         <Button layoutX="36.0" layoutY="346.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="71.0" text="Search" />
-        <Button fx:id="continueButton" layoutX="487.0" layoutY="320.0" mnemonicParsing="false" text="Continue" />
+        <Button fx:id="continueButton" layoutX="487.0" layoutY="320.0" mnemonicParsing="false" text="Continue" onAction="#stageRoomInfo"/>
         <Line endX="-100.00001525878906" endY="-341.0" layoutX="300.0" layoutY="341.0" startX="-100.00001525878906" startY="59.000030517578125" stroke="#aaa6a6" />
         <ListView fx:id="roomListView" layoutX="226.0" layoutY="68.0" prefHeight="278.0" prefWidth="239.0" />
-        <ChoiceBox layoutX="36.0" layoutY="103.0" prefWidth="150.0" />
+        <ChoiceBox fx:id="buildingChoiceBox" layoutX="36.0" layoutY="103.0" prefWidth="150.0" />
         <Label layoutX="36.0" layoutY="77.0" text="Choose a building:" />
         <DatePicker layoutX="36.0" layoutY="265.0" prefHeight="18.0" prefWidth="150.0" />
       <Label layoutX="36.0" layoutY="312.0" />

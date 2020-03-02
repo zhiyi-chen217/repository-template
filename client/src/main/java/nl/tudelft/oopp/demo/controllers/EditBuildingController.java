@@ -12,13 +12,15 @@ import nl.tudelft.oopp.demo.entities.Building;
 import org.apache.http.client.methods.CloseableHttpResponse;
 import org.apache.http.util.EntityUtils;
 
+import java.io.IOException;
+import java.net.URISyntaxException;
 import java.time.LocalTime;
 import java.util.regex.Pattern;
 
 
 public class EditBuildingController {
     @FXML
-    private TextField buildingName;
+    private Label buildingName;
 
     @FXML
     private TextField buildingOpeningHour;
@@ -44,8 +46,13 @@ public class EditBuildingController {
         building = building1;
     }
 
+    /**Method that displays all information regarding a building.
+     *
+     */
     @FXML
-    public void initialize() {
+    public void initialize() throws IOException, URISyntaxException {
+        building = (Building) GeneralHomepageController.jsonToEntity(
+                ServerCommunication.readBuilding(building.getName()), "Building");
         buildingName.setText(building.getName());
         buildingOpeningHour.setText(building.getOpeningHour().toString());
         buildingClosingHour.setText(building.getClosingHour().toString());
@@ -54,9 +61,8 @@ public class EditBuildingController {
         buildingBikes.setText(String.valueOf(building.getBikes()));
     }
 
-    /**
-     *
-     * @param event
+    /**Update method for buildings.
+     * @param event by which this method is triggered
      */
     public void submitUpdate(ActionEvent event) {
         failtext.setText("");
@@ -132,16 +138,16 @@ public class EditBuildingController {
             erralert.showAndWait();
         }
 
-        if (statusCode == 202) {
+        if (statusCode == 201) {
             alert.setTitle("Success");
         } else {
-            alert.setTitle("Unsuccessful");
+            alert.setTitle("Fail");
         }
 
         alert.setHeaderText(null);
         alert.showAndWait();
 
-        if (statusCode == 202) {
+        if (statusCode == 201) {
             Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
             stage.close();
         }
