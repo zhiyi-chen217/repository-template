@@ -24,7 +24,7 @@ import java.time.LocalTime;
 import java.time.temporal.ChronoUnit;
 import java.util.List;
 
-public class RoomInfoController extends GeneralHomepageController{
+public class RoomInfoController extends GeneralHomepageController {
 
     @FXML
     private Label roomDescription;
@@ -48,23 +48,29 @@ public class RoomInfoController extends GeneralHomepageController{
 
     public static ObservableList<RoomReservation> roomReservations;
 
-    public static void setRoom (String roomString) {
+    public static void setRoom(String roomString) {
         RoomInfoController.roomS = roomString;
     }
 
     public void initialize() throws IOException, URISyntaxException {
         String roomId = roomS.split("--")[0];
         Room room = (Room) GeneralHomepageController
-                .JsonToEntity(ServerCommunication.readRoom(roomId, null), "Room");
+                .jsonToEntity(ServerCommunication.readRoom(roomId, null), "Room");
         roomReservations = GeneralHomepageController
-                .JsonArrayToRoomReservation(ServerCommunication
+                .jsonArrayToRoomReservation(ServerCommunication
                         .readRoomReservation(ServerCommunication.userId, roomId, LocalDate.now().toString()));
         TimeSlotCell.roomReservations = roomReservations;
 
         roomDescription.setText("Description: " + room.getDescription());
         roomCapacity.setText("Capacity:" + String.valueOf(room.getCapacity()));
-        if(room.isTv()) {roomTV.setText("TV: available");}
-        if(room.isWhiteboard()) {roomWhiteboard.setText("Whiteboard: available");}
+        if (room.isTv()) {
+            roomTV.setText("TV: available");
+        }
+
+        if (room.isWhiteboard()) {
+            roomWhiteboard.setText("Whiteboard: available");
+        }
+
         roomType.setText("Type: " + room.getType());
 
         LocalTime openingHour = room.getBuilding().getOpeningHour();
@@ -84,7 +90,8 @@ public class RoomInfoController extends GeneralHomepageController{
 
     public void confirmReservation(ActionEvent event) throws IOException {
         ObservableList<String> reservations = timeSlotList.getSelectionModel().getSelectedItems();
-        LocalTime beginTime, endTime;
+        LocalTime beginTime;
+        LocalTime endTime;
         LocalDate today = LocalDate.now();
         for (String s: reservations) {
             beginTime = LocalTime.parse(s.split("--")[0]);

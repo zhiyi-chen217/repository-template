@@ -316,10 +316,10 @@ public class ServerCommunication {
         if (user != null) {
             uri.addParameter("user", user);
         }
-        if(room != null) {
+        if (room != null) {
             uri.addParameter("room", room);
         }
-        if(date != null) {
+        if (date != null) {
             uri.addParameter("date", date);
         }
         HttpGet httpGet = new HttpGet();
@@ -366,7 +366,7 @@ public class ServerCommunication {
      */
     public static CloseableHttpResponse deleteRoomReservation(Long roomReservationId)
             throws IOException {
-        HttpDelete httpDelete= new HttpDelete("http://localhost:8080/roomReservation");
+        HttpDelete httpDelete = new HttpDelete("http://localhost:8080/roomReservation");
         httpDelete.setHeader("Authorization", pubAuth);
         return httpClient.execute(httpDelete);
     }

@@ -31,7 +31,7 @@ public class ReserveARoomController extends ReserveBikeController {
 
     public void initialize() throws IOException, URISyntaxException {
         buildings = GeneralHomepageController
-                .JsonArrayToBuilding(ServerCommunication.readBuilding(null));
+                .jsonArrayToBuilding(ServerCommunication.readBuilding(null));
         buildingChoiceBox.setItems(buildings);
         buildingChoiceBox.getSelectionModel().selectedItemProperty()
                 .addListener((v, oldBuilding, newBuilding) -> {
@@ -47,7 +47,9 @@ public class ReserveARoomController extends ReserveBikeController {
                 });
         roomListView.setVisible(false);
         roomListView.getSelectionModel().selectedItemProperty().addListener((v, oldRoom, newRoom) -> {
-            if (newRoom != null) {continueButton.setVisible(true);}
+            if (newRoom != null) {
+                continueButton.setVisible(true);
+            }
         });
         continueButton.setVisible(false);
     }
@@ -58,7 +60,7 @@ public class ReserveARoomController extends ReserveBikeController {
             return;
         }
         rooms = GeneralHomepageController
-                .JsonArrayToRoomS(ServerCommunication.readRoom(null, newBuilding.getName()));
+                .jsonArrayToRoomS(ServerCommunication.readRoom(null, newBuilding.getName()));
         roomListView.setItems(rooms);
     }
 

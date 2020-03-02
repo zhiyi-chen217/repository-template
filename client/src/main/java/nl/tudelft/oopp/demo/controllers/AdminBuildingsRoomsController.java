@@ -58,7 +58,7 @@ public class AdminBuildingsRoomsController extends GeneralHomepageController {
         roomListView.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
 
         buildings = GeneralHomepageController
-                .JsonArrayToBuilding(ServerCommunication.readBuilding(null));
+                .jsonArrayToBuilding(ServerCommunication.readBuilding(null));
         buildingChoiceBox.setItems(buildings);
 
         buildings.addListener((ListChangeListener<Building>) c -> {
@@ -128,7 +128,7 @@ public class AdminBuildingsRoomsController extends GeneralHomepageController {
      * @param event The event which calls this function
      */
     public void selectBuilding(ActionEvent event) {
-        if(editBuildingButton.isDisable()) {
+        if (editBuildingButton.isDisable()) {
             editBuildingButton.setDisable(false);
             deleteBuildingButton.setVisible(true);
             editRoomButton.setVisible(true);
@@ -181,7 +181,7 @@ public class AdminBuildingsRoomsController extends GeneralHomepageController {
             return;
         }
         rooms = GeneralHomepageController
-                .JsonArrayToRoom(ServerCommunication.readRoom(null, newBuilding.getName()));
+                .jsonArrayToRoom(ServerCommunication.readRoom(null, newBuilding.getName()));
         ObservableList<String> allRoom = FXCollections.observableArrayList();
         for (Room temp : rooms) {
             allRoom.add(temp.getRoomId() + "--" + temp.getName());
@@ -239,7 +239,7 @@ public class AdminBuildingsRoomsController extends GeneralHomepageController {
      */
     public void confirmationDeletion(ActionEvent event) {
         String content = "Are you sure you want to delete this?";
-        if(event.getSource().equals(deleteRoomButton)) {
+        if (event.getSource().equals(deleteRoomButton)) {
             content = "Are you sure you want to delete this room?";
         } else if (event.getSource().equals(deleteBuildingButton)) {
             content = "All the rooms in this building will be deleted too. \n "

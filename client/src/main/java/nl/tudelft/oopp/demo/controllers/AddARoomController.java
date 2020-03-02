@@ -80,8 +80,8 @@ public class AddARoomController {
 
         String roomN = roomName.getText();
         if (roomN.length() == 0) {
-           failtext.setText("Please input a valid name.");
-           return;
+            failtext.setText("Please input a valid name.");
+            return;
         }
 
         String roomPP = roomPicturePath.getText();

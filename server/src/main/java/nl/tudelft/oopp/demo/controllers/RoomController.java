@@ -88,7 +88,7 @@ public class RoomController {
             return ResponseEntity.accepted().body(roomRepository.findAll());
         }
         Optional<Room> tempRoom = roomRepository.findByRoomId(roomId.get());
-        if(tempRoom.isPresent()){
+        if (tempRoom.isPresent()) {
             return ResponseEntity.status(200).body(tempRoom.get());
         }
         return ResponseEntity.badRequest().body("The room does not exist!");

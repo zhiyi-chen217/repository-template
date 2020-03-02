@@ -44,7 +44,7 @@ public class HomepageController extends GeneralHomepageController {
     public ObservableList<RoomReservation> getReservations()
             throws IOException, URISyntaxException {
         CloseableHttpResponse response = ServerCommunication.readRoomReservation(getUsername(), null, null);
-        return JsonArrayToRoomReservation(response);
+        return jsonArrayToRoomReservation(response);
     }
 
     public void changeSceneRooms(ActionEvent event) {

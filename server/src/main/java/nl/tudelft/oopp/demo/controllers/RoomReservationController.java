@@ -1,6 +1,5 @@
 package nl.tudelft.oopp.demo.controllers;
 
-
 import nl.tudelft.oopp.demo.entities.Building;
 import nl.tudelft.oopp.demo.entities.Room;
 import nl.tudelft.oopp.demo.entities.RoomReservation;

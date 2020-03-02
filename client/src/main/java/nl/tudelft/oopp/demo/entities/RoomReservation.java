@@ -42,9 +42,9 @@ public class RoomReservation {
         this.id = jsonObject.getLong("id");
         this.user = jsonObject.getJSONObject("user").getString("user_id");
         this.beginTime = GeneralHomepageController
-                .StringToLocalDateTime(jsonObject.getString("beginTime"));
+                .stringToLocalDateTime(jsonObject.getString("beginTime"));
         this.endTime = GeneralHomepageController
-                .StringToLocalDateTime(jsonObject.getString("endTime"));
+                .stringToLocalDateTime(jsonObject.getString("endTime"));
         this.room = new Room(jsonObject.getJSONObject("room"));
         this.building = new Building(jsonObject.getJSONObject("room").getJSONObject("building"));
     }
@@ -73,11 +73,17 @@ public class RoomReservation {
         this.beginTime = beginTime;
     }
 
-    public LocalDateTime getEndTime() { return endTime; }
+    public LocalDateTime getEndTime() {
+        return endTime;
+    }
 
-    public void setEndTime(LocalDateTime endTime) { this.endTime = endTime; }
+    public void setEndTime(LocalDateTime endTime) {
+        this.endTime = endTime;
+    }
 
-    public Room getRoom() {return this.room;}
+    public Room getRoom() {
+        return this.room;
+    }
 
     public void setRoom(Room room) {
         this.room = room;
@@ -87,6 +93,7 @@ public class RoomReservation {
         return this.getBeginTime().toString().split("T")[0] + "\n"
                 + this.getBeginTime().toString().split("T")[1];
     }
+
     public String getEndTimeString() {
         return this.getEndTime().toString().split("T")[0] + "\n"
                 + this.getEndTime().toString().split("T")[1];

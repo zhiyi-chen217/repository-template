@@ -118,6 +118,7 @@ public class GeneralHomepageController {
         return username;
     }
 
+
     /**
      * This methods retrieves the entity from the HTTP response, convert it into JsonObject
      * and then create an Object with the specified type according to that JsonObject.
@@ -126,9 +127,9 @@ public class GeneralHomepageController {
      * @return - the object created
      * @throws IOException
      */
-    public static Object JsonToEntity (CloseableHttpResponse response, String type) throws IOException {
-        String JsonString  = EntityUtils.toString(response.getEntity());
-        JSONObject objectJson = new JSONObject(JsonString);
+    public static Object jsonToEntity(CloseableHttpResponse response, String type) throws IOException {
+        String jsonString  = EntityUtils.toString(response.getEntity());
+        JSONObject objectJson = new JSONObject(jsonString);
         if (type.equals("Room")) {
             return new Room(objectJson);
         }
@@ -145,10 +146,9 @@ public class GeneralHomepageController {
      * @return - the ObservableList of rooms
      * @throws IOException
      */
-    public static ObservableList<Room> JsonArrayToRoom (CloseableHttpResponse response)
-            throws IOException {
-        String JsonArray = EntityUtils.toString(response.getEntity());
-        JSONArray roomJsonArray = new JSONArray(JsonArray);
+    public static ObservableList<Room> jsonArrayToRoom(CloseableHttpResponse response) throws IOException {
+        String jsonArray = EntityUtils.toString(response.getEntity());
+        JSONArray roomJsonArray = new JSONArray(jsonArray);
         ObservableList<Room> rooms = FXCollections.observableArrayList();
         for (int i = 0; i < roomJsonArray.length(); i++) {
             rooms.add(new Room(roomJsonArray.getJSONObject(i)));
@@ -157,16 +157,15 @@ public class GeneralHomepageController {
     }
 
     /**
-     * This method retrieves the array of Rooms from the HTTP response, convert it into JsonArray
-     * and then create an ObservableList of Rooms.
-     * @param response - the Http response returned
-     * @return - the ObservableList of Room String
-     * @throws IOException
-     */
-    public static ObservableList<String> JsonArrayToRoomS (CloseableHttpResponse response)
-            throws IOException {
-        String JsonArray = EntityUtils.toString(response.getEntity());
-        JSONArray roomJsonArray = new JSONArray(JsonArray);
+    * This method retrieves the array of Rooms from the HTTP response, convert it into JsonArray
+    * and then create an ObservableList of Rooms.
+    * @param response - the Http response returned
+    * @return - the ObservableList of Room String
+    * @throws IOException
+    */
+    public static ObservableList<String> jsonArrayToRoomS(CloseableHttpResponse response) throws IOException {
+        String jsonArray = EntityUtils.toString(response.getEntity());
+        JSONArray roomJsonArray = new JSONArray(jsonArray);
         ObservableList<String> rooms = FXCollections.observableArrayList();
         for (int i = 0; i < roomJsonArray.length(); i++) {
             rooms.add(new Room(roomJsonArray.getJSONObject(i)).toString());
@@ -181,10 +180,9 @@ public class GeneralHomepageController {
      * @return - the ObservableList of Building
      * @throws IOException
      */
-    public static ObservableList<Building> JsonArrayToBuilding (CloseableHttpResponse response)
-            throws IOException {
-        String JsonArray = EntityUtils.toString(response.getEntity());
-        JSONArray buildingJsonArray = new JSONArray(JsonArray);
+    public static ObservableList<Building> jsonArrayToBuilding(CloseableHttpResponse response) throws IOException {
+        String jsonArray = EntityUtils.toString(response.getEntity());
+        JSONArray buildingJsonArray = new JSONArray(jsonArray);
         ObservableList<Building> buildings = FXCollections.observableArrayList();
         for (int i = 0; i < buildingJsonArray.length(); i++) {
             buildings.add(new Building(buildingJsonArray.getJSONObject(i)));
@@ -199,10 +197,10 @@ public class GeneralHomepageController {
      * @return - the ObservableList of RoomReservation
      * @throws IOException
      */
-    public static ObservableList<RoomReservation> JsonArrayToRoomReservation (CloseableHttpResponse response)
+    public static ObservableList<RoomReservation> jsonArrayToRoomReservation(CloseableHttpResponse response)
             throws IOException {
-        String JsonArray = EntityUtils.toString(response.getEntity());
-        JSONArray roomReservationJsonArray = new JSONArray(JsonArray);
+        String jsonArray = EntityUtils.toString(response.getEntity());
+        JSONArray roomReservationJsonArray = new JSONArray(jsonArray);
         ObservableList<RoomReservation> roomReservations = FXCollections.observableArrayList();
         for (int i = 0; i < roomReservationJsonArray.length(); i++) {
             roomReservations.add(new RoomReservation(roomReservationJsonArray.getJSONObject(i)));
@@ -215,7 +213,7 @@ public class GeneralHomepageController {
      * @param dateTime - the String to be parsed
      * @return - A LocalDateTime object created according to the String
      */
-    public static LocalDateTime StringToLocalDateTime (String dateTime) {
+    public static LocalDateTime stringToLocalDateTime(String dateTime) {
         List<Integer> date = Arrays.stream(dateTime.split("T")[0].split("-"))
                 .map((i) -> Integer.parseInt(i))
                 .collect(Collectors.toList());

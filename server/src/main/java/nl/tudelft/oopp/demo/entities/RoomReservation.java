@@ -37,7 +37,7 @@ public class RoomReservation {
      * @param endTime is the amount of consecutive slots of a certain fixed length
      * @param room is the room which is reserved
      */
-    public RoomReservation(User user, LocalDateTime beginTime, LocalDateTime endTime , Room room) {
+    public RoomReservation(User user, LocalDateTime beginTime, LocalDateTime endTime, Room room) {
         this.user = user;
         this.beginTime = beginTime;
         this.endTime = endTime;
@@ -68,9 +68,13 @@ public class RoomReservation {
         this.beginTime = beginTime;
     }
 
-    public LocalDateTime getEndTime() { return endTime; }
+    public LocalDateTime getEndTime() {
+        return endTime;
+    }
 
-    public void setEndTime(LocalDateTime endTime) { this.endTime = endTime; }
+    public void setEndTime(LocalDateTime endTime) {
+        this.endTime = endTime;
+    }
 
     public Room getRoom() {
         return room;
