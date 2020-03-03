@@ -47,9 +47,9 @@ public class ReserveARoomController extends ReserveBikeController {
         buildingChoiceBox.setItems(buildings);
         buildingChoiceBox.getSelectionModel().selectedItemProperty()
                 .addListener((v, oldBuilding, newBuilding) -> {
-                        changeSelectedEvent(v, oldBuilding, newBuilding);
-                        roomListView.setVisible(true);
-                        continueButton.setVisible(false);
+                    changeSelectedEvent(v, oldBuilding, newBuilding);
+                    roomListView.setVisible(true);
+                    continueButton.setVisible(false);
                 });
         roomListView.setVisible(false);
         roomListView.getSelectionModel().selectedItemProperty().addListener((v, oldRoom, newRoom) -> {
