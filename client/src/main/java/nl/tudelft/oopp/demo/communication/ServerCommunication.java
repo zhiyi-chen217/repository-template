@@ -1,25 +1,20 @@
 package nl.tudelft.oopp.demo.communication;
 
+import javafx.scene.control.Alert;
 import org.apache.http.client.methods.*;
 import org.apache.http.client.utils.URIBuilder;
-import org.apache.http.entity.ContentType;
 import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.*;
 import org.json.JSONObject;
 
-import java.io.IOException;
-import java.io.UnsupportedEncodingException;
 import java.net.URI;
-import java.net.URISyntaxException;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
-import java.sql.Time;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.Base64;
 import java.util.List;
-import java.util.Optional;
 
 public class ServerCommunication {
 
@@ -45,7 +40,7 @@ public class ServerCommunication {
         URI urihttp = URI.create(baseurl);
         HttpRequest request = HttpRequest.newBuilder().GET().uri(urihttp)
                 .header("Authorization", encodedAuth).build();
-        HttpResponse<String> response = null;
+        HttpResponse<String> response;
         try {
             response = client.send(request, HttpResponse.BodyHandlers.ofString());
         } catch (Exception e) {
@@ -64,19 +59,22 @@ public class ServerCommunication {
      * @param email the email address of the user signing up
      * @param password the password of the user signing up
      * @return a ClosableHttpResponse containing text about the success of signing up.
-     * @throws IOException if something goes wrong with sending the info
      */
 
-    public static CloseableHttpResponse sendSignUp(String netid,
-                             String email, String password) throws IOException {
-        HttpPost httpPost = new HttpPost("http://localhost:8080/signup");
-        String json = "{\"userId\" : \"" + netid + "\","
-                + "\"email\" : \"" + email + "\","
-                + "\"password\" : \"" + password + "\"}";
-        httpPost.setEntity(new StringEntity(json));
-        httpPost.setHeader("Content-type", "application/json");
-        CloseableHttpResponse response = httpClient.execute(httpPost);
-        return response;
+    public static CloseableHttpResponse sendSignUp(String netid, String email, String password) {
+        try {
+            HttpPost httpPost = new HttpPost("http://localhost:8080/signup");
+            String json = "{\"userId\" : \"" + netid + "\","
+                    + "\"email\" : \"" + email + "\","
+                    + "\"password\" : \"" + password + "\"}";
+            httpPost.setEntity(new StringEntity(json));
+            httpPost.setHeader("Content-type", "application/json");
+            CloseableHttpResponse response = httpClient.execute(httpPost);
+            return response;
+        } catch (Exception e) {
+            errorAlert();
+            return null;
+        }
     }
 
     /**
@@ -88,13 +86,11 @@ public class ServerCommunication {
      * @param picturesPath the path of the picture of the building
      * @param bikes the amount of bikes at the building
      * @return a ClosableHttpResponse which contains info about if the building is saved
-     * @throws IOException if anything goes wrong with communicating with the server
      */
 
     public static CloseableHttpResponse createBuilding(String name, String location,
                                                        LocalTime openingHour, LocalTime closingHour,
-                                                       String picturesPath, int bikes)
-            throws IOException {
+                                                       String picturesPath, int bikes) {
         JSONObject json = new JSONObject();
         json.put("name", name);
         json.put("location", location);
@@ -105,9 +101,14 @@ public class ServerCommunication {
         HttpPost httpPost = new HttpPost("http://localhost:8080/admin/buildings");
         httpPost.setHeader("Content-type", "application/json");
         httpPost.setHeader("Authorization", pubAuth);
-        httpPost.setEntity(new StringEntity(json.toString()));
-        CloseableHttpResponse response = httpClient.execute(httpPost);
-        return response;
+        try {
+            httpPost.setEntity(new StringEntity(json.toString()));
+            CloseableHttpResponse response = httpClient.execute(httpPost);
+            return response;
+        } catch (Exception e) {
+            errorAlert();
+            return null;
+        }
     }
 
     /**
@@ -119,13 +120,11 @@ public class ServerCommunication {
      * @param picturesPath the updated pictures path of the building
      * @param bikes the updated amount of bikes at the building
      * @return a ClosableHttpResponse containing info about the success of updating a building
-     * @throws IOException if anything goes wrong with communicating with the server
      */
 
     public static CloseableHttpResponse updateBuilding(String name, String location,
                                                        LocalTime openingHour, LocalTime closingHour,
-                                                       String picturesPath, int bikes)
-            throws IOException {
+                                                       String picturesPath, int bikes) {
         JSONObject json = new JSONObject();
         json.put("name", name);
         json.put("location", location);
@@ -137,49 +136,58 @@ public class ServerCommunication {
         HttpPut httpPut = new HttpPut("http://localhost:8080/admin/buildings");
         httpPut.setHeader("Content-type", "application/json");
         httpPut.setHeader("Authorization", pubAuth);
-        httpPut.setEntity(new StringEntity(json.toString()));
-        CloseableHttpResponse response = httpClient.execute(httpPut);
-        return response;
+        try {
+            httpPut.setEntity(new StringEntity(json.toString()));
+            CloseableHttpResponse response = httpClient.execute(httpPut);
+            return response;
+        } catch (Exception e) {
+            errorAlert();
+            return null;
+        }
     }
 
     /**
      * read the info of a building.
      * @param name the name of a building
      * @return a ClosableHttpResponse containing info about the building
-     * @throws IOException if anything goes wrong with communicating with the server
-     * @throws URISyntaxException if the uri has any syntax errors
      */
 
-    public static CloseableHttpResponse readBuilding(String name)
-            throws IOException, URISyntaxException {
-        URIBuilder builder = new URIBuilder("http://localhost:8080/buildings");
-        HttpGet httpGet = new HttpGet();
-        httpGet.setHeader("Authorization", pubAuth);
-        if (name == null) {
+    public static CloseableHttpResponse readBuilding(String name) {
+        try {
+            URIBuilder builder = new URIBuilder("http://localhost:8080/buildings");
+            HttpGet httpGet = new HttpGet();
+            httpGet.setHeader("Authorization", pubAuth);
+            if (name == null) {
+                httpGet.setURI(builder.build());
+                return httpClient.execute(httpGet);
+            }
+            builder.addParameter("name", name);
             httpGet.setURI(builder.build());
             return httpClient.execute(httpGet);
+        } catch (Exception e) {
+            errorAlert();
+            return null;
         }
-        builder.addParameter("name", name);
-        httpGet.setURI(builder.build());
-        return httpClient.execute(httpGet);
     }
 
     /**
      * Send a name to the server so it can delete a building out the database.
      * @param name the name of the building to be deleted
      * @return a ClosableHttpResponse containing about the success of deleting the building
-     * @throws IOException if anything goes wrong with the communication with the server
-     * @throws URISyntaxException if there is any syntax error in the uri
      */
 
-    public static CloseableHttpResponse deleteBuilding(String name)
-            throws IOException, URISyntaxException {
-        URIBuilder builder = new URIBuilder("http://localhost:8080/admin/buildings");
-        HttpDelete httpDelete = new HttpDelete();
-        httpDelete.setHeader("Authorization", pubAuth);
-        builder.addParameter("name", name);
-        httpDelete.setURI(builder.build());
-        return httpClient.execute(httpDelete);
+    public static CloseableHttpResponse deleteBuilding(String name) {
+        try {
+            URIBuilder builder = new URIBuilder("http://localhost:8080/admin/buildings");
+            HttpDelete httpDelete = new HttpDelete();
+            httpDelete.setHeader("Authorization", pubAuth);
+            builder.addParameter("name", name);
+            httpDelete.setURI(builder.build());
+            return httpClient.execute(httpDelete);
+        } catch (Exception e) {
+            errorAlert();
+            return null;
+        }
     }
 
     /**Method that creates a room through the server.
@@ -193,13 +201,11 @@ public class ServerCommunication {
      * @param whiteboard is whether the room contains a whiteboard
      * @param tv is whether the room contains a tv
      * @return httpPost which will be posted to the server
-     * @throws IOException if IO goes wrong
      */
     public static CloseableHttpResponse createRoom(String roomId, String name, int capacity,
                                                    String building, String description, String type,
                                                    String picturesPath, boolean whiteboard,
-                                                   boolean tv)
-            throws IOException {
+                                                   boolean tv) {
         JSONObject json = new JSONObject();
         JSONObject innerJson = new JSONObject();
         innerJson.put("name", building);
@@ -214,9 +220,14 @@ public class ServerCommunication {
                 .put("tv", tv);
         HttpPost httpPost = new HttpPost("http://localhost:8080/admin/room");
         httpPost.setHeader("Authorization", pubAuth);
-        httpPost.setEntity(new StringEntity(json.toString()));
-        httpPost.setHeader("Content-type", "application/json");
-        return httpClient.execute(httpPost);
+        try {
+            httpPost.setEntity(new StringEntity(json.toString()));
+            httpPost.setHeader("Content-type", "application/json");
+            return httpClient.execute(httpPost);
+        } catch (Exception e) {
+            errorAlert();
+            return null;
+        }
     }
 
     /**Method that updates a room through the server.
@@ -230,13 +241,11 @@ public class ServerCommunication {
      * @param whiteboard is whether the room contains a whiteboard
      * @param tv is whether the room contains a tv
      * @return httpPost which will be posted to the server
-     * @throws IOException if IO goes wrong
      */
     public static CloseableHttpResponse updateRoom(String roomId, String name, int capacity,
                                                    String building, String description, String type,
                                                    String picturesPath, boolean whiteboard,
-                                                   boolean tv)
-            throws IOException {
+                                                   boolean tv) {
         JSONObject json = new JSONObject();
         JSONObject innerJson = new JSONObject();
         innerJson.put("name", building);
@@ -251,53 +260,62 @@ public class ServerCommunication {
                 .put("tv", tv);
         HttpPut httpPut = new HttpPut("http://localhost:8080/admin/room");
         httpPut.setHeader("Authorization", pubAuth);
-        httpPut.setEntity(new StringEntity(json.toString()));
-        httpPut.setHeader("Content-type", "application/json");
-        return httpClient.execute(httpPut);
+        try {
+            httpPut.setEntity(new StringEntity(json.toString()));
+            httpPut.setHeader("Content-type", "application/json");
+            return httpClient.execute(httpPut);
+        } catch (Exception e) {
+            errorAlert();
+            return null;
+        }
     }
 
     /**Method that reads a room through the server.
      * @param roomId is the id of the room
      * @param building is the building the room is located in
      * @return httpGet which gets the information
-     * @throws IOException if method does not understand IO
-     * @throws URISyntaxException if the URI does not exist
      */
-    public static CloseableHttpResponse readRoom(String roomId, String building)
-            throws IOException, URISyntaxException {
-        URIBuilder uri = new URIBuilder("http://localhost:8080/rooms");
-        HttpGet httpGet = new HttpGet();
-        httpGet.setHeader("Authorization", pubAuth);
-        if (building != null) {
-            uri.addParameter("building", building);
+    public static CloseableHttpResponse readRoom(String roomId, String building) {
+        try {
+            URIBuilder uri = new URIBuilder("http://localhost:8080/rooms");
+            HttpGet httpGet = new HttpGet();
+            httpGet.setHeader("Authorization", pubAuth);
+            if (building != null) {
+                uri.addParameter("building", building);
+                httpGet.setURI(uri.build());
+                return httpClient.execute(httpGet);
+            }
+            if (roomId != null) {
+                uri.addParameter("roomId", roomId);
+                httpGet.setURI(uri.build());
+                return httpClient.execute(httpGet);
+            }
             httpGet.setURI(uri.build());
             return httpClient.execute(httpGet);
+        } catch (Exception e) {
+            errorAlert();
+            return null;
         }
-        if (roomId != null) {
-            uri.addParameter("roomId", roomId);
-            httpGet.setURI(uri.build());
-            return httpClient.execute(httpGet);
-        }
-        httpGet.setURI(uri.build());
-        return httpClient.execute(httpGet);
     }
 
     /**Method that deletes a room in the server.
      * @param roomIds is the list of rooms which are to be deleted
      * @return httpDelete which deletes information on the server
-     * @throws IOException if the method does not understand the IO
-     * @throws URISyntaxException if the URI can not be found
      */
-    public static CloseableHttpResponse deleteRoom(List<String> roomIds)
-            throws IOException, URISyntaxException {
-        URIBuilder uri = new URIBuilder("http://localhost:8080/admin/room");
-        for (String s: roomIds) {
-            uri.addParameter("roomIds", s);
+    public static CloseableHttpResponse deleteRoom(List<String> roomIds) {
+        try {
+            URIBuilder uri = new URIBuilder("http://localhost:8080/admin/room");
+            for (String s : roomIds) {
+                uri.addParameter("roomIds", s);
+            }
+            HttpDelete httpDelete = new HttpDelete();
+            httpDelete.setHeader("Authorization", pubAuth);
+            httpDelete.setURI(uri.build());
+            return httpClient.execute(httpDelete);
+        } catch (Exception e) {
+            errorAlert();
+            return null;
         }
-        HttpDelete httpDelete = new HttpDelete();
-        httpDelete.setHeader("Authorization", pubAuth);
-        httpDelete.setURI(uri.build());
-        return httpClient.execute(httpDelete);
     }
 
     /**
@@ -307,25 +325,27 @@ public class ServerCommunication {
      * @param room - the roomId
      * @param date - the date
      * @return - An HttpResponse containing all the qualified room reservations
-     * @throws URISyntaxException thrown if the URI is wrongly constructed
-     * @throws IOException thrown if something going wrong with IO
      */
-    public static CloseableHttpResponse readRoomReservation(String user, String room, String date)
-            throws URISyntaxException, IOException {
-        URIBuilder uri = new URIBuilder("http://localhost:8080/roomReservations");
-        if (user != null) {
-            uri.addParameter("user", user);
+    public static CloseableHttpResponse readRoomReservation(String user, String room, String date) {
+        try {
+            URIBuilder uri = new URIBuilder("http://localhost:8080/roomReservations");
+            if (user != null) {
+                uri.addParameter("user", user);
+            }
+            if (room != null) {
+                uri.addParameter("room", room);
+            }
+            if (date != null) {
+                uri.addParameter("date", date);
+            }
+            HttpGet httpGet = new HttpGet();
+            httpGet.setURI(uri.build());
+            httpGet.setHeader("Authorization", pubAuth);
+            return httpClient.execute(httpGet);
+        } catch (Exception e) {
+            errorAlert();
+            return null;
         }
-        if (room != null) {
-            uri.addParameter("room", room);
-        }
-        if (date != null) {
-            uri.addParameter("date", date);
-        }
-        HttpGet httpGet = new HttpGet();
-        httpGet.setURI(uri.build());
-        httpGet.setHeader("Authorization", pubAuth);
-        return httpClient.execute(httpGet);
     }
 
     /**
@@ -336,11 +356,9 @@ public class ServerCommunication {
      * @param endTime - the end time of the reservation
      * @param room - the roomId
      * @return - An HttpResponse specifying the state of the request
-     * @throws IOException thrown if something going wrong with IO
      */
     public static CloseableHttpResponse createRoomReservation(String user, LocalDateTime beginTime,
-                                                              LocalDateTime endTime, String room)
-            throws IOException {
+                                                              LocalDateTime endTime, String room) {
         JSONObject jsonObject = new JSONObject();
         JSONObject temp = new JSONObject();
         temp.put("userId", user);
@@ -352,9 +370,14 @@ public class ServerCommunication {
         jsonObject.put("room", temp);
         HttpPost httpPost = new HttpPost("http://localhost:8080/roomReservation");
         httpPost.setHeader("Authorization", pubAuth);
-        httpPost.setEntity(new StringEntity(jsonObject.toString()));
-        httpPost.setHeader("Content-type", "application/json");
-        return httpClient.execute(httpPost);
+        try {
+            httpPost.setEntity(new StringEntity(jsonObject.toString()));
+            httpPost.setHeader("Content-type", "application/json");
+            return httpClient.execute(httpPost);
+        } catch (Exception e) {
+            errorAlert();
+            return null;
+        }
     }
 
     /**
@@ -362,13 +385,16 @@ public class ServerCommunication {
      * in order to delete the given room reservation.
      * @param roomReservationId - the id of the room reservation
      * @return - An HttpResponse specifying the state of the request
-     * @throws IOException thrown if something going wrong with IO
      */
-    public static CloseableHttpResponse deleteRoomReservation(Long roomReservationId)
-            throws IOException {
+    public static CloseableHttpResponse deleteRoomReservation(Long roomReservationId) {
         HttpDelete httpDelete = new HttpDelete("http://localhost:8080/roomReservation");
         httpDelete.setHeader("Authorization", pubAuth);
-        return httpClient.execute(httpDelete);
+        try {
+            return httpClient.execute(httpDelete);
+        } catch (Exception e) {
+            errorAlert();
+            return null;
+        }
     }
 
 
@@ -402,4 +428,16 @@ public class ServerCommunication {
     public static void resetPubAuth() {
         pubAuth = null;
     }
+
+    /**
+     * Shows an Alert with an error to the user.
+     */
+    public static void errorAlert() {
+        Alert alert = new Alert(Alert.AlertType.ERROR);
+        alert.setHeaderText(null);
+        alert.setTitle("Error");
+        alert.setContentText("Something went wrong, please try again.");
+        alert.showAndWait();
+    }
+
 }

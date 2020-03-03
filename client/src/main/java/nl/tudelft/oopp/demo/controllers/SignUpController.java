@@ -48,7 +48,7 @@ public class SignUpController {
     /**
      * Send the sign up details to the server.
      */
-    public void signUp(ActionEvent event) throws IOException, URISyntaxException {
+    public void signUp(ActionEvent event) {
         failtext.setText("");
         String netidstr = netid.getText();
 
@@ -92,15 +92,27 @@ public class SignUpController {
 
         CloseableHttpResponse response = ServerCommunication
                 .sendSignUp(netidstr, emailstr1, passstr1);
+        if (response == null) {
+            return;
+        }
 
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setHeaderText(null);
+
         if (response.getStatusLine().getStatusCode() == 202) {
             alert.setTitle("Signup successful");
         } else {
             alert.setTitle("Signup unsuccessful");
         }
-        alert.setContentText(EntityUtils.toString(response.getEntity(), "UTF-8"));
-        alert.setHeaderText(null);
+
+        try {
+            alert.setContentText(EntityUtils.toString(response.getEntity(), "UTF-8"));
+        } catch (Exception e) {
+            alert.setAlertType(Alert.AlertType.ERROR);
+            alert.setTitle("Error");
+            alert.setContentText("Something went wrong, please try again.");
+        }
+
         alert.showAndWait();
         if (response.getStatusLine().getStatusCode() == 202) {
             Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
