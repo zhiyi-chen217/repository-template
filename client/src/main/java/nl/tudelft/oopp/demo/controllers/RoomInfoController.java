@@ -55,15 +55,26 @@ public class RoomInfoController extends GeneralHomepageController {
     /**
      * This initialize method contains the set up procedures for the RoomInfo page.
      * @throws IOException thrown when something goes wrong with IO
-     * @throws URISyntaxException thrown when the URI is falsely constructed
      */
-    public void initialize() throws IOException, URISyntaxException {
+    public void initialize() throws IOException {
         String roomId = roomS.split("--")[0];
+
+        CloseableHttpResponse response = ServerCommunication.readRoom(roomId, null);
+        if (response == null) {
+            errorAlert();
+            return;
+        }
         Room room = (Room) GeneralHomepageController
-                .jsonToEntity(ServerCommunication.readRoom(roomId, null), "Room");
+                .jsonToEntity(response, "Room");
+
+        CloseableHttpResponse response1 = ServerCommunication
+                .readRoomReservation(ServerCommunication.getUserId(), roomId, LocalDate.now().toString());
+        if (response1 == null || room == null) {
+            errorAlert();
+            return;
+        }
         roomReservations = GeneralHomepageController
-                .jsonArrayToRoomReservation(ServerCommunication
-                        .readRoomReservation(ServerCommunication.userId, roomId, LocalDate.now().toString()));
+                .jsonArrayToRoomReservation(response1);
         TimeSlotCell.roomReservations = roomReservations;
 
         roomDescription.setText("Description: " + room.getDescription());
@@ -97,9 +108,8 @@ public class RoomInfoController extends GeneralHomepageController {
      * This methods send an Http request for creating new reservations.
      * It pops alerts indicating whether the reservations are successful.
      * @param event - the generated event
-     * @throws IOException - thrown when something goes wrong with IO
      */
-    public void confirmReservation(ActionEvent event) throws IOException {
+    public void confirmReservation(ActionEvent event) {
         ObservableList<String> reservations = timeSlotList.getSelectionModel().getSelectedItems();
         LocalTime beginTime;
         LocalTime endTime;
@@ -108,9 +118,13 @@ public class RoomInfoController extends GeneralHomepageController {
             beginTime = LocalTime.parse(s.split("--")[0]);
             endTime = LocalTime.parse(s.split("--")[1]);
             CloseableHttpResponse response =
-                    ServerCommunication.createRoomReservation(ServerCommunication.userId,
+                    ServerCommunication.createRoomReservation(ServerCommunication.getUserId(),
                             LocalDateTime.of(today, beginTime), LocalDateTime.of(today, endTime),
                             roomS.split("--")[0]);
+            if (response == null) {
+                errorAlert();
+                return;
+            }
             if (response.getStatusLine().getStatusCode() != 201) {
                 Alert alert = new Alert(Alert.AlertType.INFORMATION);
                 alert.setHeaderText(null);

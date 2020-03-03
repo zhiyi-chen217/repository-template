@@ -224,4 +224,15 @@ public class GeneralHomepageController {
                 time.get(0), time.get(1), time.get(2));
     }
 
+    /**
+     * General error alert to be used in all controllers.
+     */
+    public static void errorAlert() {
+        Alert alert = new Alert(Alert.AlertType.ERROR);
+        alert.setHeaderText(null);
+        alert.setTitle("Error");
+        alert.setContentText("Something went wrong, please try again.");
+        alert.showAndWait();
+    }
+
 }

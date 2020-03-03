@@ -7,6 +7,7 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
+import nl.tudelft.oopp.demo.communication.BuildingServerCommunication;
 import nl.tudelft.oopp.demo.communication.ServerCommunication;
 import nl.tudelft.oopp.demo.entities.Building;
 import org.apache.http.client.methods.CloseableHttpResponse;
@@ -18,7 +19,7 @@ import java.time.LocalTime;
 import java.util.regex.Pattern;
 
 
-public class EditBuildingController {
+public class EditBuildingController extends GeneralHomepageController {
     @FXML
     private Label buildingName;
 
@@ -50,9 +51,23 @@ public class EditBuildingController {
      *
      */
     @FXML
-    public void initialize() throws IOException, URISyntaxException {
-        building = (Building) GeneralHomepageController.jsonToEntity(
-                ServerCommunication.readBuilding(building.getName()), "Building");
+    public void initialize() {
+        CloseableHttpResponse response = BuildingServerCommunication.readBuilding(building.getName());
+        if (response == null) {
+            errorAlert();
+            return;
+        }
+        try {
+            building = (Building) GeneralHomepageController.jsonToEntity(response, "Building");
+        } catch (Exception e) {
+            errorAlert();
+            return;
+        }
+        if (building == null) {
+            errorAlert();
+            return;
+        }
+
         buildingName.setText(building.getName());
         buildingOpeningHour.setText(building.getOpeningHour().toString());
         buildingClosingHour.setText(building.getClosingHour().toString());
@@ -122,21 +137,16 @@ public class EditBuildingController {
         int bldBikesint = Integer.parseInt(bldBikes);
 
 
-        CloseableHttpResponse response;
-        Alert alert = new Alert(Alert.AlertType.INFORMATION);
-        int statusCode = 0;
-
-        try {
-            response = ServerCommunication
-                    .updateBuilding(bldName, bldloc, oh, ch, bldpp, bldBikesint);
-            statusCode = response.getStatusLine().getStatusCode();
-            alert.setContentText(EntityUtils.toString(response.getEntity(), "UTF-8"));
-        } catch (Exception e) {
-            Alert erralert = new Alert(Alert.AlertType.ERROR);
-            erralert.setTitle("Error");
-            erralert.setContentText("An error occurred, please try again");
-            erralert.showAndWait();
+        CloseableHttpResponse response = BuildingServerCommunication
+                .updateBuilding(bldName, bldloc, oh, ch, bldpp, bldBikesint);
+        if (response == null) {
+            errorAlert();
+            return;
         }
+
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setHeaderText(null);
+        int statusCode = response.getStatusLine().getStatusCode();
 
         if (statusCode == 201) {
             alert.setTitle("Success");
@@ -144,7 +154,14 @@ public class EditBuildingController {
             alert.setTitle("Fail");
         }
 
-        alert.setHeaderText(null);
+        try {
+            alert.setContentText(EntityUtils.toString(response.getEntity(), "UTF-8"));
+        } catch (Exception e) {
+            alert.setAlertType(Alert.AlertType.ERROR);
+            alert.setTitle("Error");
+            alert.setContentText("An error occurred, please try again");
+        }
+
         alert.showAndWait();
 
         if (statusCode == 201) {

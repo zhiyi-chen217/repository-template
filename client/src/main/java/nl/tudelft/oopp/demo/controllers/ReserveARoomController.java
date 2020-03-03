@@ -8,10 +8,13 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.ListView;
+import nl.tudelft.oopp.demo.communication.BuildingServerCommunication;
 import nl.tudelft.oopp.demo.communication.ServerCommunication;
 import nl.tudelft.oopp.demo.entities.Building;
 import nl.tudelft.oopp.demo.entities.Room;
+import org.apache.http.client.methods.CloseableHttpResponse;
 
+import java.io.Closeable;
 import java.io.IOException;
 import java.net.URISyntaxException;
 
@@ -32,23 +35,21 @@ public class ReserveARoomController extends ReserveBikeController {
     /**
      * This initialize method contains the set up procedures for the ReserveARoom page.
      * @throws IOException thrown when something goes wrong with IO
-     * @throws URISyntaxException thrown when the URI is falsely constructed
      */
-    public void initialize() throws IOException, URISyntaxException {
+    public void initialize() throws IOException {
+        CloseableHttpResponse response = BuildingServerCommunication.readBuilding(null);
+        if (response == null) {
+            errorAlert();
+            return;
+        }
         buildings = GeneralHomepageController
-                .jsonArrayToBuilding(ServerCommunication.readBuilding(null));
+                .jsonArrayToBuilding(response);
         buildingChoiceBox.setItems(buildings);
         buildingChoiceBox.getSelectionModel().selectedItemProperty()
                 .addListener((v, oldBuilding, newBuilding) -> {
-                    try {
                         changeSelectedEvent(v, oldBuilding, newBuilding);
                         roomListView.setVisible(true);
                         continueButton.setVisible(false);
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    } catch (URISyntaxException e) {
-                        e.printStackTrace();
-                    }
                 });
         roomListView.setVisible(false);
         roomListView.getSelectionModel().selectedItemProperty().addListener((v, oldRoom, newRoom) -> {
@@ -64,16 +65,23 @@ public class ReserveARoomController extends ReserveBikeController {
      * @param v - the observable item
      * @param oldBuilding - the previous selected building
      * @param newBuilding - the latest selected building
-     * @throws IOException thrown when something goes wrong with IO
-     * @throws URISyntaxException thrown when the URI is falsely constructed
      */
-    public void changeSelectedEvent(Observable v, Building oldBuilding, Building newBuilding)
-            throws IOException, URISyntaxException {
+    public void changeSelectedEvent(Observable v, Building oldBuilding, Building newBuilding) {
         if (newBuilding == null) {
             return;
         }
-        rooms = GeneralHomepageController
-                .jsonArrayToRoomS(ServerCommunication.readRoom(null, newBuilding.getName()));
+        CloseableHttpResponse response = ServerCommunication.readRoom(null, newBuilding.getName());
+        if (response == null) {
+            errorAlert();
+            return;
+        }
+        try {
+            rooms = GeneralHomepageController
+                    .jsonArrayToRoomS(response);
+        } catch (Exception e) {
+            errorAlert();
+            return;
+        }
         roomListView.setItems(rooms);
     }
 

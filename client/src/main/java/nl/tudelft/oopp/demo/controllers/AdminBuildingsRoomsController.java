@@ -14,6 +14,7 @@ import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.stage.Stage;
 import nl.tudelft.oopp.demo.communication.ServerCommunication;
+import nl.tudelft.oopp.demo.communication.BuildingServerCommunication;
 import nl.tudelft.oopp.demo.entities.Building;
 import nl.tudelft.oopp.demo.entities.Room;
 import org.apache.http.client.methods.CloseableHttpResponse;
@@ -57,8 +58,13 @@ public class AdminBuildingsRoomsController extends GeneralHomepageController {
         disableNodes();
         roomListView.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
 
+        CloseableHttpResponse response = BuildingServerCommunication.readBuilding(null);
+        if (response == null) {
+            errorAlert();
+            return;
+        }
         buildings = GeneralHomepageController
-                .jsonArrayToBuilding(ServerCommunication.readBuilding(null));
+                .jsonArrayToBuilding(response);
         buildingChoiceBox.setItems(buildings);
 
         buildings.addListener((ListChangeListener<Building>) c -> {
@@ -70,7 +76,7 @@ public class AdminBuildingsRoomsController extends GeneralHomepageController {
                 try {
                     changeSelectedEvent(v, oldBuilding, newBuilding);
                     roomListView.setVisible(true);
-                } catch (IOException | URISyntaxException e) {
+                } catch (IOException e) {
                     e.printStackTrace();
                     Alert alert = new Alert(Alert.AlertType.ERROR);
                     alert.setContentText("Something went wrong, please try again.");
@@ -146,8 +152,12 @@ public class AdminBuildingsRoomsController extends GeneralHomepageController {
         String name = building.getName();
         Alert alert;
         try {
-            CloseableHttpResponse response = ServerCommunication.deleteBuilding(name);
+            CloseableHttpResponse response = BuildingServerCommunication.deleteBuilding(name);
             alert = new Alert(Alert.AlertType.CONFIRMATION);
+            if (response == null) {
+                errorAlert();
+                return;
+            }
             alert.setContentText(EntityUtils.toString(response.getEntity(), "UTF-8"));
 
             if (response.getStatusLine().getStatusCode() == 200) {
@@ -155,12 +165,8 @@ public class AdminBuildingsRoomsController extends GeneralHomepageController {
                 roomListView.setItems(null);
                 disableNodes();
             }
-        } catch (IOException | URISyntaxException e) {
-            alert = new Alert(Alert.AlertType.ERROR);
-            alert.setContentText("Something went wrong, please try again.");
-            alert.setHeaderText(null);
-            alert.setTitle("Error");
-            alert.showAndWait();
+        } catch (Exception e) {
+            errorAlert();
             return;
         }
         alert.setTitle("Success!");
@@ -173,10 +179,9 @@ public class AdminBuildingsRoomsController extends GeneralHomepageController {
      * @param oldBuilding is the old building
      * @param newBuilding is the new building
      * @throws IOException if it can not find the building
-     * @throws URISyntaxException if the URI is not correct
      */
     public void changeSelectedEvent(Observable v, Building oldBuilding, Building newBuilding)
-            throws IOException, URISyntaxException {
+            throws IOException {
         if (newBuilding == null) {
             return;
         }
@@ -219,7 +224,7 @@ public class AdminBuildingsRoomsController extends GeneralHomepageController {
                 temp.removeAll(selectedRoomNames);
                 roomListView.setItems(temp);
             }
-        } catch (IOException | URISyntaxException e) {
+        } catch (IOException e) {
             e.printStackTrace();
             alert = new Alert(Alert.AlertType.ERROR);
             alert.setContentText("Something went wrong, please try again.");
@@ -267,16 +272,18 @@ public class AdminBuildingsRoomsController extends GeneralHomepageController {
      * a building has been selected.
      */
     public void disableNodes() {
-        editBuildingButton.setDisable(true);
-        deleteBuildingButton.setVisible(false);
-        editRoomButton.setVisible(false);
-        deleteRoomButton.setVisible(false);
-        roomListView.setVisible(false);
-        addRoomButton.setDisable(true);
-        refreshButton.setVisible(false);
+        if (!editBuildingButton.isDisable()) {
+            editBuildingButton.setDisable(true);
+            deleteBuildingButton.setVisible(false);
+            editRoomButton.setVisible(false);
+            deleteRoomButton.setVisible(false);
+            roomListView.setVisible(false);
+            addRoomButton.setDisable(true);
+            refreshButton.setVisible(false);
+        }
     }
 
-    public void refresh(ActionEvent event) throws IOException, URISyntaxException {
+    public void refresh(ActionEvent event) throws IOException {
         changeSelectedEvent(null, null, buildingChoiceBox.getSelectionModel().getSelectedItem());
     }
 

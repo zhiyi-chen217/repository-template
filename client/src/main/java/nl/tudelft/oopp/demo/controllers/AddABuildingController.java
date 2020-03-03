@@ -7,6 +7,7 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
+import nl.tudelft.oopp.demo.communication.BuildingServerCommunication;
 import nl.tudelft.oopp.demo.communication.ServerCommunication;
 import nl.tudelft.oopp.demo.entities.Building;
 import org.apache.http.client.methods.CloseableHttpResponse;
@@ -16,7 +17,7 @@ import java.io.IOException;
 import java.time.LocalTime;
 import java.util.regex.Pattern;
 
-public class AddABuildingController {
+public class AddABuildingController extends GeneralHomepageController {
     @FXML
     private TextField buildingName;
 
@@ -105,15 +106,17 @@ public class AddABuildingController {
         int statusCode = 0;
 
         try {
-            response = ServerCommunication
+            response = BuildingServerCommunication
                     .createBuilding(bldName, bldloc, oh, ch, bldpp, bldBikesint);
-            statusCode = response.getStatusLine().getStatusCode();
-            alert.setContentText(EntityUtils.toString(response.getEntity(), "UTF-8"));
+            if (response != null) {
+                statusCode = response.getStatusLine().getStatusCode();
+                alert.setContentText(EntityUtils.toString(response.getEntity(), "UTF-8"));
+            } else {
+                errorAlert();
+            }
         } catch (Exception e) {
-            Alert erralert = new Alert(Alert.AlertType.ERROR);
-            erralert.setTitle("Error");
-            erralert.setContentText("An error occurred, please try again");
-            erralert.showAndWait();
+            errorAlert();
+            return;
         }
 
         if (statusCode == 201) {

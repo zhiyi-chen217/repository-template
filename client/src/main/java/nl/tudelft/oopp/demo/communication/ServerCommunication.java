@@ -20,8 +20,8 @@ public class ServerCommunication {
 
     private static HttpClient client = HttpClient.newBuilder().build();
     private static CloseableHttpClient httpClient = HttpClients.createDefault();
-    public static String pubAuth;
-    public static String userId;
+    private static String pubAuth;
+    private static String userId;
 
     /**
      * Send the username and password under the authentication header to the server.
@@ -77,118 +77,6 @@ public class ServerCommunication {
         }
     }
 
-    /**
-     * Sends the info about a building to the server so it can be stored in the database.
-     * @param name the name of the building
-     * @param location the location of the building
-     * @param openingHour the opening hour of the building
-     * @param closingHour the closing hour of the building
-     * @param picturesPath the path of the picture of the building
-     * @param bikes the amount of bikes at the building
-     * @return a ClosableHttpResponse which contains info about if the building is saved
-     */
-
-    public static CloseableHttpResponse createBuilding(String name, String location,
-                                                       LocalTime openingHour, LocalTime closingHour,
-                                                       String picturesPath, int bikes) {
-        JSONObject json = new JSONObject();
-        json.put("name", name);
-        json.put("location", location);
-        json.put("openingHour", openingHour);
-        json.put("closingHour", closingHour);
-        json.put("picturesPath", picturesPath);
-        json.put("bikes", bikes);
-        HttpPost httpPost = new HttpPost("http://localhost:8080/admin/buildings");
-        httpPost.setHeader("Content-type", "application/json");
-        httpPost.setHeader("Authorization", pubAuth);
-        try {
-            httpPost.setEntity(new StringEntity(json.toString()));
-            CloseableHttpResponse response = httpClient.execute(httpPost);
-            return response;
-        } catch (Exception e) {
-            errorAlert();
-            return null;
-        }
-    }
-
-    /**
-     * Sending the details to update a building in the database.
-     * @param name the name of the building to be updated
-     * @param location the updated location of the building
-     * @param openingHour the updated opening hour of the building
-     * @param closingHour the updated closing hour of the building
-     * @param picturesPath the updated pictures path of the building
-     * @param bikes the updated amount of bikes at the building
-     * @return a ClosableHttpResponse containing info about the success of updating a building
-     */
-
-    public static CloseableHttpResponse updateBuilding(String name, String location,
-                                                       LocalTime openingHour, LocalTime closingHour,
-                                                       String picturesPath, int bikes) {
-        JSONObject json = new JSONObject();
-        json.put("name", name);
-        json.put("location", location);
-        json.put("openingHour", openingHour);
-        json.put("closingHour", closingHour);
-        json.put("picturesPath", picturesPath);
-        json.put("bikes", bikes);
-        CloseableHttpClient httpClient = HttpClients.createDefault();
-        HttpPut httpPut = new HttpPut("http://localhost:8080/admin/buildings");
-        httpPut.setHeader("Content-type", "application/json");
-        httpPut.setHeader("Authorization", pubAuth);
-        try {
-            httpPut.setEntity(new StringEntity(json.toString()));
-            CloseableHttpResponse response = httpClient.execute(httpPut);
-            return response;
-        } catch (Exception e) {
-            errorAlert();
-            return null;
-        }
-    }
-
-    /**
-     * read the info of a building.
-     * @param name the name of a building
-     * @return a ClosableHttpResponse containing info about the building
-     */
-
-    public static CloseableHttpResponse readBuilding(String name) {
-        try {
-            URIBuilder builder = new URIBuilder("http://localhost:8080/buildings");
-            HttpGet httpGet = new HttpGet();
-            httpGet.setHeader("Authorization", pubAuth);
-            if (name == null) {
-                httpGet.setURI(builder.build());
-                return httpClient.execute(httpGet);
-            }
-            builder.addParameter("name", name);
-            httpGet.setURI(builder.build());
-            return httpClient.execute(httpGet);
-        } catch (Exception e) {
-            errorAlert();
-            return null;
-        }
-    }
-
-    /**
-     * Send a name to the server so it can delete a building out the database.
-     * @param name the name of the building to be deleted
-     * @return a ClosableHttpResponse containing about the success of deleting the building
-     */
-
-    public static CloseableHttpResponse deleteBuilding(String name) {
-        try {
-            URIBuilder builder = new URIBuilder("http://localhost:8080/admin/buildings");
-            HttpDelete httpDelete = new HttpDelete();
-            httpDelete.setHeader("Authorization", pubAuth);
-            builder.addParameter("name", name);
-            httpDelete.setURI(builder.build());
-            return httpClient.execute(httpDelete);
-        } catch (Exception e) {
-            errorAlert();
-            return null;
-        }
-    }
 
     /**Method that creates a room through the server.
      * @param roomId is the id of the room
@@ -429,6 +317,10 @@ public class ServerCommunication {
         pubAuth = null;
     }
 
+    public static String setPubAuth(String auth) {
+        return pubAuth = auth;
+    }
+
     /**
      * Shows an Alert with an error to the user.
      */
@@ -440,4 +332,27 @@ public class ServerCommunication {
         alert.showAndWait();
     }
 
+    public static HttpClient getClient() {
+        return client;
+    }
+
+    public static void setClient(HttpClient client) {
+        ServerCommunication.client = client;
+    }
+
+    public static CloseableHttpClient getHttpClient() {
+        return httpClient;
+    }
+
+    public static void setHttpClient(CloseableHttpClient httpClient) {
+        ServerCommunication.httpClient = httpClient;
+    }
+
+    public static String getUserId() {
+        return userId;
+    }
+
+    public static void setUserId(String userId) {
+        ServerCommunication.userId = userId;
+    }
 }
