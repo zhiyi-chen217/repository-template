@@ -9,6 +9,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.ListView;
 import nl.tudelft.oopp.demo.communication.BuildingServerCommunication;
+import nl.tudelft.oopp.demo.communication.RoomServerCommunication;
 import nl.tudelft.oopp.demo.communication.ServerCommunication;
 import nl.tudelft.oopp.demo.entities.Building;
 import nl.tudelft.oopp.demo.entities.Room;
@@ -70,7 +71,7 @@ public class ReserveARoomController extends ReserveBikeController {
         if (newBuilding == null) {
             return;
         }
-        CloseableHttpResponse response = ServerCommunication.readRoom(null, newBuilding.getName());
+        CloseableHttpResponse response = RoomServerCommunication.readRoom(null, newBuilding.getName());
         if (response == null) {
             errorAlert();
             return;

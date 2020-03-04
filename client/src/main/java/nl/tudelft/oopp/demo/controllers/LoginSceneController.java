@@ -14,6 +14,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.stage.Stage;
 import nl.tudelft.oopp.demo.communication.ServerCommunication;
+import nl.tudelft.oopp.demo.communication.UserServerCommunication;
 
 public class LoginSceneController {
     @FXML
@@ -31,7 +32,7 @@ public class LoginSceneController {
     public void submitClicked(ActionEvent event) throws IOException {
         String usertxt = username.getText();
         String pwtxt = password.getText();
-        HttpResponse<String> authentication = ServerCommunication.sendLoginUser(usertxt, pwtxt);
+        HttpResponse<String> authentication = UserServerCommunication.sendLoginUser(usertxt, pwtxt);
 
         //WIP: probably need to add a better form of authorization here.
         if (usertxt.length() == 0 || pwtxt.length() == 0) {

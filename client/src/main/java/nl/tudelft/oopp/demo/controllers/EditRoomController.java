@@ -2,6 +2,7 @@ package nl.tudelft.oopp.demo.controllers;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
+import nl.tudelft.oopp.demo.communication.RoomServerCommunication;
 import nl.tudelft.oopp.demo.communication.ServerCommunication;
 import nl.tudelft.oopp.demo.entities.Room;
 import org.apache.http.client.methods.CloseableHttpResponse;
@@ -57,7 +58,7 @@ public class EditRoomController {
      */
     public void initialize() throws IOException, URISyntaxException {
         room = (Room) GeneralHomepageController
-                .jsonToEntity(ServerCommunication
+                .jsonToEntity(RoomServerCommunication
                         .readRoom(room.getRoomId(), null), "Room");
         roomCapacity.setText(String.valueOf(room.getCapacity()));
         roomDescription.setText(room.getDescription());
@@ -101,7 +102,7 @@ public class EditRoomController {
         if (this.roomType.isSelected()) {
             roomType = "Employee";
         }
-        CloseableHttpResponse response = ServerCommunication.updateRoom(room.getRoomId(), roomName,
+        CloseableHttpResponse response = RoomServerCommunication.updateRoom(room.getRoomId(), roomName,
                 roomCapint, room.getBuildingName(), roomDescription, roomType, roomPicturePath, roomWhiteboard, roomTV);
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
         alert.setHeaderText(null);

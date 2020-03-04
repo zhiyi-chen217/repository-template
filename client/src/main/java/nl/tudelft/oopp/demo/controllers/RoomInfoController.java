@@ -8,6 +8,8 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
+import nl.tudelft.oopp.demo.communication.ReservationServerCommunication;
+import nl.tudelft.oopp.demo.communication.RoomServerCommunication;
 import nl.tudelft.oopp.demo.communication.ServerCommunication;
 import nl.tudelft.oopp.demo.entities.Room;
 import nl.tudelft.oopp.demo.entities.RoomReservation;
@@ -59,7 +61,7 @@ public class RoomInfoController extends GeneralHomepageController {
     public void initialize() throws IOException {
         String roomId = roomS.split("--")[0];
 
-        CloseableHttpResponse response = ServerCommunication.readRoom(roomId, null);
+        CloseableHttpResponse response = RoomServerCommunication.readRoom(roomId, null);
         if (response == null) {
             errorAlert();
             return;
@@ -67,7 +69,7 @@ public class RoomInfoController extends GeneralHomepageController {
         Room room = (Room) GeneralHomepageController
                 .jsonToEntity(response, "Room");
 
-        CloseableHttpResponse response1 = ServerCommunication
+        CloseableHttpResponse response1 = ReservationServerCommunication
                 .readRoomReservation(ServerCommunication.getUserId(), roomId, LocalDate.now().toString());
         if (response1 == null || room == null) {
             errorAlert();
@@ -118,7 +120,7 @@ public class RoomInfoController extends GeneralHomepageController {
             beginTime = LocalTime.parse(s.split("--")[0]);
             endTime = LocalTime.parse(s.split("--")[1]);
             CloseableHttpResponse response =
-                    ServerCommunication.createRoomReservation(ServerCommunication.getUserId(),
+                    ReservationServerCommunication.createRoomReservation(ServerCommunication.getUserId(),
                             LocalDateTime.of(today, beginTime), LocalDateTime.of(today, endTime),
                             roomS.split("--")[0]);
             if (response == null) {

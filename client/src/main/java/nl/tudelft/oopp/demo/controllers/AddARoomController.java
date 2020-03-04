@@ -5,6 +5,7 @@ import javafx.fxml.FXML;
 import javafx.scene.Node;
 import javafx.scene.control.*;
 import javafx.stage.Stage;
+import nl.tudelft.oopp.demo.communication.RoomServerCommunication;
 import nl.tudelft.oopp.demo.communication.ServerCommunication;
 import nl.tudelft.oopp.demo.entities.Building;
 import nl.tudelft.oopp.demo.entities.Room;
@@ -108,7 +109,7 @@ public class AddARoomController {
         int statusCode = 0;
 
         try {
-            response = ServerCommunication.createRoom(roomid, roomN, roomcap,
+            response = RoomServerCommunication.createRoom(roomid, roomN, roomcap,
                     roomBuilding, roomdesc, typestr, roomPP, roomWhite, hasTv);
             alert.setContentText(EntityUtils.toString(response.getEntity()));
             statusCode = response.getStatusLine().getStatusCode();

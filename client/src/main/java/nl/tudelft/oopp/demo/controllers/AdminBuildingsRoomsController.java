@@ -13,6 +13,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.stage.Stage;
+import nl.tudelft.oopp.demo.communication.RoomServerCommunication;
 import nl.tudelft.oopp.demo.communication.ServerCommunication;
 import nl.tudelft.oopp.demo.communication.BuildingServerCommunication;
 import nl.tudelft.oopp.demo.entities.Building;
@@ -186,7 +187,7 @@ public class AdminBuildingsRoomsController extends GeneralHomepageController {
             return;
         }
         rooms = GeneralHomepageController
-                .jsonArrayToRoom(ServerCommunication.readRoom(null, newBuilding.getName()));
+                .jsonArrayToRoom(RoomServerCommunication.readRoom(null, newBuilding.getName()));
         ObservableList<String> allRoom = FXCollections.observableArrayList();
         for (Room temp : rooms) {
             allRoom.add(temp.getRoomId() + "--" + temp.getName());
@@ -215,7 +216,7 @@ public class AdminBuildingsRoomsController extends GeneralHomepageController {
         }
         Alert alert;
         try {
-            CloseableHttpResponse response = ServerCommunication.deleteRoom(selectedRooms);
+            CloseableHttpResponse response = RoomServerCommunication.deleteRoom(selectedRooms);
             alert = new Alert(Alert.AlertType.CONFIRMATION,
                     EntityUtils.toString(response.getEntity()),
                     ButtonType.OK);

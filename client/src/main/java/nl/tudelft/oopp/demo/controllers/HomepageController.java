@@ -8,6 +8,8 @@ import javafx.fxml.FXML;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
+import nl.tudelft.oopp.demo.communication.ReservationServerCommunication;
+import nl.tudelft.oopp.demo.communication.RoomServerCommunication;
 import nl.tudelft.oopp.demo.communication.ServerCommunication;
 import nl.tudelft.oopp.demo.entities.Building;
 import nl.tudelft.oopp.demo.entities.Room;
@@ -49,7 +51,7 @@ public class HomepageController extends GeneralHomepageController {
 
     public ObservableList<RoomReservation> getReservations()
             throws IOException, URISyntaxException {
-        CloseableHttpResponse response = ServerCommunication.readRoomReservation(getUsername(), null, null);
+        CloseableHttpResponse response = ReservationServerCommunication.readRoomReservation(getUsername(), null, null);
         return jsonArrayToRoomReservation(response);
     }
 
