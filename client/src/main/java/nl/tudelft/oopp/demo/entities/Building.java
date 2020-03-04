@@ -3,6 +3,7 @@ package nl.tudelft.oopp.demo.entities;
 import org.json.JSONObject;
 
 import java.time.LocalTime;
+import java.util.Objects;
 
 public class Building {
     private String name;
@@ -44,13 +45,13 @@ public class Building {
      * @param bikes the amount of bikes at the building
      */
     public Building(String name, String location, LocalTime openingHour,
-                    LocalTime closingHour, int bikes) {
+                    LocalTime closingHour, int bikes, String picturesPath) {
         this.name = name;
         this.location = location;
         this.openingHour = openingHour;
         this.closingHour = closingHour;
         this.bikes = bikes;
-        this.picturesPath = "";
+        this.picturesPath = picturesPath;
     }
 
     public String getName() {
@@ -109,15 +110,14 @@ public class Building {
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) {
-            return true;
-        }
-        if (o == null || getClass() != o.getClass()) {
-            return false;
-        }
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
         Building building = (Building) o;
-        return this.name.equals(building.name);
+        return bikes == building.bikes &&
+                name.equals(building.name) &&
+                location.equals(building.location) &&
+                openingHour.equals(building.openingHour) &&
+                closingHour.equals(building.closingHour) &&
+                Objects.equals(picturesPath, building.picturesPath);
     }
-
-
 }

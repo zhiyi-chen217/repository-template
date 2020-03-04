@@ -47,6 +47,7 @@ public class AddABuildingController {
         String bldName = buildingName.getText();
         String bldoh = buildingOpeningHour.getText();
         String bldch = buildingClosingHour.getText();
+        String bldPath = buildingPicturesPath.getText();
 
 
         if (bldName.length() == 0) {
@@ -118,7 +119,7 @@ public class AddABuildingController {
 
         if (statusCode == 201) {
             AdminBuildingsRoomsController.getBuildings()
-                    .add(new Building(bldName, bldloc, oh, ch, bldBikesint));
+                    .add(new Building(bldName, bldloc, oh, ch, bldBikesint, bldPath));
             alert.setTitle("Success");
 
         } else {
