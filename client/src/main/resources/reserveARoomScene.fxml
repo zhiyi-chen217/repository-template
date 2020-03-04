@@ -5,31 +5,61 @@
 <?import javafx.scene.control.ChoiceBox?>
 <?import javafx.scene.control.DatePicker?>
 <?import javafx.scene.control.Label?>
-<?import javafx.scene.control.ListView?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.VBox?>
 <?import javafx.scene.shape.Line?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="nl.tudelft.oopp.demo.controllers.ReserveARoomController">
+<AnchorPane prefHeight="525.2" prefWidth="788.4" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="nl.tudelft.oopp.demo.controllers.ReserveARoomController">
     <children>
-        <Label layoutX="36.0" text="Reserve a room:" AnchorPane.bottomAnchor="284.8" AnchorPane.leftAnchor="36.0" AnchorPane.rightAnchor="113.0" AnchorPane.topAnchor="0.0">
+        <Label layoutX="26.0" layoutY="9.0" prefHeight="88.0" prefWidth="150.0" text="Reserve a room" AnchorPane.bottomAnchor="429.0" AnchorPane.leftAnchor="26.0" AnchorPane.rightAnchor="612.0" AnchorPane.topAnchor="9.0">
             <font>
-                <Font size="15.0" />
+                <Font size="18.0" />
             </font>
         </Label>
-        <Button mnemonicParsing="false" onAction="#changeSceneHomepage" text="Back" AnchorPane.bottomAnchor="374.5" AnchorPane.leftAnchor="0.0" />
-        <CheckBox fx:id="tvCheckBox" layoutX="36.0" layoutY="201.0" mnemonicParsing="false" text="TV?" />
-        <CheckBox fx:id="whiteboardCheckBox" layoutX="36.0" layoutY="229.0" mnemonicParsing="false" text="Whiteboard?" />
-        <Label layoutX="37.0" layoutY="148.0" text="Capacity:" />
-        <Button layoutX="36.0" layoutY="346.0" mnemonicParsing="false" onAction="#search" prefHeight="25.0" prefWidth="71.0" text="Search" />
-        <Button fx:id="continueButton" layoutX="487.0" layoutY="320.0" mnemonicParsing="false" onAction="#stageRoomInfo" text="Continue" />
-        <Line endX="-100.00001525878906" endY="-341.0" layoutX="300.0" layoutY="341.0" startX="-100.00001525878906" startY="59.000030517578125" stroke="#aaa6a6" />
-        <ListView fx:id="roomListView" layoutX="226.0" layoutY="68.0" prefHeight="278.0" prefWidth="239.0" />
-        <ChoiceBox fx:id="buildingChoiceBox" layoutX="36.0" layoutY="103.0" prefWidth="150.0" />
-        <Label layoutX="36.0" layoutY="77.0" text="Choose a building:" />
-        <DatePicker fx:id="datePicker" layoutX="36.0" layoutY="265.0" prefHeight="18.0" prefWidth="150.0" />
-      <Label layoutX="36.0" layoutY="312.0" />
-      <TextField fx:id="capacityTextField" layoutX="37.0" layoutY="166.0" prefHeight="26.0" prefWidth="71.0" />
+        <Button mnemonicParsing="false" onAction="#changeSceneHomepage" text="Back" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0" />
+      <VBox layoutX="21.0" layoutY="288.0" spacing="10.0">
+         <children>
+            <Label prefHeight="19.0" prefWidth="160.0" text="Filter on room properties">
+               <font>
+                  <Font size="14.0" />
+               </font>
+            </Label>
+              <Label text="Minimum capacity:" />
+            <TextField fx:id="capacityTextField" prefHeight="26.0" prefWidth="71.0" />
+              <CheckBox fx:id="tvCheckBox" mnemonicParsing="false" text="TV?" />
+              <CheckBox fx:id="whiteboardCheckBox" mnemonicParsing="false" text="Whiteboard?" />
+              <Button mnemonicParsing="false" onAction="#filter" prefHeight="25.0" prefWidth="71.0" text="Filter" />
+         </children>
+      </VBox>
+        <Button fx:id="continueButton" layoutX="701.0" layoutY="478.0" mnemonicParsing="false" onAction="#stageRoomInfo" text="Continue" />
+        <Line endX="-100.00001525878906" endY="-341.0" layoutX="300.0" layoutY="341.0" startX="-100.00001525878906" startY="184.20001220703125" stroke="#aaa6a6" />
+        <TableView fx:id="roomTableView" layoutX="226.0" layoutY="83.0" prefHeight="385.0" prefWidth="540.0">
+        <columns>
+            <TableColumn fx:id="roomColumn" prefWidth="236.7999725341797" text="Room" />
+            <TableColumn fx:id="whiteboardColumn" prefWidth="102.4000244140625" text="Whiteboard" />
+            <TableColumn fx:id="tvColumn" minWidth="0.0" prefWidth="74.39996337890625" text="TV" />
+            <TableColumn fx:id="capacityColumn" prefWidth="120.7999267578125" text="Maximum capacity" />
+        </columns>
+        </TableView>
+      <VBox alignment="CENTER" layoutX="21.0" layoutY="83.0">
+         <children>
+              <Label text="Choose a building:" />
+              <ChoiceBox fx:id="buildingChoiceBox" prefWidth="150.0" />
+         </children>
+      </VBox>
+      <Line endX="-196.99998474121094" endY="-111.69998168945312" layoutX="198.0" layoutY="388.0" startX="2.499969482421875" startY="-111.69999694824219" stroke="#aaa6a6" />
+      <Line endX="-193.80001831054688" endY="-111.69999694824219" layoutX="193.0" layoutY="277.0" startX="7.4999542236328125" startY="-111.69998168945312" stroke="#aaa6a6" />
+      <VBox alignment="CENTER" layoutX="21.0" layoutY="184.0" spacing="5.0">
+         <children>
+            <Label text="Search on room name" />
+            <TextField fx:id="searchTextField" onAction="#search"/>
+            <Button mnemonicParsing="false" text="Search" onAction="#search" />
+         </children>
+      </VBox>
+        <DatePicker fx:id="datePicker" layoutX="226.0" layoutY="40.0" prefHeight="18.0" prefWidth="150.0" />
     </children>
 </AnchorPane>

@@ -1,44 +1,42 @@
 package nl.tudelft.oopp.demo.controllers;
 
 import javafx.beans.Observable;
+import javafx.beans.property.ReadOnlyObjectWrapper;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
+import javafx.scene.control.cell.PropertyValueFactory;
 import nl.tudelft.oopp.demo.communication.ServerCommunication;
 import nl.tudelft.oopp.demo.entities.Building;
 import nl.tudelft.oopp.demo.entities.Room;
+import org.w3c.dom.Text;
 
 import java.io.IOException;
 import java.net.URISyntaxException;
 import java.util.Optional;
 
 public class ReserveARoomController extends ReserveBikeController {
-    @FXML
-    ListView<String> roomListView;
 
-    @FXML
-    Button continueButton;
+    @FXML TableView<Room> roomTableView;
+    @FXML TableColumn<Room, String> roomColumn;
+    @FXML TableColumn<Room, String> whiteboardColumn;
+    @FXML TableColumn<Room, String> tvColumn;
+    @FXML TableColumn<Room, Integer> capacityColumn;
+    @FXML Button continueButton;
 
-    @FXML
-    ChoiceBox<Building> buildingChoiceBox;
+    @FXML ChoiceBox<Building> buildingChoiceBox;
 
-    @FXML
-    CheckBox whiteboardCheckBox;
-
-    @FXML
-    CheckBox tvCheckBox;
-
-    @FXML
-    TextField capacityTextField;
-
-    @FXML
-    DatePicker datePicker;
+    @FXML CheckBox whiteboardCheckBox;
+    @FXML CheckBox tvCheckBox;
+    @FXML TextField capacityTextField;
+    @FXML DatePicker datePicker;
+    @FXML TextField searchTextField;
 
     public static ObservableList<Building> buildings;
 
-    public static ObservableList<String> rooms;
+    public static ObservableList<Room> rooms;
 
     /**
      * This initialize method contains the set up procedures for the ReserveARoom page.
@@ -53,21 +51,40 @@ public class ReserveARoomController extends ReserveBikeController {
                 .addListener((v, oldBuilding, newBuilding) -> {
                     try {
                         changeSelectedEvent(v, oldBuilding, newBuilding);
-                        roomListView.setVisible(true);
+                        roomTableView.setVisible(true);
                         continueButton.setVisible(false);
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    } catch (URISyntaxException e) {
+                        datePicker.setVisible(true);
+                    } catch (IOException | URISyntaxException e) {
                         e.printStackTrace();
                     }
                 });
-        roomListView.setVisible(false);
-        roomListView.getSelectionModel().selectedItemProperty().addListener((v, oldRoom, newRoom) -> {
+
+        roomColumn.setCellValueFactory(cellData -> new ReadOnlyObjectWrapper<>(
+                cellData.getValue().getRoomId() + " -- " + cellData.getValue().getName()));
+        whiteboardColumn.setCellValueFactory(cellData -> {
+            if (cellData.getValue().isWhiteboard()) {
+                return new ReadOnlyObjectWrapper<>("Yes");
+            } else {
+                return new ReadOnlyObjectWrapper<>("No");
+            }
+        });
+        tvColumn.setCellValueFactory(cellData -> {
+            if (cellData.getValue().isTv()) {
+                return new ReadOnlyObjectWrapper<>("Yes");
+            } else {
+                return new ReadOnlyObjectWrapper<>("No");
+            }
+        });
+        capacityColumn.setCellValueFactory(new PropertyValueFactory<Room, Integer>("capacity"));
+
+        roomTableView.setVisible(false);
+        roomTableView.getSelectionModel().selectedItemProperty().addListener((v, oldRoom, newRoom) -> {
             if (newRoom != null) {
                 continueButton.setVisible(true);
             }
         });
         continueButton.setVisible(false);
+        datePicker.setVisible(false);
     }
 
     /**
@@ -84,8 +101,8 @@ public class ReserveARoomController extends ReserveBikeController {
             return;
         }
         rooms = GeneralHomepageController
-                .jsonArrayToRoomS(ServerCommunication.readRoom(null, newBuilding.getName()));
-        roomListView.setItems(rooms);
+                .jsonArrayToRoom(ServerCommunication.readRoom(null, newBuilding.getName()));
+        roomTableView.setItems(rooms);
     }
 
     /**
@@ -95,7 +112,7 @@ public class ReserveARoomController extends ReserveBikeController {
      * @throws IOException thrown when something goes wrong with IO
      * @throws URISyntaxException thrown when the URI is falsely constructed
      */
-    public void search() throws IOException, URISyntaxException {
+    public void filter() throws IOException, URISyntaxException {
         Building building = buildingChoiceBox.getSelectionModel().getSelectedItem();
         if (building == null) {
             Alert alert = new Alert(Alert.AlertType.ERROR, "Please select a building");
@@ -112,10 +129,29 @@ public class ReserveARoomController extends ReserveBikeController {
         } else {
             capacity = 0;
         }
-        rooms = GeneralHomepageController.jsonArrayToRoomS(ServerCommunication.filterRooms(buildingName,
+        rooms = GeneralHomepageController.jsonArrayToRoom(ServerCommunication.filterRooms(buildingName,
                 tv, whiteboard, capacity));
-        roomListView.setItems(rooms);
-        roomListView.setVisible(true);
+        roomTableView.setItems(rooms);
+        roomTableView.setVisible(true);
+        datePicker.setVisible(true);
+        continueButton.setVisible(false);
+    }
+
+    /** Sends the room name to the server for searching.
+     *
+     * @throws IOException thrown when something goes wrong with IO
+     * @throws URISyntaxException thrown when the URI is falsely constructed
+     */
+    public void search() throws IOException, URISyntaxException {
+        String roomName = searchTextField.getText();
+        if (roomName.equals("")) {
+            Alert alert = new Alert(Alert.AlertType.ERROR, "Please fill in the field");
+            alert.setHeaderText(null);
+        }
+        rooms = GeneralHomepageController.jsonArrayToRoom(ServerCommunication.readRoomByName(roomName));
+        roomTableView.setItems(rooms);
+        roomTableView.setVisible(true);
+        datePicker.setVisible(true);
         continueButton.setVisible(false);
     }
 
@@ -125,7 +161,7 @@ public class ReserveARoomController extends ReserveBikeController {
      */
     public void stageRoomInfo(ActionEvent event) {
         RoomInfoController
-                .setRoom(roomListView.getSelectionModel().getSelectedItem());
+                .setRoom(roomTableView.getSelectionModel().getSelectedItem());
         changeScene(event, "/roomInfoScene.fxml");
     }
 }

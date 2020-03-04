@@ -282,6 +282,22 @@ public class ServerCommunication {
         return httpClient.execute(httpGet);
     }
 
+    /**Method that reads a room through the server.
+     * @param roomName is the name of the room
+     * @return httpGet which gets the information
+     * @throws IOException if method does not understand IO
+     * @throws URISyntaxException if the URI does not exist
+     */
+    public static CloseableHttpResponse readRoomByName(String roomName)
+            throws IOException, URISyntaxException {
+        URIBuilder uri = new URIBuilder("http://localhost:8080/rooms");
+        HttpGet httpGet = new HttpGet();
+        httpGet.setHeader("Authorization", pubAuth);
+        uri.addParameter("roomName", roomName);
+        httpGet.setURI(uri.build());
+        return httpClient.execute(httpGet);
+    }
+
     /** This method sends the desired room properties to the backend.
      * @param building is the building the room is located in
      * @param tv is a boolean describing if there is a tv in the room

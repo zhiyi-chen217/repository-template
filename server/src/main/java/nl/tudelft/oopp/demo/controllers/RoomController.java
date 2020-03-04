@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.persistence.EntityNotFoundException;
 import java.lang.module.ResolutionException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -80,11 +81,24 @@ public class RoomController {
      */
     @GetMapping("rooms")
     public ResponseEntity readRoom(@RequestParam Optional<String> roomId,
-                                   @RequestParam Optional<String> building) {
+                                   @RequestParam Optional<String> building,
+                                   @RequestParam Optional<String> roomName) {
+        String roomType = "ALL_CAN_USE";
+        if (SecurityContextHolder.getContext().getAuthentication()
+                .getAuthorities().contains(new SimpleGrantedAuthority("Employee"))) {
+            roomType = "Employee";
+        }
+        List<String> types = new ArrayList<>();
+        types.add("ALL_CAN_USE");
+        types.add(roomType);
+
+        if (roomName.isPresent()) {
+            return ResponseEntity.accepted().body(roomRepository.findByNameContainingIgnoreCaseAndTypeIn(roomName.get(), types));
+        }
         if (building.isPresent()) {
             Building temp = new Building();
             temp.setName(building.get());
-            return ResponseEntity.accepted().body(roomRepository.findByBuilding(temp));
+            return ResponseEntity.accepted().body(roomRepository.findByBuildingAndTypeIn(temp, types));
         }
         if (roomId.isEmpty()) {
             return ResponseEntity.accepted().body(roomRepository.findAll());
@@ -96,6 +110,13 @@ public class RoomController {
         return ResponseEntity.badRequest().body("The room does not exist!");
     }
 
+    /** Returns a list of rooms based on the filters specified in the parameters.
+     * @param buildingName the name of the building
+     * @param whiteboard a boolean value describing the availability of whiteboards in a room
+     * @param tv a boolean value describing the availability of TVs in a room
+     * @param capacity the minimum capacity of a room
+     * @return a ResponseEntity to be sent back
+     */
     @GetMapping("rooms/filter")
     public ResponseEntity readRoomFilter(
                                    @RequestParam String buildingName,

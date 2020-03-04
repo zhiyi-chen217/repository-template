@@ -44,12 +44,12 @@ public class RoomInfoController extends GeneralHomepageController {
     @FXML
     private ListView<String> timeSlotList;
 
-    public static String roomS;
+    public static Room room;
 
     public static ObservableList<RoomReservation> roomReservations;
 
-    public static void setRoom(String roomString) {
-        RoomInfoController.roomS = roomString;
+    public static void setRoom(Room room) {
+        RoomInfoController.room = room;
     }
 
     /**
@@ -58,9 +58,7 @@ public class RoomInfoController extends GeneralHomepageController {
      * @throws URISyntaxException thrown when the URI is falsely constructed
      */
     public void initialize() throws IOException, URISyntaxException {
-        String roomId = roomS.split("--")[0];
-        Room room = (Room) GeneralHomepageController
-                .jsonToEntity(ServerCommunication.readRoom(roomId, null), "Room");
+        String roomId = room.getRoomId();
         roomReservations = GeneralHomepageController
                 .jsonArrayToRoomReservation(ServerCommunication
                         .readRoomReservation(ServerCommunication.userId, roomId, LocalDate.now().toString()));
@@ -110,7 +108,7 @@ public class RoomInfoController extends GeneralHomepageController {
             CloseableHttpResponse response =
                     ServerCommunication.createRoomReservation(ServerCommunication.userId,
                             LocalDateTime.of(today, beginTime), LocalDateTime.of(today, endTime),
-                            roomS.split("--")[0]);
+                            room.getRoomId());
             if (response.getStatusLine().getStatusCode() != 201) {
                 Alert alert = new Alert(Alert.AlertType.INFORMATION);
                 alert.setHeaderText(null);
