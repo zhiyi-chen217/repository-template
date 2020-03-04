@@ -10,6 +10,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.http.ResponseEntity;
 import org.springframework.orm.jpa.JpaObjectRetrievalFailureException;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
 import javax.persistence.EntityNotFoundException;
@@ -94,6 +96,20 @@ public class RoomController {
         return ResponseEntity.badRequest().body("The room does not exist!");
     }
 
+    @GetMapping("rooms/filter")
+    public ResponseEntity readRoomFilter(
+                                   @RequestParam String buildingName,
+                                   @RequestParam boolean whiteboard,
+                                   @RequestParam boolean tv,
+                                   @RequestParam int capacity) {
+        String roomType = "ALL_CAN_USE";
+        if (SecurityContextHolder.getContext().getAuthentication()
+                .getAuthorities().contains(new SimpleGrantedAuthority("Employee"))) {
+            roomType = "Employee";
+        }
+        return ResponseEntity.accepted().body(roomRepository.filter(whiteboard,
+                tv, roomType, buildingName, capacity));
+    }
 
 
     /**
