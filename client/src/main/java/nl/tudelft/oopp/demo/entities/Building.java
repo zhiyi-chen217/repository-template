@@ -110,14 +110,18 @@ public class Building {
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
         Building building = (Building) o;
-        return bikes == building.bikes &&
-                name.equals(building.name) &&
-                location.equals(building.location) &&
-                openingHour.equals(building.openingHour) &&
-                closingHour.equals(building.closingHour) &&
-                Objects.equals(picturesPath, building.picturesPath);
+        return bikes == building.bikes
+                && name.equals(building.name)
+                && location.equals(building.location)
+                && openingHour.equals(building.openingHour)
+                && closingHour.equals(building.closingHour)
+                && Objects.equals(picturesPath, building.picturesPath);
     }
 }

@@ -2,6 +2,8 @@ package nl.tudelft.oopp.demo.entities;
 
 import org.json.JSONObject;
 
+import java.util.Objects;
+
 public class  Room {
 
     private String roomId;
@@ -34,13 +36,13 @@ public class  Room {
      * @param building is the building the room is located in
      */
     public Room(String roomId, String name, int capacity, boolean whiteboard,
-                boolean tv, Building building) {
+                boolean tv, Building building, String description, String picturesPath) {
         this.roomId = roomId;
         this.name = name;
         this.capacity = capacity;
-        this.description = "";
+        this.description = description;
         this.type = "AllCanUse";
-        this.picturesPath = "";
+        this.picturesPath = picturesPath;
         this.whiteboard = whiteboard;
         this.tv = tv;
         this.building = building;
@@ -147,7 +149,6 @@ public class  Room {
 
     @Override
     public String toString() {
-
         return this.roomId + "--" + this.name;
     }
 
@@ -156,12 +157,16 @@ public class  Room {
         if (this == o) {
             return true;
         }
-        if (o == null || getClass() != o.getClass()) {
+        if (!(o instanceof Room)) {
             return false;
         }
         Room room = (Room) o;
-        return roomId.equals(room.roomId);
-
+        return capacity == room.capacity
+                && whiteboard == room.whiteboard
+                && tv == room.tv
+                && roomId.equals(room.roomId)
+                && name.equals(room.name)
+                && building.equals(room.building)
+                && type.equals(room.type);
     }
-
 }
