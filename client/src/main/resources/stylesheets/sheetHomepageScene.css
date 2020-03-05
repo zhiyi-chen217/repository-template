@@ -1,15 +1,37 @@
 .root{
     -fx-background-color: #27ACE8;
-    -fx-background-image: url("../images/OOPP_background_ewi.jpg");
+    -fx-background-image: url("../images/OOPP_background_lib.jpg");
     -fx-background-size:100% auto;
     -fx-background-size:auto 100%;
 }
 
 #welcome {
-    -fx-font-weight: bold;
+    -fx-text-fill: white;
 }
 
+#foodbutton {
+    -fx-background-image: url("../images/OOPP_button_food.jpg");
+    -fx-text-fill: white;
+}
 
+#bikebutton {
+    -fx-background-image: url("../images/OOPP_button_bike.jpg");
+    -fx-text-fill: white;
+}
+
+#roombutton {
+    -fx-background-image: url("../images/OOPP_button_room.jpg");
+    -fx-text-fill: white;
+}
+
+#logbutton {
+    -fx-background-color: red;
+}
+
+#tutitle {
+    -fx-font-size: 41;
+    -fx-text-fill: white;
+}
 
 .button{
     -fx-background-color:

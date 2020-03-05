@@ -17,16 +17,13 @@
             <font>
                 <Font size="16.0" />
             </font></Label>
-        <Label alignment="CENTER_RIGHT" layoutX="353.0" layoutY="-31.0" prefHeight="166.0" prefWidth="420.0" text="TU Reservation" AnchorPane.bottomAnchor="391.0" AnchorPane.leftAnchor="353.0" AnchorPane.rightAnchor="15.0" AnchorPane.topAnchor="-31.0">
-            <font>
-                <Font size="41.0" />
-            </font></Label>
+        <Label id="tutitle" alignment="CENTER_RIGHT" layoutX="353.0" layoutY="-31.0" prefHeight="166.0" prefWidth="420.0" text="TU Reservations" AnchorPane.bottomAnchor="391.0" AnchorPane.leftAnchor="353.0" AnchorPane.rightAnchor="15.0" AnchorPane.topAnchor="-31.0"></Label>
         <VBox id="menu" alignment="BOTTOM_LEFT" layoutY="105.0" prefHeight="419.0" prefWidth="247.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0">
             <children>
-                <Button mnemonicParsing="false" onAction="#changeSceneRooms" prefHeight="104.8" prefWidth="268.0" text="Reserve a room" />
-                <Button mnemonicParsing="false" onAction="#changeSceneBikes" prefHeight="104.8" prefWidth="254.0" text="Reserve a bike" />
-                <Button mnemonicParsing="false" prefHeight="104.8" prefWidth="273.0" text="Order food" />
-                <Button fx:id="logoutBtn" mnemonicParsing="false" onAction="#logout" prefHeight="104.8" prefWidth="247.0" text="Logout" />
+                <Button id="roombutton" mnemonicParsing="false" onAction="#changeSceneRooms" prefHeight="104.8" prefWidth="268.0" text="Reserve a room" />
+                <Button id="bikebutton" mnemonicParsing="false" onAction="#changeSceneBikes" prefHeight="104.8" prefWidth="254.0" text="Reserve a bike" />
+                <Button id="foodbutton" mnemonicParsing="false" prefHeight="104.8" prefWidth="273.0" text="Order food" />
+                <Button id="logbutton" mnemonicParsing="false" onAction="#logout" prefHeight="104.8" prefWidth="247.0" text="Log out" />
             </children>
         </VBox>
         <Button layoutX="648.0" layoutY="196.0" mnemonicParsing="false" text="Calendar view" />
