@@ -8,6 +8,10 @@ public class AdminHomepageController extends GeneralHomepageController {
         changeScene(event, "/adminBuildingsRoomsScene.fxml");
     }
 
+    public void changeSceneBikes(ActionEvent event) {
+        changeScene(event, "/adminBikesScene.fxml");
+    }
+
     @FXML
     public void initialize() {
         setWelcomeMessage();

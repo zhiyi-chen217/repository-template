@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="nl.tudelft.oopp.demo.controllers.AdminBikesController">
+    <children>
+        <Label layoutX="74.0" layoutY="-27.0" text="Manage bikes" AnchorPane.bottomAnchor="311.8" AnchorPane.leftAnchor="74.0" AnchorPane.rightAnchor="75.0" AnchorPane.topAnchor="-27.0">
+            <font>
+                <Font size="15.0" />
+            </font></Label>
+        <Button layoutX="263.0" layoutY="157.0" mnemonicParsing="false" onAction="#changeSceneAdminHomepage" text="Back" AnchorPane.bottomAnchor="356.8" AnchorPane.leftAnchor="20.0" />
+        <VBox layoutX="20.0" layoutY="63.0" prefHeight="45.0" prefWidth="146.0">
+            <children>
+                <Label text="Pick a building">
+                    <font>
+                        <Font size="13.0" />
+                    </font>
+                </Label>
+                <ChoiceBox fx:id="buildingChoiceBox" prefWidth="150.0" />
+            </children>
+        </VBox>
+        <VBox alignment="TOP_RIGHT" layoutX="283.0" layoutY="80.0" spacing="5.0">
+            <children>
+                <ListView fx:id="bikeListView" prefHeight="252.0" prefWidth="200.0" />
+                <Button fx:id="refreshButton" mnemonicParsing="false" text="Refresh" />
+            </children>
+        </VBox>
+        <VBox alignment="CENTER" layoutX="495.0" layoutY="80.0" spacing="5.0">
+            <children>
+                <Button fx:id="addBikeButton" mnemonicParsing="false" onAction="#stageAddBike" prefHeight="25.0" prefWidth="83.0" text="Add bike" />
+                <Button fx:id="editBikeButton" mnemonicParsing="false" onAction="#stageEditBike" prefHeight="25.0" prefWidth="83.0" text="Edit bike" />
+                <Button fx:id="deleteBikeButton" mnemonicParsing="false" prefHeight="25.0" prefWidth="83.0" text="Delete bike" />
+            </children>
+        </VBox>
+    </children>
+</AnchorPane>

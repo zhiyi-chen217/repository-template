@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="nl.tudelft.oopp.demo.controllers.AddABikeController">
+    <children>
+        <Button fx:id="addButton" layoutX="247.0" layoutY="200.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="70.0" text="Add" />
+        <GridPane layoutX="84.0" layoutY="88.0" prefHeight="89.0" prefWidth="396.0">
+            <columnConstraints>
+                <ColumnConstraints hgrow="ALWAYS" maxWidth="283.2" minWidth="10.0" prefWidth="190.2" />
+                <ColumnConstraints hgrow="ALWAYS" maxWidth="171.0" minWidth="10.0" prefWidth="169.0" />
+            </columnConstraints>
+            <rowConstraints>
+                <RowConstraints maxHeight="128.0" minHeight="10.0" prefHeight="34.0" vgrow="ALWAYS" />
+                <RowConstraints maxHeight="144.4" minHeight="10.0" prefHeight="34.59998474121093" vgrow="ALWAYS" />
+            </rowConstraints>
+            <children>
+                <Label text="Add the bike ID:" />
+                <TextField fx:id="bikeID" prefHeight="26.0" prefWidth="158.0" GridPane.columnIndex="1" />
+                <Label text="Add the building where it is located:" GridPane.rowIndex="1" />
+                <TextField fx:id="bikeBuildingLocation" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+            </children>
+        </GridPane>
+        <Label layoutX="84.0" layoutY="-18.0" text="Add a bike" AnchorPane.bottomAnchor="302.8" AnchorPane.leftAnchor="84.0" AnchorPane.rightAnchor="65.0" AnchorPane.topAnchor="-18.0">
+            <font>
+                <Font size="15.0" />
+            </font></Label>
+        <Label fx:id="failtext" alignment="CENTER_RIGHT" contentDisplay="LEFT" layoutX="62.0" layoutY="309.0" prefHeight="26.0" prefWidth="510.0" textAlignment="RIGHT" textFill="RED" />
+    </children>
+</AnchorPane>

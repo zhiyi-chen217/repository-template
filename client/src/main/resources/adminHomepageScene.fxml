@@ -19,7 +19,7 @@
         <VBox alignment="CENTER" layoutX="193.0" layoutY="138.0" prefHeight="238.0" prefWidth="214.0" spacing="20.0" AnchorPane.bottomAnchor="24.0" AnchorPane.leftAnchor="193.0" AnchorPane.rightAnchor="193.0" AnchorPane.topAnchor="138.0">
             <children>
                 <Button mnemonicParsing="false" onAction="#changeSceneBuildings" text="Manage buildings and rooms" />
-                <Button mnemonicParsing="false" text="Manage bikes" />
+                <Button mnemonicParsing="false" onAction="#changeSceneBikes" text="Manage bikes" />
                 <Button mnemonicParsing="false" text="Manage food shop menus" />
                 <Button mnemonicParsing="false" text="Promote user" />
             </children></VBox>
