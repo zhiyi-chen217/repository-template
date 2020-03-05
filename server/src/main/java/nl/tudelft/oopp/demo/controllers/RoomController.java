@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.http.ResponseEntity;
 import org.springframework.orm.jpa.JpaObjectRetrievalFailureException;
+import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
@@ -17,6 +18,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.persistence.EntityNotFoundException;
 import java.lang.module.ResolutionException;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
 
@@ -84,16 +86,19 @@ public class RoomController {
                                    @RequestParam Optional<String> building,
                                    @RequestParam Optional<String> roomName) {
         String roomType = "ALL_CAN_USE";
-        if (SecurityContextHolder.getContext().getAuthentication()
-                .getAuthorities().contains(new SimpleGrantedAuthority("Employee"))) {
+        List<GrantedAuthority> authorities = new ArrayList<>(SecurityContextHolder.getContext().getAuthentication()
+                .getAuthorities());
+        if (authorities.contains(new SimpleGrantedAuthority("Employee"))
+                || authorities.contains(new SimpleGrantedAuthority("Admin"))) {
             roomType = "Employee";
         }
-        List<String> types = new ArrayList<>();
-        types.add("ALL_CAN_USE");
-        types.add(roomType);
+        List<String> types = new ArrayList<String>(List.of("ALL_CAN_USE", roomType));
 
-        if (roomName.isPresent()) {
-            return ResponseEntity.accepted().body(roomRepository.findByNameContainingIgnoreCaseAndTypeIn(roomName.get(), types));
+        if (roomName.isPresent() && building.isPresent()) {
+            Building temp = new Building();
+            temp.setName(building.get());
+            return ResponseEntity.accepted().body(roomRepository
+                    .findByNameContainingIgnoreCaseAndTypeInAndBuilding(roomName.get(), types, temp));
         }
         if (building.isPresent()) {
             Building temp = new Building();

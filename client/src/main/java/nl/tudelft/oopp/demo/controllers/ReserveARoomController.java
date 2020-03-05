@@ -144,11 +144,21 @@ public class ReserveARoomController extends ReserveBikeController {
      */
     public void search() throws IOException, URISyntaxException {
         String roomName = searchTextField.getText();
+        Building building = buildingChoiceBox.getSelectionModel().getSelectedItem();
+        if (building == null) {
+            Alert alert = new Alert(Alert.AlertType.ERROR, "Please select a building");
+            alert.setHeaderText(null);
+            alert.show();
+            return;
+        }
+        String buildingName = building.getName();
         if (roomName.equals("")) {
             Alert alert = new Alert(Alert.AlertType.ERROR, "Please fill in the field");
             alert.setHeaderText(null);
+            alert.show();
+            return;
         }
-        rooms = GeneralHomepageController.jsonArrayToRoom(ServerCommunication.readRoomByName(roomName));
+        rooms = GeneralHomepageController.jsonArrayToRoom(ServerCommunication.readRoomByName(roomName, buildingName));
         roomTableView.setItems(rooms);
         roomTableView.setVisible(true);
         datePicker.setVisible(true);

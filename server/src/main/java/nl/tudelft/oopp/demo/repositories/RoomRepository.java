@@ -18,7 +18,7 @@ public interface RoomRepository extends JpaRepository<Room, String> {
 
     List<Room> findByBuildingAndTypeIn(Building building, List<String> types);
 
-    List<Room> findByNameContainingIgnoreCaseAndTypeIn(String name, List<String> types);
+    List<Room> findByNameContainingIgnoreCaseAndTypeInAndBuilding(String name, List<String> types, Building building);
 
     @Query(value = "SELECT * FROM room WHERE "
             + "room.whiteboard IN (true, :whiteboard) AND room.tv IN (true, :tv) AND room.type "
