@@ -167,6 +167,7 @@ public class  Room {
                 && roomId.equals(room.roomId)
                 && name.equals(room.name)
                 && building.equals(room.building)
-                && type.equals(room.type);
+                && type.equals(room.type)
+                && picturesPath.equals(room.picturesPath);
     }
 }

@@ -4,6 +4,7 @@ import nl.tudelft.oopp.demo.controllers.GeneralHomepageController;
 import org.json.JSONObject;
 
 import java.time.LocalDateTime;
+import java.util.Objects;
 
 public class RoomReservation {
 
@@ -26,13 +27,13 @@ public class RoomReservation {
      * @param endTime is the amount of consecutive slots of a certain fixed length
      * @param room is the room which is reserved
      */
-    public RoomReservation(String user, LocalDateTime beginTime, LocalDateTime endTime, Room room) {
+    public RoomReservation(String user, LocalDateTime beginTime, LocalDateTime endTime, Room room, Long id) {
         this.user = user;
         this.beginTime = beginTime;
         this.endTime = endTime;
         this.room = room;
+        this.id = id;
     }
-
 
     /**
      * This constructor constructs a room reservation object according to the provided JsonObject.
@@ -100,15 +101,13 @@ public class RoomReservation {
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) {
-            return true;
-        }
-        if (o == null || getClass() != o.getClass()) {
-            return false;
-        }
+        if (this == o) return true;
+        if (!(o instanceof RoomReservation)) return false;
         RoomReservation that = (RoomReservation) o;
-        return that.getId().equals(id);
+        return id.equals(that.id) &&
+                user.equals(that.user) &&
+                beginTime.equals(that.beginTime) &&
+                endTime.equals(that.endTime) &&
+                room.equals(that.room);
     }
-
-
 }

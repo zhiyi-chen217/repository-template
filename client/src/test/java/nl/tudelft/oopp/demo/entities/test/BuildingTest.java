@@ -10,16 +10,16 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class BuildingTest {
 
+    Building gebouw;
+
     @BeforeEach
     void before() {
-        Building gebouw = new Building("Gebouw", "Mekelweg 4",
+        gebouw = new Building("Gebouw", "Mekelweg 4",
                 LocalTime.of(11, 0), LocalTime.of(16, 0), 50, "/pics");
     }
 
     @Test
     void getName() {
-        Building gebouw = new Building("Gebouw", "Mekelweg 4",
-                LocalTime.of(11, 0), LocalTime.of(16, 0), 50, "/pics");
         assertEquals("Gebouw", gebouw.getName());
         assertNotEquals("Building", gebouw.getName());
         assertNotNull(gebouw.getName());
@@ -27,8 +27,6 @@ class BuildingTest {
 
     @Test
     void setName() {
-        Building gebouw = new Building("Gebouw", "Mekelweg 4",
-                LocalTime.of(11, 0), LocalTime.of(16, 0), 50, "/pics");
         gebouw.setName("Building");
         assertEquals("Building", gebouw.getName());
         assertNotEquals("Gebouw", gebouw.getName());
@@ -37,8 +35,6 @@ class BuildingTest {
 
     @Test
     void getLocation() {
-        Building gebouw = new Building("Gebouw", "Mekelweg 4",
-                LocalTime.of(11, 0), LocalTime.of(16, 0), 50, "/pics");
         assertEquals("Mekelweg 4", gebouw.getLocation());
         assertNotEquals("Mekelweg 5", gebouw.getLocation());
         assertNotNull(gebouw.getLocation());
@@ -46,8 +42,6 @@ class BuildingTest {
 
     @Test
     void setLocation() {
-        Building gebouw = new Building("Gebouw", "Mekelweg 4",
-                LocalTime.of(11, 0), LocalTime.of(16, 0), 50, "/pics");
         gebouw.setLocation("Mekelweg 5");
         assertEquals("Mekelweg 5", gebouw.getLocation());
         assertNotEquals("Mekelweg 4", gebouw.getLocation());
@@ -56,8 +50,6 @@ class BuildingTest {
 
     @Test
     void getOpeningHour() {
-        Building gebouw = new Building("Gebouw", "Mekelweg 4",
-                LocalTime.of(11, 0), LocalTime.of(16, 0), 50, "/pics");
         assertEquals(LocalTime.of(11, 0), gebouw.getOpeningHour());
         assertNotEquals(LocalTime.of(11, 30), gebouw.getOpeningHour());
         assertNotNull(gebouw.getOpeningHour());
@@ -65,8 +57,6 @@ class BuildingTest {
 
     @Test
     void setOpeningHour() {
-        Building gebouw = new Building("Gebouw", "Mekelweg 4",
-                LocalTime.of(11, 0), LocalTime.of(16, 0), 50, "/pics");
         gebouw.setOpeningHour(LocalTime.of(12, 0));
         assertEquals(LocalTime.of(12, 0), gebouw.getOpeningHour());
         assertNotEquals(LocalTime.of(12, 30), gebouw.getOpeningHour());
@@ -75,8 +65,6 @@ class BuildingTest {
 
     @Test
     void getClosingHour() {
-        Building gebouw = new Building("Gebouw", "Mekelweg 4",
-                LocalTime.of(11, 0), LocalTime.of(16, 0), 50, "/pics");
         assertEquals(LocalTime.of(16, 0), gebouw.getClosingHour());
         assertNotEquals(LocalTime.of(11, 0), gebouw.getClosingHour());
         assertNotNull(gebouw.getClosingHour());
@@ -84,8 +72,6 @@ class BuildingTest {
 
     @Test
     void setClosingHour() {
-        Building gebouw = new Building("Gebouw", "Mekelweg 4",
-                LocalTime.of(11, 0), LocalTime.of(16, 0), 50, "/pics");
         gebouw.setClosingHour(LocalTime.of(17, 0));
         assertEquals(LocalTime.of(17, 0), gebouw.getClosingHour());
         assertNotEquals(LocalTime.of(16, 0), gebouw.getClosingHour());
@@ -94,8 +80,6 @@ class BuildingTest {
 
     @Test
     void getPicturesPath() {
-        Building gebouw = new Building("Gebouw", "Mekelweg 4",
-                LocalTime.of(11, 0), LocalTime.of(16, 0), 50, "/pics");
         assertEquals("/pics", gebouw.getPicturesPath());
         assertNotEquals("/pictures", gebouw.getPicturesPath());
         assertNotNull(gebouw.getPicturesPath());
@@ -103,8 +87,6 @@ class BuildingTest {
 
     @Test
     void setPicturesPath() {
-        Building gebouw = new Building("Gebouw", "Mekelweg 4",
-                LocalTime.of(11, 0), LocalTime.of(16, 0), 50, "/pics");
         gebouw.setPicturesPath("/pictures");
         assertEquals("/pictures", gebouw.getPicturesPath());
         assertNotEquals("/pics", gebouw.getPicturesPath());
@@ -113,8 +95,6 @@ class BuildingTest {
 
     @Test
     void getBikes() {
-        Building gebouw = new Building("Gebouw", "Mekelweg 4",
-                LocalTime.of(11, 0), LocalTime.of(16, 0), 50, "/pics");
         assertEquals(50, gebouw.getBikes());
         assertNotEquals(1000000, gebouw.getBikes());
         assertNotNull(gebouw.getBikes());
@@ -122,8 +102,6 @@ class BuildingTest {
 
     @Test
     void setBikes() {
-        Building gebouw = new Building("Gebouw", "Mekelweg 4",
-                LocalTime.of(11, 0), LocalTime.of(16, 0), 50, "/pics");
         gebouw.setBikes(1000000);
         assertEquals(1000000, gebouw.getBikes());
         assertNotEquals(50, gebouw.getBikes());
@@ -132,8 +110,6 @@ class BuildingTest {
 
     @Test
     void testToString() {
-        Building gebouw = new Building("Gebouw", "Mekelweg 4",
-                LocalTime.of(11, 0), LocalTime.of(16, 0), 50, "/pics");
         assertEquals("Gebouw", gebouw.toString());
         assertNotEquals("Building", gebouw.toString());
         assertNotNull(gebouw.toString());
@@ -141,8 +117,7 @@ class BuildingTest {
 
     @Test
     void testEquals() {
-        Building gebouw1 = new Building("Gebouw", "Mekelweg 4",
-                LocalTime.of(11, 0), LocalTime.of(16, 0), 50, "/pics");
+        Building gebouw1 = gebouw;
         Building gebouw2 = new Building("Gebouw", "Mekelweg 5",
                 LocalTime.of(11, 0), LocalTime.of(16, 0), 50, "/pics");
         Building gebouw3 = new Building("Gebouw", "Mekelweg 4",
