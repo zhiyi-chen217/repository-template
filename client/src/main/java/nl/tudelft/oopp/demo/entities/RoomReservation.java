@@ -101,13 +101,17 @@ public class RoomReservation {
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (!(o instanceof RoomReservation)) return false;
+        if (this == o) {
+            return true;
+        }
+        if (!(o instanceof RoomReservation)) {
+            return false;
+        }
         RoomReservation that = (RoomReservation) o;
-        return id.equals(that.id) &&
-                user.equals(that.user) &&
-                beginTime.equals(that.beginTime) &&
-                endTime.equals(that.endTime) &&
-                room.equals(that.room);
+        return id.equals(that.id)
+                && user.equals(that.user)
+                && beginTime.equals(that.beginTime)
+                && endTime.equals(that.endTime)
+                && room.equals(that.room);
     }
 }
