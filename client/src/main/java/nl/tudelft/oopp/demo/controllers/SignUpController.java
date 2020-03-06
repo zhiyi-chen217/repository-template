@@ -42,6 +42,7 @@ public class SignUpController {
     private PasswordField pass1;
     @FXML
     private PasswordField pass2;
+
     @FXML
     private Label failtext;
 

@@ -11,7 +11,7 @@
             <Font size="26.0" />
          </font>
       </Label>
-      <Button layoutX="309.0" layoutY="312.0" mnemonicParsing="false" onAction="#signUp" text="Submit" />
+      <Button fx:id="submit" layoutX="309.0" layoutY="312.0" mnemonicParsing="false" onAction="#signUp" text="Submit" />
       <Label fx:id="failtext" layoutX="286.0" layoutY="369.0" prefWidth="0.0" textFill="RED" />
       <GridPane layoutX="53.0" layoutY="112.0" prefHeight="189.0" prefWidth="310.0">
         <columnConstraints>
@@ -27,7 +27,7 @@
         </rowConstraints>
          <children>
             <Label text="Enter your NetID:" />
-            <TextField fx:id="netid" prefHeight="26.0" prefWidth="181.0" GridPane.columnIndex="1" />
+            <TextField fx:id="netid" prefHeight="26.0" prefWidth="181.0" GridPane.columnIndex="1" editable="true"/>
             <Label text="Enter your e-mail address:" GridPane.rowIndex="1" />
             <Label text="Enter your e-mail address again:" GridPane.rowIndex="2" />
             <Label text="Enter your password:" GridPane.rowIndex="3" />
