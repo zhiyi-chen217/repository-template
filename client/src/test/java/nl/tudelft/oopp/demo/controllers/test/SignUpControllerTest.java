@@ -51,7 +51,7 @@ class SignUpControllerTest{
         Scene scene = new Scene(root);
         stage.setScene(scene);
         stage.show();
-        //stage.toFront();
+        stage.toFront();
     }
 
     @Test
@@ -59,7 +59,6 @@ class SignUpControllerTest{
         Button submit = (Button) fxRobot.lookup("#submit").query();
         netId.setText("***");
         fxRobot.clickOn(submit);
-        WaitForAsyncUtils.waitForFxEvents();
         FxAssert.verifyThat("#failtext", LabeledMatchers.hasText("Please insert a valid NetID."));
     }
 
@@ -68,7 +67,6 @@ class SignUpControllerTest{
         Button submit = (Button) fxRobot.lookup("#submit").query();
         email1.setText("***");
         fxRobot.clickOn(submit);
-        WaitForAsyncUtils.waitForFxEvents();
         FxAssert.verifyThat("#failtext", LabeledMatchers.hasText("Please enter a valid email address."));
     }
 
@@ -77,7 +75,6 @@ class SignUpControllerTest{
         Button submit = (Button) fxRobot.lookup("#submit").query();
         email2.setText("ab@abc.com");
         fxRobot.clickOn(submit);
-        WaitForAsyncUtils.waitForFxEvents();
         FxAssert.verifyThat("#failtext", LabeledMatchers.hasText("Please make sure the two email addresses are the same."));
     }
 
@@ -86,7 +83,6 @@ class SignUpControllerTest{
         Button submit = (Button) fxRobot.lookup("#submit").query();
         pass1.setText("");
         fxRobot.clickOn(submit);
-        WaitForAsyncUtils.waitForFxEvents();
         FxAssert.verifyThat("#failtext", LabeledMatchers.hasText("Please insert a valid password."));
     }
 
@@ -95,7 +91,6 @@ class SignUpControllerTest{
         Button submit = (Button) fxRobot.lookup("#submit").query();
         pass1.setText("123456789");
         fxRobot.clickOn(submit);
-        WaitForAsyncUtils.waitForFxEvents();
         FxAssert.verifyThat("#failtext", LabeledMatchers.hasText("Please make sure the two passwords match."));
     }
 
@@ -105,7 +100,6 @@ class SignUpControllerTest{
         pass1.setText("123456");
         pass2.setText("123456");
         fxRobot.clickOn(submit);
-        WaitForAsyncUtils.waitForFxEvents();
         FxAssert.verifyThat("#failtext", LabeledMatchers.hasText("Password needs to be 8 characters or longer."));
     }
 }
