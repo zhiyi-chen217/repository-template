@@ -28,6 +28,16 @@ class SignUpControllerTest{
     TextField pass1;
     TextField pass2;
 
+    static {
+        if (true) {
+            System.setProperty("testfx.robot", "glass");
+            System.setProperty("testfx.headless", "true");
+            System.setProperty("prism.order", "sw");
+            System.setProperty("prism.text", "t2k");
+            System.setProperty("java.awt.headless", "true");
+        }
+    }
+
     @BeforeEach
     public void setup(FxRobot fxRobot) {
         netId = (TextField) fxRobot.lookup("#netid").query();
