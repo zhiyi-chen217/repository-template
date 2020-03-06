@@ -37,4 +37,4 @@ client-checkstyle:
 client-test:
   stage: test
   script:
-    gradle :client:test
+    gradle --stacktrace :client:test
